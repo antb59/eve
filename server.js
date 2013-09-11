@@ -1,0 +1,32 @@
+var express = require('express'),
+    pushNotificationsCommand = require('./server/routes/commands/pushNotificationsCommand'),
+    path = require('path');
+
+console.log('Starting Server...')
+
+var app = express();
+
+app.configure(function () {
+        app.use(express.favicon());
+        app.use(express.bodyParser());
+        app.use(express.methodOverride());
+        app.use(app.router);
+        app.use(express.logger('dev'));
+        app.use(express.static(path.join(__dirname, 'client')));
+        app.use(express.errorHandler({
+            dumpExceptions: true,
+            showStack: true
+        }));
+});
+
+app.get('/api/help', function(req, res) {
+    res.send([{name:'command'}, {name:'status'}]);
+});
+app.get('/api/status', function(req, res) {
+    res.send("status OK");
+});
+
+app.post('/api/sendNotification', pushNotificationsCommand.sendNotification);
+
+app.listen(process.env.PORT,process.env.IP);
+console.log('Listening on port ' + process.env.PORT + '...');

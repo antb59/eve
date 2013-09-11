@@ -1,0 +1,28 @@
+<!doctype html>
+<html ng-app>
+    
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <script src="//code.jquery.com/jquery.js"></script>
+        <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+        <script src="lib/bootstrap/js/bootstrap-theme.min.css"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+        <script src="js/controllers/pushNotificationsCtrl.js"></script>
+    </head>
+    
+    <body>
+        <div>
+            <h1>Push Notifications</h1>
+            <div ng-controller="pushNotificationsCtrl">
+                <form ng-submit="sendNotification()">
+                    <input type="text" ng-model="titleText" placeholder="Title" />
+                    <input type="text" ng-model="messageText" placeholder="Message" />
+                    <input class="btn-primary" type="submit" value="add" />
+                </form>
+                <p>Status: {{codeStatus}}</p>
+            </div>
+        </div>
+    </body>
+
+</html>
