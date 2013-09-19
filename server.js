@@ -1,5 +1,6 @@
 var express = require('express'),
     pushNotificationsCommand = require('./server/routes/commands/pushNotificationsCommand'),
+    wikipediaCommand = require('./server/routes/commands/wikipediaCommand'),
     path = require('path');
 
 console.log('Starting Server...')
@@ -26,7 +27,9 @@ app.get('/api/status', function(req, res) {
     res.send("status OK");
 });
 
-app.post('/api/sendNotification', pushNotificationsCommand.sendNotification);
+app.get('/api/getWikipediaArticle/:title', wikipediaCommand.getWikipediaArticle);
+app.post('/api/pushNotification', pushNotificationsCommand.pushNotification);
+
 
 app.listen(process.env.PORT,process.env.IP);
 console.log('Listening on port ' + process.env.PORT + '...');

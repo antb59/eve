@@ -1,8 +1,8 @@
 function pushNotificationsCtrl($scope, $http, $templateCache) {
 
     $scope.codeStatus = '';
-    $scope.sendNotification = function() {
-        console.log('Notification a envoyer : ' + $scope.titleText + ' - ' + $scope.messageText);
+    $scope.pushNotification = function() {
+        console.log('Pushing Notification');
 
         var notificationFormData = {
             notification: {
@@ -11,22 +11,17 @@ function pushNotificationsCtrl($scope, $http, $templateCache) {
             }
         };
 
-        var jdata = 'notification:'+JSON.stringify(notificationFormData);
-
-        console.log("jdata= " + jdata);
-
-        $http.post('/api/sendNotification',notificationFormData).success(function(response) {
-            console.log("pushNotification successfully sent");
-            $scope.codeStatus = response.data;
-            console.log($scope.codeStatus);
+        $http.post('/api/pushNotification',notificationFormData).success(function(response) {
+            console.log(response)
+            //$scope.codeStatus = response.status + ' - ' + response.message;
+            //console.log($scope.codeStatus);
         }).
         error(function(response) {
-            console.log("pushNotification error during sending"); // Getting Error Response in Callback
-            $scope.codeStatus = response || "Request failed";
-            console.log($scope.codeStatus);
+            //$scope.codeStatus = response.status + ' - ' + response.message;
+            //console.log($scope.codeStatus);
         });
 
-        $scope.titleText = 'Bernard';
+        $scope.titleText = '';
         $scope.messageText = '';
     };
 
