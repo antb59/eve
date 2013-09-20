@@ -1,5 +1,8 @@
-function wikipediaCtrl($scope, $http, $templateCache) {
+//angular.module('eveApp.controllers').controller('wikipediaCtrl', function($scope, $http, $templateCache) {
 
+
+angular.module('eveApp').controller('wikipediaCtrl', function wikipediaCtrl($scope, $http, $templateCache) {
+    
     $scope.wikipediaArticle = '';
     $scope.getWikipediaArticle = function() {
         console.log('Getting Wikipedia Article: ' + this.titleText);
@@ -14,4 +17,4 @@ function wikipediaCtrl($scope, $http, $templateCache) {
         });
     };
 
-}
+});

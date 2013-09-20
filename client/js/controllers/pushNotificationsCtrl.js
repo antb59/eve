@@ -1,4 +1,7 @@
-function pushNotificationsCtrl($scope, $http, $templateCache) {
+//angular.module('eveApp.controllers').controller('pushNotificationsCtrl', function ($scope, $http, $templateCache) {
+    
+    
+angular.module('eveApp').controller('pushNotificationsCtrl', function pushNotificationsCtrl($scope, $http, $templateCache) {
 
     $scope.codeStatus = '';
     $scope.pushNotification = function() {
@@ -25,4 +28,4 @@ function pushNotificationsCtrl($scope, $http, $templateCache) {
         $scope.messageText = '';
     };
 
-}
+});

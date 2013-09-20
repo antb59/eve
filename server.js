@@ -1,4 +1,5 @@
 var express = require('express'),
+    commandsFlowCommand = require('./server/routes/commands/commandsFlow'),
     pushNotificationsCommand = require('./server/routes/commands/pushNotificationsCommand'),
     wikipediaCommand = require('./server/routes/commands/wikipediaCommand'),
     path = require('path');
@@ -27,6 +28,7 @@ app.get('/api/status', function(req, res) {
     res.send("status OK");
 });
 
+app.get('/api/commandsFlow', commandsFlowCommand.getCommandsFlow);
 app.get('/api/getWikipediaArticle/:title', wikipediaCommand.getWikipediaArticle);
 app.post('/api/pushNotification', pushNotificationsCommand.pushNotification);
 

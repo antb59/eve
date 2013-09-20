@@ -1,9 +1,11 @@
 var querystring = require('querystring'),
-    http = require('http');
+    http = require('http'),
+    commandsFlow = require('./commandsFlow');
 
 exports.getWikipediaArticle = function(req, res) {
 
-    console.log("API get wikipedia article");
+    console.log("API GET wikipediaArticle");
+    commandsFlow.pushCommand("GET wikipediaArticle '" + req.params.title + "'");
 
     var queryParam = querystring.stringify({
         format: 'json',

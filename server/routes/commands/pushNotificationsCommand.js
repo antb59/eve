@@ -3,7 +3,7 @@ var querystring = require('querystring'),
 
 exports.pushNotification = function(req, res){
 
-    console.log("API push notification");
+    console.log("API POST pushNotification");
     console.log(req.body);
 
     var data = querystring.stringify({
