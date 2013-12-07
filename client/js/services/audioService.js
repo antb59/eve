@@ -5,6 +5,7 @@ angular.module('eveApp').factory('audioService', function($document) {
         audioElement: audioElement,
 
         play: function(filename) {
+            console.log('audioService play : ' + filename);
             audioElement.src = filename;
             audioElement.load();
             audioElement.play(); //  <-- Thats all you need

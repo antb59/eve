@@ -38,7 +38,7 @@ exports.getCommandsFlow =  function(req, res) {
             }
         }
         openConnections.splice(j,1);
-        console.log(openConnections.length);
+        console.log("Open Connections : " + openConnections.length);
     });
 };
 

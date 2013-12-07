@@ -1,10 +1,11 @@
 var querystring = require('querystring'),
-    http = require('http');
+    http = require('http'),
+    commandsFlow = require('./commandsFlow');
 
 exports.pushNotification = function(req, res){
 
     console.log("API POST pushNotification");
-    console.log(req.body);
+    commandsFlow.pushCommand("POST pushNotification '" + req.body + "'");
 
     var data = querystring.stringify({
         'email' : 'antb59@gmail.com',
