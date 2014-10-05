@@ -2,6 +2,14 @@ var express = require('express'),
     mongoose = require('mongoose'),
     passport = require("passport"),
     LocalStrategy = require('passport-local').Strategy,
+    favicon = require('serve-favicon'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    methodOverride = require('method-override'),
+    session = require('express-session'),
+    errorHandler = require('errorhandler'),
+    logger = require('morgan'),
+    multer = require('multer'),
     usersController = require('./server/controllers/usersController'),
     commandsFlowCommand = require('./server/routes/commands/commandsFlow'),
     pushNotificationsCommand = require('./server/routes/commands/pushNotificationsCommand'),
@@ -9,35 +17,44 @@ var express = require('express'),
     bookmarksCommand = require('./server/routes/commands/bookmarksCommand'),
     interpreterCommand = require('./server/routes/commands/interpreterCommand'),
     connectionWatcher = require('./server/routes/watchers/connectionWatcher'),
-    path = require('path');
+    path = require('path'),
     sockjs = require('sockjs');
 
 
 
 console.log('Starting Server...');
 
+var connectionStatus = 'DISCONNECTED';
 var applicationMode = 'DISCONNECTED';
+
 
 var app = express();
 
-app.configure(function() {
-    app.use(express.favicon());
-    app.set('views', __dirname + '/client/views');
-    app.set('view engine', 'ejs');
-    app.use(express.cookieParser() );
-    app.use(express.bodyParser());
-    app.use(express.methodOverride());
-    app.use(express.logger('dev'));
-    app.use(express.static(path.join(__dirname, 'client')));
-    app.use(express.errorHandler({
-        dumpExceptions: true,
-        showStack: true
-    }));
-    app.use(express.session({secret: 'SecretKeyForSessionManagement'}));
-    app.use(passport.initialize());
-    app.use(passport.session());
-    app.use(app.router);
-});
+app.use(favicon(__dirname + '/client/img/eve_small.png'));
+app.set('views', __dirname + '/client/views');
+app.set('view engine', 'ejs');
+app.use(cookieParser() );
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json());
+app.use(multer());
+app.use(methodOverride());
+app.use(logger('dev'));
+app.use(express.static(path.join(__dirname, 'client')));
+app.use(errorHandler({
+    dumpExceptions: true,
+    showStack: true
+}));
+app.use(session({
+    secret: 'SecretKeyForSessionManagement',
+    name: 'eve',
+    resave: true,
+    saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+//app.use(app.router);
 
 passport.serializeUser(function(user, done) {
     done(null, user.id);
@@ -60,7 +77,7 @@ var ensureTrue = function (req, res, next) {
 }
 
 var ensureConnected = function (req, res, next) {
-    if (applicationMode != "CONNECTED") {
+    if (connectionStatus != "CONNECTED") {
         console.log("Not in connected mode");
         res.send(401);
     }
@@ -128,19 +145,19 @@ app.post('/api/pushNotification', pushNotificationsCommand.pushNotification);
 app.post('/api/addBookmark', ensureAuthenticated, bookmarksCommand.addBookmark);
 app.post('/api/deleteBookmark', bookmarksCommand.deleteBookmark);
 app.get('/', function(req, res){
-    if (applicationMode === "CONNECTED")
+    if (connectionStatus === "CONNECTED")
         res.render('eve/index', { title: 'Express' });
     else
         res.render('piratebox/pirateBox', { title: 'PirateBox' });
 });
-app.post('/api/switchConnected', function(req, res){ applicationMode = 'CONNECTED';res.send(200); });
+app.post('/api/switchConnected', function(req, res){ connectionStatus = 'CONNECTED';res.send(200); });
 
-var port = process.env.PORT || 80;
+var port = process.env.PORT || 7777;
 var ip = process.env.IP || "localhost";
 
-var server = app.listen(port, ip);
-console.log('Listening on port ' + port + '...');
-
+var server = app.listen(port, function(){
+    console.log('Express server listening on port ' + app.get('port'));
+});
 
 mongoose.connect('mongodb://' + ip + '/data');
 
@@ -172,19 +189,19 @@ chat.on('connection', function(conn) {
 chat.installHandlers(server, {prefix:'/chat'});
 
 
-/*var checkConnection = function() {
+var checkConnection = function() {
     connectionWatcher.isConnected(
         function() {
             console.log("Connected !!");
-            applicationMode = 'CONNECTED';
+            connectionStatus = 'CONNECTED';
             setTimeout(checkConnection,10000);
         },
         function() {
             console.log("Disconnected !!");
-            applicationMode = 'DISCONNECTED';
+            connectionStatus = 'DISCONNECTED';
             setTimeout(checkConnection,10000);
         }
     );
 };
 
-checkConnection();*/
+checkConnection();
