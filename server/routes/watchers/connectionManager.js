@@ -1,7 +1,10 @@
 var querystring = require('querystring'),
     dns = require('dns'),
-    http = require('http');
+    http = require('http'),
+    sh = require('shelljs');
 
+
+var networkConfigPirateBox = "/etc/network/interfaces.piratebox";
 
 exports.isConnected =  function(callback,error) {
 
@@ -21,6 +24,21 @@ exports.isConnected =  function(callback,error) {
         }
     });
 
+};
+
+exports.switchPirateBoxMode =  function(callback,error) {
+
+    console.log("Switch to PirateBox Mode");
+
+    if (!sh.test('-e', networkConfigPirateBox)) {
+        console.log("File [" + networkConfigPirateBox + "] does not exist, abort switching to PirateBox mode");
+        error();
+    }
+    else {
+        var cp = sh.exec('cp -p ' + networkConfigPirateBox + ' /home/pi/testAbe', {silent:false}).output;
+        console.log("Copy result : " + cp);
+        callback();
+    }
 };
 
 

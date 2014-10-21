@@ -16,7 +16,7 @@ var express = require('express'),
     wikipediaCommand = require('./server/routes/commands/wikipediaCommand'),
     bookmarksCommand = require('./server/routes/commands/bookmarksCommand'),
     interpreterCommand = require('./server/routes/commands/interpreterCommand'),
-    connectionWatcher = require('./server/routes/watchers/connectionWatcher'),
+    connectionManager = require('./server/routes/watchers/connectionManager'),
     path = require('path'),
     sockjs = require('sockjs');
 
@@ -25,7 +25,9 @@ var express = require('express'),
 console.log('Starting Server...');
 
 var connectionStatus = 'DISCONNECTED';
-var applicationMode = 'DISCONNECTED';
+var connectionAttempt = 0;
+const TIME_BETWEEN_CONNECTION_ATTEMPTS = 1000;
+const CONNECTION_ATTEMPTS_LIMIT = 3;
 
 
 var app = express();
@@ -35,7 +37,7 @@ app.set('views', __dirname + '/client/views');
 app.set('view engine', 'ejs');
 app.use(cookieParser() );
 app.use(bodyParser.urlencoded({
-  extended: true
+    extended: true
 }));
 app.use(bodyParser.json());
 app.use(multer());
@@ -190,16 +192,40 @@ chat.installHandlers(server, {prefix:'/chat'});
 
 
 var checkConnection = function() {
-    connectionWatcher.isConnected(
+    connectionManager.isConnected(
         function() {
-            console.log("Connected !!");
-            connectionStatus = 'CONNECTED';
-            setTimeout(checkConnection,10000);
+            if (connectionStatus === "CONNECTED") {
+                console.log("Still connected");
+                connectionStatus = 'CONNECTED';
+                connectionAttempt = 0;
+                setTimeout(checkConnection,10000);
+            }
+            else {
+                console.log("Connection status is now 'Connected'");
+                connectionStatus = 'CONNECTED';
+                connectionAttempt = 0;
+                setTimeout(checkConnection,10000);
+            }
         },
         function() {
-            console.log("Disconnected !!");
-            connectionStatus = 'DISCONNECTED';
-            setTimeout(checkConnection,10000);
+            if (connectionAttempt < CONNECTION_ATTEMPTS_LIMIT) {
+                console.log("Connection status is 'Disconnected'");
+                connectionStatus = 'DISCONNECTED';
+                connectionAttempt++;
+                setTimeout(checkConnection,TIME_BETWEEN_CONNECTION_ATTEMPTS);
+            }
+            else {
+                console.log("Connection attempts limit is reached");
+                console.log("Switching to PirateBox mode");
+                connectionManager.switchPirateBoxMode(
+                    function() {
+                        console.log("PirateBox mode successfully loaded");    
+                    },
+                    function() {
+                        console.log("Error while switching into PirateBox mode");    
+                    }
+                );
+            }
         }
     );
 };
