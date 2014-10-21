@@ -150,7 +150,7 @@ app.get('/', function(req, res){
     if (connectionStatus === "CONNECTED")
         res.render('eve/index', { title: 'Express' });
     else
-        res.render('piratebox/pirateBox', { title: 'PirateBox' });
+        res.render('piratebox/piratebox', { title: 'PirateBox' });
 });
 app.post('/api/switchConnected', function(req, res){ connectionStatus = 'CONNECTED';res.send(200); });
 
