@@ -28,6 +28,7 @@ var connectionStatus = 'DISCONNECTED';
 var connectionAttempt = 0;
 const TIME_BETWEEN_CONNECTION_ATTEMPTS = 1000;
 const CONNECTION_ATTEMPTS_LIMIT = 3;
+const PIRATE_BOX_MODE_DURATION = 300000;
 
 
 var app = express();
@@ -219,7 +220,15 @@ var checkConnection = function() {
                 console.log("Switching to PirateBox mode");
                 connectionManager.switchPirateBoxMode(
                     function() {
-                        console.log("PirateBox mode successfully loaded");    
+                        console.log("PirateBox mode successfully loaded");
+                        setTimeout(connectionManager.switchEveMode(
+                            function() {
+                                console.log("Eve mode successfully loaded");
+                            },
+                            function() {
+                                console.log("Error while switching into Eve mode");    
+                            }
+                        ),PIRATE_BOX_MODE_DURATION);
                     },
                     function() {
                         console.log("Error while switching into PirateBox mode");    
