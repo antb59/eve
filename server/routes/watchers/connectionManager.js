@@ -6,7 +6,7 @@ var querystring = require('querystring'),
 
 var networkConfigEve = "/etc/network/interfaces.mh";
 var networkConfigPirateBox = "/etc/network/interfaces.piratebox";
-var networkConfig = "/etc/network/interfaces.ABE";
+var networkConfig = "/etc/network/interfaces";
 
 exports.isConnected =  function(callback,error) {
 
