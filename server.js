@@ -28,7 +28,7 @@ var connectionStatus = 'DISCONNECTED';
 var connectionAttempt = 0;
 const TIME_BETWEEN_CONNECTION_ATTEMPTS = 1000;
 const CONNECTION_ATTEMPTS_LIMIT = 3;
-const PIRATE_BOX_MODE_DURATION = 300000;
+const PIRATE_BOX_MODE_DURATION = 500000;
 
 
 var app = express();

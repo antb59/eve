@@ -55,7 +55,12 @@ exports.switchEveMode =  function(callback,error) {
     else {
         var cp = sh.exec('sudo cp -p ' + networkConfigEve + ' ' + networkConfig, {silent:false}).output;
         console.log("Copy result : " + cp);
-        restartConnection();
+        var networkRestart = sh.exec('sudo ifdown eth0', {silent:false}).output;
+        console.log("ifdown eth0 result : " + networkRestart);
+        networkRestart = sh.exec('sudo ifdown wlan0', {silent:false}).output;
+        console.log("ifdown wlan0 result : " + networkRestart);
+        networkRestart = sh.exec('sudo ifup wlan0', {silent:false}).output;
+        console.log("ifup wlan0 result : " + networkRestart);
         callback();
     }
 };
@@ -70,6 +75,7 @@ function restartConnection() {
     networkRestart = sh.exec('sudo ifup wlan0', {silent:false}).output;
     console.log("ifup wlan0 result : " + networkRestart);
 };
+
 
 
 
