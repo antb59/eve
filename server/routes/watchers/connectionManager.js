@@ -60,7 +60,7 @@ exports.switchEveMode =  function(callback,error) {
     }
 };
 
-exports.restartConnection =  function() {
+function restartConnection() {
     var networkRestart = sh.exec('sudo ifdown eth0', {silent:false}).output;
     console.log("ifdown eth0 result : " + networkRestart);
     networkRestart = sh.exec('sudo ifdown wlan0', {silent:false}).output;
