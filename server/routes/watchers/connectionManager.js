@@ -40,6 +40,8 @@ exports.switchPirateBoxMode =  function(callback,error) {
         var cp = sh.exec('sudo cp -p ' + networkConfigPirateBox + ' ' + networkConfig, {silent:false}).output;
         console.log("Copy result : " + cp);
         restartConnection();
+        var hostapd = sh.exec('sudo hostapd -dd /etc/hostapd/hostapd.conf -B &', {silent:false}).output;
+        console.log("hostapd result : " + hostapd);
         callback();
     }
 };
@@ -54,13 +56,10 @@ exports.switchEveMode =  function(callback,error) {
     }
     else {
         var cp = sh.exec('sudo cp -p ' + networkConfigEve + ' ' + networkConfig, {silent:false}).output;
-        console.log("Copy result : " + cp);
-        var networkRestart = sh.exec('sudo ifdown eth0', {silent:false}).output;
-        console.log("ifdown eth0 result : " + networkRestart);
-        networkRestart = sh.exec('sudo ifdown wlan0', {silent:false}).output;
-        console.log("ifdown wlan0 result : " + networkRestart);
-        networkRestart = sh.exec('sudo ifup wlan0', {silent:false}).output;
-        console.log("ifup wlan0 result : " + networkRestart);
+        console.log("Copy result : " + cp);       
+        var killhostapd = sh.exec("ps -ef | grep hostapd | grep -v grep | awk '{print $2}' | xargs kill -9", {silent:false}).output;
+        console.log("killhostapd result : " + killhostapd);
+        restartConnection();
         callback();
     }
 };
