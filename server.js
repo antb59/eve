@@ -18,7 +18,8 @@ var express = require('express'),
     interpreterCommand = require('./server/routes/commands/interpreterCommand'),
     connectionManager = require('./server/routes/watchers/connectionManager'),
     path = require('path'),
-    sockjs = require('sockjs');
+    sockjs = require('sockjs'),
+    log = require('custom-logger').config({ level: 0 });
 
 
 
@@ -196,13 +197,13 @@ var checkConnection = function() {
     connectionManager.isConnected(
         function() {
             if (connectionStatus === "CONNECTED") {
-                console.log("Still connected");
+                log.info("Still connected");
                 connectionStatus = 'CONNECTED';
                 connectionAttempt = 0;
                 setTimeout(checkConnection,10000);
             }
             else {
-                console.log("Connection status is now 'Connected'");
+                log.info("Connection status is now 'Connected'");
                 connectionStatus = 'CONNECTED';
                 connectionAttempt = 0;
                 setTimeout(checkConnection,10000);
@@ -210,28 +211,28 @@ var checkConnection = function() {
         },
         function() {
             if (connectionAttempt < CONNECTION_ATTEMPTS_LIMIT) {
-                console.log("Connection status is 'Disconnected'");
+                log.info("Connection status is 'Disconnected'");
                 connectionStatus = 'DISCONNECTED';
                 connectionAttempt++;
                 setTimeout(checkConnection,TIME_BETWEEN_CONNECTION_ATTEMPTS);
             }
             else {
-                console.log("Connection attempts limit is reached");
-                console.log("Switching to PirateBox mode");
+                log.info("Connection attempts limit is reached");
+                log.info("Switching to PirateBox mode");
                 connectionManager.switchPirateBoxMode(
                     function() {
-                        console.log("PirateBox mode successfully loaded");
+                        log.info("PirateBox mode successfully loaded");
                         setTimeout(connectionManager.switchEveMode(
                             function() {
-                                console.log("Eve mode successfully loaded");
+                                log.info("Eve mode successfully loaded");
                             },
                             function() {
-                                console.log("Error while switching into Eve mode");    
+                                log.info("Error while switching into Eve mode");    
                             }
                         ),PIRATE_BOX_MODE_DURATION);
                     },
                     function() {
-                        console.log("Error while switching into PirateBox mode");    
+                        log.info("Error while switching into PirateBox mode");    
                     }
                 );
             }

@@ -1,7 +1,8 @@
 var querystring = require('querystring'),
     dns = require('dns'),
     http = require('http'),
-    sh = require('shelljs');
+    sh = require('shelljs'),
+    log = require('custom-logger').config({ level: 0 });
 
 
 var networkConfigEve = "/etc/network/interfaces.mh";
@@ -30,35 +31,35 @@ exports.isConnected =  function(callback,error) {
 
 exports.switchPirateBoxMode =  function(callback,error) {
 
-    console.log("Switch to PirateBox Mode");
+    log.info("Switch to PirateBox Mode");
 
     if (!sh.test('-e', networkConfigPirateBox)) {
-        console.log("File [" + networkConfigPirateBox + "] does not exist, abort switching to PirateBox mode");
+        log.info("File [" + networkConfigPirateBox + "] does not exist, abort switching to PirateBox mode");
         error();
     }
     else {
         var cp = sh.exec('sudo cp -p ' + networkConfigPirateBox + ' ' + networkConfig, {silent:false}).output;
-        console.log("Copy result : " + cp);
+        log.info("Copy result : " + cp);
         restartConnection();
         var hostapd = sh.exec('sudo hostapd -dd /etc/hostapd/hostapd.conf -B &', {silent:false}).output;
-        console.log("hostapd result : " + hostapd);
+        log.info("hostapd result : " + hostapd);
         callback();
     }
 };
 
 exports.switchEveMode =  function(callback,error) {
 
-    console.log("Switch to Eve Mode");
+    log.info("Switch to Eve Mode");
 
     if (!sh.test('-e', networkConfigEve)) {
-        console.log("File [" + networkConfigEve + "] does not exist, abort switching to Eve mode");
+        log.info("File [" + networkConfigEve + "] does not exist, abort switching to Eve mode");
         error();
     }
     else {
         var cp = sh.exec('sudo cp -p ' + networkConfigEve + ' ' + networkConfig, {silent:false}).output;
-        console.log("Copy result : " + cp);       
+        log.info("Copy result : " + cp);       
         var killhostapd = sh.exec("ps -ef | grep hostapd | grep -v grep | awk '{print $2}' | xargs kill -9", {silent:false}).output;
-        console.log("killhostapd result : " + killhostapd);
+        log.info("killhostapd result : " + killhostapd);
         restartConnection();
         callback();
     }
@@ -66,13 +67,13 @@ exports.switchEveMode =  function(callback,error) {
 
 function restartConnection() {
     var networkRestart = sh.exec('sudo ifdown eth0', {silent:false}).output;
-    console.log("ifdown eth0 result : " + networkRestart);
+    log.info("ifdown eth0 result : " + networkRestart);
     networkRestart = sh.exec('sudo ifdown wlan0', {silent:false}).output;
-    console.log("ifdown wlan0 result : " + networkRestart);
+    log.info("ifdown wlan0 result : " + networkRestart);
     networkRestart = sh.exec('sudo ifup eth0', {silent:false}).output;
-    console.log("ifup eth0 result : " + networkRestart);
+    log.info("ifup eth0 result : " + networkRestart);
     networkRestart = sh.exec('sudo ifup wlan0', {silent:false}).output;
-    console.log("ifup wlan0 result : " + networkRestart);
+    log.info("ifup wlan0 result : " + networkRestart);
 };
 
 
