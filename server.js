@@ -28,7 +28,7 @@ console.log('Starting Server...');
 var connectionStatus = 'DISCONNECTED';
 var connectionAttempt = 0;
 const TIME_BETWEEN_CONNECTION_ATTEMPTS = 1000;
-const CONNECTION_ATTEMPTS_LIMIT = 3;
+const CONNECTION_ATTEMPTS_LIMIT = 10;
 const PIRATE_BOX_MODE_DURATION = 500000;
 
 
@@ -229,7 +229,7 @@ var checkConnection = function() {
                             function() {
                                 log.info("Error while switching into Eve mode");    
                             }
-                        ),PIRATE_BOX_MODE_DURATION);
+                        ),120000);
                     },
                     function() {
                         log.info("Error while switching into PirateBox mode");    
