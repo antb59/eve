@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+
+	<!-- server configuration -->
+	<server>
+		<urlHDP>http://qlf-hdp.infofi.aw.atosorigin.com/FDS/history.xml</urlHDP>
+		<urlIDP>http://qlf-hdp.infofi.aw.atosorigin.com/FDS/intraday.xml</urlIDP>
+		<urlHC>http://qlf-hdp.infofi.aw.atosorigin.com/FDS/histoConsensus.xml</urlHC>
+		<annotation>
+			<providers>ATO</providers>
+			<categories/>
+			<urlAnnotation>http://qlf-hdp.infofi.aw.atosorigin.com/FDS/documentSearch.xml</urlAnnotation>
+			<onClick activate="true" url="http://qlf-wfi.infofi.aw.atosorigin.com/forms/documentDetail/DocumentDetailResult.jsp?code=__ID__&amp;view=FULL"/>
+				<!--'url' NOT YED IMPLEMENTED __ID__ is a substitutable which were replaced with the externalId of the news
+					if activate == true and url is not filled, click sends to the url in external.path into the document result  -->
+		</annotation>
+		<chartType>IO</chartType>
+			<!--IO : intraday only 
+				HO : history only 
+				HC : history consensus-->
+
+    <maxPeriod>
+          <!-- highest period we want to load in the HTML 
+          we have another param which permit to choose the period  we want to display at the first load of the graph --> 
+      <maxPeriodLoaded>3Y</maxPeriodLoaded>  <!-- period charged at the first load of the graph page -->
+      <beginDateMax>20140624</beginDateMax>  <!-- farthest date at the first load of the graph page (date format= YYYYMMDD)-->   
+    </maxPeriod>
+		<splitDataForPerf>TRUE</splitDataForPerf>
+			<!--when period to download is greater than 1 year (1Y) 
+		 		download and display 1Y 
+		 		and then download in background the rest of the data-->
+		 		
+		<errorImg>/resources/images/erreur.png</errorImg>
+	</server>
+
+	<!--Main chart settings-->
+	<mainChart>
+		<!-- AXIS -->
+		<drawXAxis>FALSE</drawXAxis><!-- Display X axis -->
+		<drawXAxisLabel>FALSE</drawXAxisLabel> <!--  default TRUE -->
+		<xAxisLabel dateFormat="" datePadding="" hourFormat='%H"h"'/>
+			<!--format to apply to date axis
+					Historic : dateFormat datePadding
+						d for day as number / m for month as number / M or M3 or M5 for month as name (3 or 5=nb letter wanted, nothing for default(4, do not use with another "/" after)) / H for hour  / i for minute / s for seconde / y for year on 2 char / Y for Full Year
+					Intraday : hourFormat
+						look at doc for strftime js function for hourFormat / "string" for static string -->
+		
+
+		<drawYAxis>TRUE</drawYAxis><!-- Display Y axis -->
+		<yAxisLabel precision="1" useKMB="false" decimalSeparator="," thousandSeparator=" " width="25"/>
+			<!--format to apply to y axis
+				precision : number of decimal displayed
+				useKMB : use notation 10K instead of 10000, etc...
+				decimalSeparator : default is "."
+				width : width of zone to display y label (left margin)
+				        -> to use with html parameter FORCEYAXISLABELWIDTH -->
+		
+				
+		<axisColor>#EDEDED</axisColor>
+		<axisLabelColor>#B22222</axisLabelColor>
+		<axisLabelFontSize>13</axisLabelFontSize>
+		<axisWeight>0</axisWeight>
+				
+		<!-- GRID -->
+		<drawXGrid>FALSE</drawXGrid><!-- Display X grid -->
+		<drawYGrid>TRUE</drawYGrid><!-- Display Y grid -->
+		<gridColor>#2255CC</gridColor>
+		<gridWeight>0.1</gridWeight>
+		<highlightCircleSize>5</highlightCircleSize><!-- Size of the circle following the cursor -->
+		
+		<!-- OTHER -->
+		<width>450</width>
+		<height>300</height>
+		<title align="left" height="30" font-family="courrier, verdana, sans-serif">HISTORIC curve only</title>
+		
+		<consensus lang="en"><!-- value for lang : 'en' or 'fr' -->
+			<colors>
+				<high>#458B00</high>
+				<medium>#707172</medium>
+				<low>#C90000</low>
+			</colors>
+			<weight>
+				<high>2</high>
+				<medium>2</medium>
+				<low>2</low>
+			</weight>
+			<lineStyle> <!-- {SOLID/DOTTED_LINE/DASHED_LINE/DOT_DASH_LINE} -->
+				<high>DOTTED_LINE</high>
+				<medium>DOTTED_LINE</medium>
+				<low>DOTTED_LINE</low>
+			</lineStyle>
+			
+			<verticalSeparator visibility="false" location="end"><!-- location relative to historic ; location in ( begin, end ) -->
+																<!-- if dayDivider is activate, verticalSeparator is desactivate -->
+				<color>#C7C1B8</color>
+				<weight>1</weight>
+			</verticalSeparator>			
+			
+			<drawFilledTriangle color="#E4D9CB">TRUE</drawFilledTriangle>
+			<displayCircleOnConsensus size="3">TRUE</displayCircleOnConsensus>
+		</consensus>
+		
+				
+		<!-- LINE CHART -->
+		<lineChart visibility="true" lang="en"><!-- value for lang : 'en' or 'fr', default is 'en' -->
+			<chartColor>#2A918E</chartColor><!--color of the line-->
+			<colorDependsOnPrice price="previous">FALSE</colorDependsOnPrice>
+			<chartDecreaseColor>#01B0F0</chartDecreaseColor><!-- sert pour le mode colorDependsOnPrice -->			
+			<!-- colorie la courbe d'une couleur différente suivant qu'elle 
+				 est au dessus ou au dessous du previous close ou de l'open
+				 l'attribut "price" peut valoir : "previous" ou "open", par défaut c'est le previous-->
+
+				<!-- mode dégradé de couleurs : 
+					fromColor : color from the top
+					midColor : via the color of the middle
+					toColor : to this color at bottom
+				NOT COMPATIBLE WITH FILLED = TRUE-->
+			<gradientColor fromColor="#7CAD4B" midColor="#C1B9B5" toColor="#CD0505">TRUE</gradientColor>
+				
+				<!--values for style in {SOLID/DOTTED_LINE/DASHED_LINE/DOT_DASH_LINE} -->
+			<tradingCentralNoteLines color="#D3D3D3" style="SOLID" weight="0.5">FALSE</tradingCentralNoteLines> 
+				 
+			<chartWeight>2</chartWeight><!--thickness of the line-->
+			<prevClose>
+				<prevCloseColor>#0000FF</prevCloseColor>
+				<prevCloseWeight>1</prevCloseWeight><!--thickness of the prevClose line-->
+			</prevClose>
+
+			<!--color of the highPrice line #008000 (vert) : activation is defined in html -->		
+			<highPrice>
+				<!--color of the highPrice line-->	
+				<highPriceColor>#008000</highPriceColor>
+				<!--thickness of the highPrice line-->
+				<highPriceWeight>0.8</highPriceWeight>
+			</highPrice>
+			
+			<!--color of the lowPrice line #FF0000 (rouge) : activation is defined in html-->		
+			<lowPrice >
+				<!--color of the highPrice line-->	
+				<lowPriceColor>#ff0000</lowPriceColor>
+				<!--thickness of the highPrice line-->
+				<lowPriceWeight>0.8</lowPriceWeight>
+			</lowPrice>
+			
+			<filled alpha="1">TRUE</filled><!--display Mountain Mode-->
+			 
+			<dayDivider visibility="true"><!--use only for intraday with depth > 1 (multiple days)-->
+				<color>#E51F01</color>
+				<weight>1</weight>
+			</dayDivider>
+			
+			<threshold>
+				<color>#FF1493</color>
+				<weight>2</weight>
+			</threshold>	
+		</lineChart>
+		
+		<!-- CANDLE CHART -->
+		<candleChart visibility="false">
+			<increaseFillColor>#0D8A02</increaseFillColor><!--inside color when it rises-->
+			<decreaseFillColor>#D60016</decreaseFillColor><!--inside color when it declines-->
+			<strokeColor>#486DA2</strokeColor>
+			<strokeWeight>0.6</strokeWeight><!--thickness of the stroke-->
+			<yAxisLabel width="25"/>
+			
+			<!--thickness of the stroke-->
+			<!-- <strokeAlpha>1</strokeAlpha> -->
+			<!--transparency of the stroke-->
+			<!-- <boxColor>#486DA2</boxColor># -->
+			<!--color of the box-->
+			<!-- <boxWeight>0.5</boxWeight> -->
+			<!--thickness of the box-->
+			<!-- <boxAlpha>1</boxAlpha> -->
+			<!--transparency of the box-->
+			
+		</candleChart>
+	</mainChart>
+	
+	<!-- RANGE SELECTOR-->
+	<rangeSelector visibility="false">
+		<width>450</width>
+		<height>50</height>
+		<axisLabelColor>#FFFFFF</axisLabelColor>
+		
+		<rangePeriodSelected>3M</rangePeriodSelected>
+			<!-- possible values (day => 1D to 5D | week => 1W to nW | month => 1M to nM | year => 1Y to 10Y --> 
+		
+	</rangeSelector>
+	
+	<!-- VOLUME -->
+	<volume visibility="true" viewable="true">
+		<!--visibility : display or not at the first draw
+			viewable : if not displayed at the first draw, displayable after (or not) -->
+
+		<!-- AXIS -->		
+		<drawXAxis>FALSE</drawXAxis><!-- Display X axis -->
+		
+		<drawYAxis>TRUE</drawYAxis><!-- Display Y grid -->
+		<yAxisLabel useKMB="true"/>
+		
+		<axisLabelColor>#EDEDED</axisLabelColor>
+		<axisLabelWidth>1</axisLabelWidth><!--  default 50 -->
+				
+		<!-- GRID -->
+		<drawXGrid>FALSE</drawXGrid><!-- Display X grid -->
+		<drawYGrid>FALSE</drawYGrid><!-- Display Y grid -->
+
+		<!-- OTHER -->
+		<volumeName>VOLUME</volumeName>	
+			<!--Volume column name / default is VOLUME
+				BE CAREFULL : modify this only if xsl sheet has been modifed 
+				for the column volume -->
+		
+		<displayVolumeForComparison>TRUE</displayVolumeForComparison><!-- default : TRUE -->
+		
+		<chartColor>#AFAFAF</chartColor>
+		<barWidth>8</barWidth><!-- tickness of the bar -->
+		<width>450</width>
+		<height>20</height>
+	</volume>
+	
+	<!--  ONLY FOR HISTO : (chartType = HO) -->
+	<indicators>
+		<!-- displayable indicators are defined in the html parameter "INDICATORLIST"
+			here the attribute 'visibility' set if the indicator is displayed on the first loading -->
+		<bollingerHigh visibility="false" color="#FF0000" name="myBGHigh"></bollingerHigh>
+		<bollingerLow visibility="false" color="#00FF00" name="myBGLow"></bollingerLow>
+	</indicators>
+	
+	<instrumentsToCompare>
+		<instrToCmp1 visibility="false" color="#333333" name="mon instrument de comparaison 1"></instrToCmp1>
+		<instrToCmp2 visibility="false" color="#999999" name="mon instrument de comparaison 2"></instrToCmp2>
+	</instrumentsToCompare>
+</root>

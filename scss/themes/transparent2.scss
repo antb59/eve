@@ -1,0 +1,11 @@
+@import "../modules/all";
+
+@debug "Building Transparent2 Theme";
+
+@import "transparent";
+
+$eve_background_img_url:           "../img/blue.jpg"; 
+
+@debug "Transparent2 Theme is built";
+
+@import "../main.scss";

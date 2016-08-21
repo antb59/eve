@@ -1,0 +1,16 @@
+<div>
+
+    <div data-settings-menu class="hidden-xs"></div>
+
+    <!--Smartphone display -->
+    <div ng-if="mobileDisplay" class="visible-xs-block">
+        Bonjour sur téléphone
+    </div>
+
+    <!--Tablet/screen display -->
+    <div ng-if="tabletDisplay || desktopDisplay" class="container hidden-xs">
+        <div data-eve-panel data-title="Plugin 1">
+            blablabla
+        </div>
+    </div>
+</div>

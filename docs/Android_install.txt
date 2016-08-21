@@ -1,0 +1,22 @@
+1 - Sur le téléphone, dans le menu Paramètres - Sécurité :
+Cocher "Source inconnues - Autoriser l'installation d'application issues de sources autres que le Google PlayStore"
+
+2 - Sur le l'ordinateur, cliquer sur le lien reçu dans le mail 'Invitation from App Garden'
+S'identifier avec son login/mdp ISMP.
+Contacter Atos une fois l'identification réalisée.
+Une fois l'identification réalisée, vous êtes partie du panel de testeurs de l'application.
+Pour pouvoir tester une version de l'application, il faut qu'Atos vous ajoute au panel de testeurs d'une version.
+                                                  
+3 - Sur le téléphone, ouvrir Chrome et se connecter sur https://appgarden.aw.atos.net
+S'identifier avec son login/mdp ISMP.
+Enregistrer votre téléphone dans l'application (Register my device)
+
+4 - Appuyer sur la version voulue
+Sur l'écran du détail de la version cliquer sur Download.
+Confirmer le téléchargement du fichier WAFAMobileAndroid.apk
+
+5 - Le téléchargement se lance.
+Lorsque le téléchargement est terminé, appuyer sur le fichier téléchargé.
+Appuyer sur Installer pour installer l'application WAFA Mobile.
+
+6 - L'application est maintenant disponible dans la liste des applications du téléphone.

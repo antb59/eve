@@ -1,0 +1,39 @@
+/*********SETTINGS MENU************/
+#settings {
+    position: fixed;
+    right: 0;
+    color: #000;
+    background: rgba(255, 255, 255, 0.88);
+    padding: 7px 8px;
+    top: 120px;
+    z-index: 1000;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.22);
+    font-family: open-sans-regular;
+    border-radius: 5px 0px 0px 5px !important;
+    line-height: 20px;
+    width: 34px;
+    white-space: nowrap;
+    -webkit-transition: width 300ms;
+    -moz-transition: width 300ms;
+    transition: width 300ms;
+    text-decoration: none;
+
+    i {
+        font-size: 21px;
+        float: left;
+        margin-right: 10px;
+    }
+
+    &:hover {
+        background: #fff;
+        width: 200px;
+    }
+    
+    .settings-selected {
+        background: #fff;
+        width: 200px;
+    }
+}
+/*****************************/
+

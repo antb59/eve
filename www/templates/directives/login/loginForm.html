@@ -1,0 +1,13 @@
+<form class="login-form">
+    <div class="login-form-message">{{message}}</div>
+    <input class="form-control login-form-field login-form-field-input login-form-username" type="text" placeholder="Login" ng-model="user.username" required>
+    <input class="form-control login-form-field login-form-field-input login-form-password" type="password" placeholder="Password" ng-model="user.password" required>
+    <div class="login-form-field login-form-checkbox">
+        <i class="fa fa-square-o" ng-if="!rememberMeSelected" ng-click="rememberMeSelect()"></i>
+        <i class="fa fa-check-square-o" ng-if="rememberMeSelected" ng-click="rememberMeUnselect()"></i>
+        Remember Me
+    </div>
+    <div class="login-form-button">
+        <a class="btn btn-primary login-form-button-link" ng-click="login()" >Login</a>
+    </div>
+</form>

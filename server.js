@@ -16,36 +16,27 @@ var express = require('express'),
     wikipediaCommand = require('./server/routes/commands/wikipediaCommand'),
     bookmarksCommand = require('./server/routes/commands/bookmarksCommand'),
     interpreterCommand = require('./server/routes/commands/interpreterCommand'),
-    connectionManager = require('./server/routes/watchers/connectionManager'),
     path = require('path'),
-    sockjs = require('sockjs'),
     log = require('custom-logger').config({ level: 0 });
 
 
 
 console.log('Starting Server...');
 
-var connectionStatus = 'DISCONNECTED';
-var connectionAttempt = 0;
-const TIME_BETWEEN_CONNECTION_ATTEMPTS = 1000;
-const CONNECTION_ATTEMPTS_LIMIT = 10;
-const PIRATE_BOX_MODE_DURATION = 500000;
-
-
 var app = express();
 
-app.use(favicon(__dirname + '/client/img/eve_small.png'));
-app.set('views', __dirname + '/client/views');
+app.use(favicon(__dirname + '/icon.png'));
+app.set('views', __dirname + '/www/templates');
 app.set('view engine', 'ejs');
 app.use(cookieParser() );
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
-app.use(multer());
+//app.use(multer());
 app.use(methodOverride());
 app.use(logger('dev'));
-app.use(express.static(path.join(__dirname, 'client')));
+app.use(express.static(path.join(__dirname, 'www')));
 app.use(errorHandler({
     dumpExceptions: true,
     showStack: true
@@ -76,17 +67,6 @@ var ensureAuthenticated = function (req, res, next) {
     else next();
 }
 
-var ensureTrue = function (req, res, next) {
-    next();
-}
-
-var ensureConnected = function (req, res, next) {
-    if (connectionStatus != "CONNECTED") {
-        console.log("Not in connected mode");
-        res.send(401);
-    }
-    else next();
-}
 
 
 passport.use(new LocalStrategy(function(username, password, done) {
@@ -133,13 +113,14 @@ app.get('/api/status', function(req, res) {
     res.send("status OK");
 });
 
-app.get('/api/test', ensureTrue, ensureConnected, function(req, res) {
+app.get('/api/test', function(req, res) {
     res.send({
         test: 'OK'
     });
 });
 app.get('/api/loggedin', function(req, res) { res.send(req.isAuthenticated() ? req.user : '0'); });
-app.post('/api/login', passport.authenticate('local'), function(req, res) {res.send(200);});
+//app.post('/api/login', passport.authenticate('local'), function(req, res) {res.send(200);});
+app.post('/api/login', function(req, res) {res.send(200);});
 app.post('/api/logout', function(req, res){ req.logOut();res.send(200); });
 app.get('/api/commandsFlow', commandsFlowCommand.getCommandsFlow);
 app.get('/api/getWikipediaArticle/:title', wikipediaCommand.getWikipediaArticle);
@@ -149,95 +130,22 @@ app.post('/api/pushNotification', pushNotificationsCommand.pushNotification);
 app.post('/api/addBookmark', ensureAuthenticated, bookmarksCommand.addBookmark);
 app.post('/api/deleteBookmark', bookmarksCommand.deleteBookmark);
 app.get('/', function(req, res){
-    if (connectionStatus === "CONNECTED")
-        res.render('eve/index', { title: 'Express' });
-    else
-        res.render('piratebox/piratebox', { title: 'PirateBox' });
+    res.render('index');
 });
-app.post('/api/switchConnected', function(req, res){ connectionStatus = 'CONNECTED';res.send(200); });
+
 
 var port = process.env.PORT || 7777;
 var ip = process.env.IP || "localhost";
 
 var server = app.listen(port, function(){
-    console.log('Express server listening on port ' + app.get('port'));
+    console.log('Express server listening on port ' + port);
 });
 
 mongoose.connect('mongodb://' + ip + '/data');
 
 var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
+db.on('error', console.error.bind(console, 'Failed to connect to database :'));
 db.once('open', function callback() {
     console.log("Connection to database succeed")
 });
 
-var connections = [];
-
-var chat = sockjs.createServer();
-chat.on('connection', function(conn) {
-    connections.push(conn);
-    var number = connections.length;
-    conn.write("Welcome, User " + number);
-    conn.on('data', function(message) {
-        for (var ii=0; ii < connections.length; ii++) {
-            connections[ii].write("User " + number + " says: " + message);
-        }
-    });
-    conn.on('close', function() {
-        for (var ii=0; ii < connections.length; ii++) {
-            connections[ii].write("User " + number + " has disconnected");
-        }
-    });
-});
-
-chat.installHandlers(server, {prefix:'/chat'});
-
-
-var checkConnection = function() {
-    connectionManager.isConnected(
-        function() {
-            if (connectionStatus === "CONNECTED") {
-                log.info("Still connected");
-                connectionStatus = 'CONNECTED';
-                connectionAttempt = 0;
-                setTimeout(checkConnection,10000);
-            }
-            else {
-                log.info("Connection status is now 'Connected'");
-                connectionStatus = 'CONNECTED';
-                connectionAttempt = 0;
-                setTimeout(checkConnection,10000);
-            }
-        },
-        function() {
-            if (connectionAttempt < CONNECTION_ATTEMPTS_LIMIT) {
-                log.info("Connection status is 'Disconnected'");
-                connectionStatus = 'DISCONNECTED';
-                connectionAttempt++;
-                setTimeout(checkConnection,TIME_BETWEEN_CONNECTION_ATTEMPTS);
-            }
-            else {
-                log.info("Connection attempts limit is reached");
-                log.info("Switching to PirateBox mode");
-                connectionManager.switchPirateBoxMode(
-                    function() {
-                        log.info("PirateBox mode successfully loaded");
-                        setTimeout(connectionManager.switchEveMode(
-                            function() {
-                                log.info("Eve mode successfully loaded");
-                            },
-                            function() {
-                                log.info("Error while switching into Eve mode");    
-                            }
-                        ),120000);
-                    },
-                    function() {
-                        log.info("Error while switching into PirateBox mode");    
-                    }
-                );
-            }
-        }
-    );
-};
-
-checkConnection();

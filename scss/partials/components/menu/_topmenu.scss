@@ -1,0 +1,45 @@
+/*********TOP MENU************/
+#top-menu{
+    @if $eve_header_is_colored {
+        background-color: $eve_header_background_color;    
+    }
+    @else {
+        @if $eve_header_is_transparent {
+            background: rgba(0,0,0, $eve_header_transparency_level);
+        }
+    }
+    color:black;
+    border-bottom-color: rgba(255,255,255,0.15);
+
+    .title{
+        color:white;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: $eve_top_menu_font_size;
+        text-transform:uppercase;
+        
+    }
+
+    .button-icon, .back-button {
+        color:white;
+        width:auto;
+    }
+
+    .top-menu-logo {
+        border: 0px solid white;
+        color: transparent;
+        margin-top: $eve_header_logo_margin_top;
+        margin-left: auto;
+        margin-right: auto;
+        height: $eve_header_logo_height;
+        min-height: $eve_header_logo_height;
+        width: $eve_header_logo_width;
+        min-width: $eve_header_logo_width;
+        background-image: url($eve_header_logo_url);
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center; 
+    }
+
+}
+/*****************************/

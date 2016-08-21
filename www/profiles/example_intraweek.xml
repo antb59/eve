@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- BNPP intraweek -->
+<root>
+
+	<!-- server configuration -->
+	<server>
+		<urlHDP>http://qlf-hdp.infofi.aw.atosorigin.com/FDS/history.xml</urlHDP>
+		<urlIDP>http://qlf-hdp.infofi.aw.atosorigin.com/FDS/intraday.xml</urlIDP>
+		<chartType>IO</chartType>
+	</server>
+
+	<!--Main chart settings, mandatory-->
+	<mainChart>
+		<!-- main Chart background Color -->
+		<!-- <backgroundColor>#2255CC</backgroundColor> -->
+		<!--the chart background opacity-->
+		<!-- <bgAlpha>0.5</bgAlpha> -->
+		<!--color of text in the chart-->
+		<!-- <colorText>#FF0000</colorText> -->
+		<!--how the date is show : DDMMYY, DDMMYYYY, MMDDYY, MMDDYYYY, DD-MM-YY-->
+		<!-- <patternDate>DDMMYYYY</patternDate> -->
+		
+		<drawXAxis>FALSE</drawXAxis>
+		<drawYAxis>TRUE</drawYAxis>
+		<!-- Color of axes -->
+		<axisColor>#EDEDED</axisColor>
+		<axisLabelColor>#444444</axisLabelColor>
+		<axisLabelFontSize>11</axisLabelFontSize>
+		<!-- Weight of axes -->
+		<axisWeight>0</axisWeight>
+		<!-- Display X grid -->
+		<drawXGrid>TRUE</drawXGrid>
+		<!-- Display Y grid -->
+		<drawYGrid>TRUE</drawYGrid>
+		<!-- Color of the grid -->
+		<gridColor>#AFAFAF</gridColor>
+		<!-- weight of the grid -->
+		<gridWeight>0.2</gridWeight>
+		<!-- Size of the circle following the cursor -->
+		<highlightCircleSize>3</highlightCircleSize>
+		<!--main chart width-->
+		<width>650</width>
+		<!--main chart height-->
+		<height>300</height>
+
+		<yAxisLabel precision="1" useKMB="false" decimalSeparator="," width="25"/>
+
+		<xAxisLabel dateFormat="d/m" datePadding="true" hourFormat='%H"h"'/>
+		<!--format to apply to date axis
+					Historic : dateFormat datePadding
+						d for day as number / m for month as number / M[3;5] for month as name (3 or 5=nb letter wanted, nothing for default(4)) / H for hour  / i for minute / s for seconde / y for year on 2 char / Y for Full Year
+					Intraday : hourFormat
+						look at doc for strftime js function for hourFormat / "string" for static string -->
+			
+		<!-- <title height="25" >INTRADAY</title>--> 
+		<!--parameters for line chart-->
+		<lineChart visibility="true" lang="fr">
+			<!--color of the line-->
+			<chartColor>#517F93</chartColor><!-- rose FF358B -->
+			<chartDecreaseColor>#000000</chartDecreaseColor><!-- bleu -->
+			<!--thickness of the line-->
+			<chartWeight>2</chartWeight>
+			<!--color of the prevClose line-->		
+			<prevClose visibility="false">
+				<!--color of the prevClose line-->	
+				<prevCloseColor>#000000</prevCloseColor>
+				<!--thickness of the prevClose line-->
+				<prevCloseWeight>0.5</prevCloseWeight>
+			</prevClose>
+
+			<!--color of the highPrice line #008000 (vert) : activation is defined in html -->		
+			<highPrice>
+				<!--color of the highPrice line-->	
+				<highPriceColor>#008000</highPriceColor>
+				<!--thickness of the highPrice line-->
+				<highPriceWeight>0.8</highPriceWeight>
+			</highPrice>
+			
+			<!--color of the lowPrice line #FF0000 (rouge) : activation is defined in html-->		
+			<lowPrice >
+				<!--color of the highPrice line-->	
+				<lowPriceColor>#ff0000</lowPriceColor>
+				<!--thickness of the highPrice line-->
+				<lowPriceWeight>0.8</lowPriceWeight>
+			</lowPrice>
+			
+			<filled alpha="1">TRUE</filled>
+			
+			 <dayDivider visibility="true"><!--use only for intraday with depth > 1 (multiple days)  -->
+		 		<color>#AFAFAF</color>
+				<weight>1</weight>
+			</dayDivider>  	
+			
+			<threshold>
+				<color>#FF1493</color>
+				<weight>2</weight>
+			</threshold>	
+		</lineChart>
+
+		<candleChart visibility="false">
+			<!--parameters for candle chart-->
+			<increaseFillColor>#0D8A02</increaseFillColor>
+			<!--inside color when it rises-->
+			<decreaseFillColor>#D60016</decreaseFillColor>
+			<!--inside color when it declines-->
+			<strokeColor>#486DA2</strokeColor>
+			<!--color of the stroke-->
+			<strokeWeight>0.6</strokeWeight>
+			<!--thickness of the stroke-->
+			<!-- <strokeAlpha>1</strokeAlpha> -->
+			<!--transparency of the stroke-->
+			<!-- <boxColor>#486DA2</boxColor># -->
+			<!--color of the box-->
+			<!-- <boxWeight>0.5</boxWeight> -->
+			<!--thickness of the box-->
+			<!-- <boxAlpha>1</boxAlpha> -->
+			<!--transparency of the box-->
+		</candleChart>
+	</mainChart>
+	
+	<!-- range selector configuration -->
+	<rangeSelector visibility="false">
+		<!-- displaying RangeSelector -->
+		
+		<!--rangeSelector chart width-->
+		<width>450</width>
+		<!--rangeSelector chart height-->
+		<height>50</height>
+		
+		<!-- possible values (day => 1D to 5D | week => 1W to nW | month => 1M to nM | year => 1Y to 10Y -->
+		<rangePeriodSelected>3M</rangePeriodSelected> 
+		
+		<!--Chart of the RangeSelector settings-->
+		<!-- <rangChart>
+			<fillColor>#2277AA</fillColor>
+			<fillAlpha>0.9</fillAlpha>
+			<strokeColor>#000000</strokeColor>
+			<strokeWeight>1</strokeWeight>
+			<strokeAlpha>2</strokeAlpha>
+			<dividerColor>#FFFFFF</dividerColor>
+			<dividerWeight>3</dividerWeight>
+		</rangChart>-->
+		
+	</rangeSelector>
+	
+	
+	<!-- volume configuration -->
+	<volume visibility="true" viewable="true">
+		<!-- displaying Volume -->
+		<!-- Volume Chart's name -->
+		<!--<volumeName>VOLUME</volumeName> -->	
+
+		<!-- Volume Chart's color -->
+		<chartColor>#AFAFAF</chartColor><!-- gris -->
+		<barWidth>3</barWidth><!-- tickness of the bar -->
+		<!--volume chart width-->
+		<width>450</width>
+		<!--volume chart height-->
+		<height>20</height>
+		
+		<drawXAxis>FALSE</drawXAxis>
+		<drawYAxis>TRUE</drawYAxis>
+		<!-- Display X grid -->
+		<drawXGrid>FALSE</drawXGrid>
+		<!-- Display Y grid -->
+		<drawYGrid>FALSE</drawYGrid>
+		<axisLabelColor>rgba(0,0,0,0)</axisLabelColor>
+	</volume>
+	
+	<indicators>
+	<!-- 	<bollingerHigh visibility="true" color="FF0000" name="myBGHigh"></bollingerHigh>
+		<bollingerLow visibility="true" color="00FF00" name="myBGLow"></bollingerLow>
+	 -->
+	</indicators>
+	
+	<instrumentsToCompare>
+	<!--	<instrToCmp1 visibility="true" color="333333" name="mon instrument de comparaison 1"></instrToCmp1>
+		<instrToCmp2 visibility="true" color="999999" name="mon instrument de comparaison 2"></instrToCmp2>
+		-->
+	</instrumentsToCompare>
+</root>

@@ -1,0 +1,24 @@
+@mixin share-button($is_colored, $background_color, $is_transparent, $transparency_level, $hover_transparency_level) {
+    @if $is_colored {
+        background-color: $background_color;
+        color: black;
+        i {
+            color: black;
+        }
+    }
+    @else {
+        @if $is_transparent {
+            background: rgba(0,0,0,$transparency_level);
+            color: white;
+            i {
+                color: white;
+            }
+            &:hover {
+                background: rgba(0,0,0,$hover_transparency_level);
+                i {
+                    color: #AAA;
+                }
+            }
+        }
+    }
+}

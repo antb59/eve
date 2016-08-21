@@ -1,0 +1,93 @@
+/******** PANELS **********/
+
+.eve-panel {
+    border-radius: 0;
+    border: $eve_panel_border;
+
+    @if $eve_panel_is_colored {
+        background-color: $eve_panel_background_color;    
+    }
+    @else {
+        @if $eve_panel_is_transparent {
+            background: rgba(0,0,0, $eve_panel_transparency_level);
+        }
+    }
+
+    .panel-heading {
+
+        padding: 0px;
+        border-radius: 0;
+        border-bottom: $eve_panel_header_border_bottom;
+
+        @if $eve_panel_header_is_colored {
+            background-color: $eve_panel_header_background_color;
+        }
+        @else {
+            @if $eve_panel_header_is_transparent {
+                background: rgba(0,0,0, $eve_panel_header_transparency_level);
+            }
+        }
+
+        h2{
+            //font-size: 11px;
+            text-transform: uppercase;
+            height: 100%;
+            width: auto;
+            display: inline-block;
+            font-size: 13px;
+            position: relative;
+            margin: 0;
+            line-height: 34px;
+            font-weight: 400;
+            letter-spacing: 0;
+            margin-left: 10px;
+            color: $eve_panel_header_color;
+        }
+
+        .eve-panel-heading-link {
+            text-decoration: underline;
+            cursor:pointer;
+        }
+
+        .btn-toolbar {
+            @if $eve_panel_header_is_colored {
+                background-color: $eve_panel_header_background_color;
+            }
+            @else {
+                @if $eve_panel_header_is_transparent {
+                    background: rgba(0,0,0,0);
+                }
+            } 
+            color: $eve_panel_header_color;
+            border: 0px;
+        }
+
+        .select-toolbar {
+            @if $eve_panel_header_is_colored {
+                background-color: $eve_panel_header_background_color;
+            }
+            @else {
+                @if $eve_panel_header_is_transparent {
+                    background: rgba(0,0,0,0);
+                }
+            } 
+            color: black;
+            border-color: rgba(0, 0, 0, 0.0901961);
+        }
+    }
+
+    .panel-body {
+        padding: 0px;
+
+        @if $eve_panel_body_is_colored {
+            background-color: $eve_panel_body_background_color;
+        }
+        @else {
+            @if $eve_panel_body_is_transparent {
+                background: rgba(0,0,0, $eve_panel_body_transparency_level);
+            }
+        }
+
+    }
+}
+/*****************************/

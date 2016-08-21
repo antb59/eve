@@ -1,0 +1,45 @@
+{  
+    "status":0,
+    "results":[  
+        {  
+            "label":"TOTAL",
+            "isin":"FR0000120271",
+            "exchCode":"XPAR",
+            "lastPrice":"42.52",
+            "percentageVariation":"-3.5E-4",
+            "tradedAmount":"5.7887055805E7"
+        },
+        {  
+            "label":"SANOFI",
+            "isin":"FR0000120578",
+            "exchCode":"XPAR",
+            "lastPrice":"75.66",
+            "percentageVariation":"0.0088",
+            "tradedAmount":"4.542238505E7"
+        },
+        {  
+            "label":"BNP PARIBAS ACT.A",
+            "isin":"FR0000131104",
+            "exchCode":"XPAR",
+            "lastPrice":"49.26",
+            "percentageVariation":"0.0088",
+            "tradedAmount":"2.746153243E7"
+        },
+        {  
+            "label":"AIRBUS GROUP",
+            "isin":"NL0000235190",
+            "exchCode":"XPAR",
+            "lastPrice":"41.35",
+            "percentageVariation":"0.01001",
+            "tradedAmount":"2.111001238E7"
+        },
+        {  
+            "label":"SCHNEIDER ELECTRIC",
+            "isin":"FR0000121972",
+            "exchCode":"XPAR",
+            "lastPrice":"60.61",
+            "percentageVariation":"0.01609",
+            "tradedAmount":"2.067760132E7"
+        }
+    ]
+}

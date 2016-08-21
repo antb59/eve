@@ -1,0 +1,86 @@
+{  
+    "status":0,
+    "nbTotalResult":1071,
+    "results":[  
+        {  
+            "label":"1000MERCIS",
+            "type":"STOCK",
+            "isin":"FR0010285965",
+            "exchCode":"XPAR",
+            "lastPrice":"41.87",
+            "percentageVariation":"4.7E-4"
+        },
+        {  
+            "label":"A ET CO",
+            "type":"STOCK",
+            "isin":"FR0000075160",
+            "exchCode":"XPAR",
+            "lastPrice":"3.0",
+            "percentageVariation":"0.02739"
+        },
+        {  
+            "label":"A TOUTE VITESSE",
+            "type":"STOCK",
+            "isin":"FR0010050773",
+            "exchCode":"XPAR",
+            "lastPrice":"6.27",
+            "percentageVariation":"0.0"
+        },
+        {  
+            "label":"A.S.T. GROUPE",
+            "type":"STOCK",
+            "isin":"FR0000076887",
+            "exchCode":"XPAR",
+            "lastPrice":"2.35",
+            "percentageVariation":"0.0262"
+        },
+        {  
+            "label":"A2MICILE EUROPE",
+            "type":"STOCK",
+            "isin":"FR0010795476",
+            "exchCode":"XPAR",
+            "lastPrice":"23.5",
+            "percentageVariation":"0.04074"
+        },
+        {  
+            "label":"AB SCIENCE",
+            "type":"STOCK",
+            "isin":"FR0010557264",
+            "exchCode":"XPAR",
+            "lastPrice":"11.51",
+            "percentageVariation":"-0.00775"
+        },
+        {  
+            "label":"ABBVIE",
+            "type":"STOCK",
+            "isin":"US00287Y1091",
+            "exchCode":"XPAR",
+            "lastPrice":"61.8",
+            "percentageVariation":"0.03171"
+        },
+        {  
+            "label":"ABC ARBITRAGE",
+            "type":"STOCK",
+            "isin":"FR0004040608",
+            "exchCode":"XPAR",
+            "lastPrice":"4.68",
+            "percentageVariation":"0.00214"
+        },
+        {  
+            "label":"ABC ORTHODONTICS",
+            "type":"STOCK",
+            "isin":"CH0044947239",
+            "exchCode":"XPAR",
+            "lastPrice":"0.16",
+            "percentageVariation":"0.0"
+        },
+        {  
+            "label":"ACANTHE DEV.",
+            "type":"STOCK",
+            "isin":"FR0000064602",
+            "exchCode":"XPAR",
+            "lastPrice":"0.34",
+            "percentageVariation":"0.0303"
+        }
+    ]
+}

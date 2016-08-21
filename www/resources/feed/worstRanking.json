@@ -1,0 +1,45 @@
+{  
+    "status":0,
+    "results":[  
+        {  
+            "label":"TOOLUX SANDING",
+            "isin":"LU0394945660",
+            "exchCode":"XPAR",
+            "lastPrice":"1.0",
+            "percentageVariation":"-0.92565",
+            "tradedAmount":"1600.0"
+        },
+        {  
+            "label":"OXIS INTL",
+            "isin":"US6918294025",
+            "exchCode":"XPAR",
+            "lastPrice":"0.01",
+            "percentageVariation":"-0.5",
+            "tradedAmount":"2230.0"
+        },
+        {  
+            "label":"ARTEA",
+            "isin":"FR0012185536",
+            "exchCode":"XPAR",
+            "lastPrice":"9.16",
+            "percentageVariation":"-0.29538",
+            "tradedAmount":"18.32"
+        },
+        {  
+            "label":"TUTO4PC.COM GROUP",
+            "isin":"FR0011068766",
+            "exchCode":"XPAR",
+            "lastPrice":"1.25",
+            "percentageVariation":"-0.19871",
+            "tradedAmount":"18.75"
+        },
+        {  
+            "label":"PACTE NOVATION",
+            "isin":"FR0000077992",
+            "exchCode":"XPAR",
+            "lastPrice":"2.4",
+            "percentageVariation":"-0.15789",
+            "tradedAmount":"720.0"
+        }
+    ]
+}

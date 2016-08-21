@@ -1,0 +1,34 @@
+/********* TABLE ***********/
+#eve-table {
+    
+    margin-bottom:  0px;
+    
+    thead {
+        font-weight: bold;
+        th {
+            color: $boursorama_blue;
+
+            &:last-child {
+                text-align: right;    
+            }
+
+        }
+    }
+
+    td {
+        &:last-child {
+            text-align: right;    
+            font-weight: bold;
+        }
+        
+        &.negative {
+            color: red;    
+        }
+        
+        &.positive {
+            color: green;    
+        }
+    }
+
+}
+/**************************/

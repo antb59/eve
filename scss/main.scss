@@ -1,0 +1,78 @@
+// The path for our ionicons font files, relative to the built CSS in www/css
+$ionicons-font-path: "../lib/ionic/release/fonts" !default;
+
+@import "www/lib/bootstrap-sass-official/assets/stylesheets/bootstrap";
+@import "modules/all";
+@import "partials/all";
+
+
+$calm:                              $worldline_blue;
+$dark:                              $worldline_black;
+
+
+/*CONFIGURATION GLOBALE DU DESIGN DE L'APPLICATION*/
+/*La classe strippedrow permet d'avoir une couleur de fond alternee pour les lignes d'un grid*/
+
+//.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+// hide webkit scrollbars
+::-webkit-scrollbar {
+  display:true;
+}
+
+
+
+* {
+    touch-action: manipulation;
+}
+
+/*body {
+color: white;
+}*/
+
+body {
+    @if $eve_background_is_img {
+        @debug "$eve_background_is_img is set to #{$eve_background_is_img}";
+        @debug "Property $eve_background_img_url needs to be set";
+        background-image: url($eve_background_img_url);
+        background-size: 100% 100%;
+        background-attachment: fixed;
+    }
+    @else {
+        @debug "$background_is_img is set to #{$eve_background_is_img}";
+        @if $eve_background_is_gradient {
+            @debug "$eve_background_is_gradient is set to #{$eve_background_is_gradient}";
+            @debug "Property $eve_background_gradient_start and $eve_background_gradient_end needs to be set";
+            background: -webkit-linear-gradient(90deg, $eve_background_gradient_start 10%, $eve_background_gradient_end 90%); // Chrome
+            background:    -moz-linear-gradient(90deg, $eve_background_gradient_start 10%, $eve_background_gradient_end 90%); // FF3.6+
+            background:     -ms-linear-gradient(90deg, $eve_background_gradient_start 10%, $eve_background_gradient_end 90%); // IE10
+            background:      -o-linear-gradient(90deg, $eve_background_gradient_start 10%, $eve_background_gradient_end 90%); // Op11.10+
+            background:         linear-gradient(90deg, $eve_background_gradient_start 10%, $eve_background_gradient_end 90%); // W3C 
+        }
+        @else {
+            @debug "$eve_background_is_gradient is set to #{$eve_background_is_gradient}";
+            @debug "Property $eve_background_color needs to be set";
+            background-color: $eve_background_color;
+        }
+    }
+}
+
+.pane, .view {
+    background-color: transparent;
+}
+
+.btn {
+    border-radius: 0;
+}
+
+.bar .button {
+    font-size: $eve_font_size;
+}
+
+
+
+
+
+
+
+

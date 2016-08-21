@@ -1,0 +1,68 @@
+{
+    "results": [
+        {
+            "label": "ACTEOS",
+            "type": "STOCK",
+            "isin": "FR0000076861",
+            "exchCode": "XPAR",
+            "lastPrice": "2.35",
+            "percentageVariation": "0.00427"
+        },
+        {
+            "label": "ACTIA GROUP",
+            "type": "STOCK",
+            "isin": "FR0000076655",
+            "exchCode": "XPAR",
+            "lastPrice": "5.15",
+            "percentageVariation": "0.0"
+        },
+        {
+            "label": "ACTIVIUM GROUP",
+            "type": "STOCK",
+            "isin": "FR0010979377",
+            "exchCode": "XPAR",
+            "lastPrice": "5.0",
+            "percentageVariation": "0.0"
+        },
+        {
+            "label": "BELVEDERE BSA ACT1",
+            "type": "STOCK",
+            "isin": "FR0011477116",
+            "exchCode": "XPAR",
+            "lastPrice": "0.3",
+            "percentageVariation": "0.0"
+        },
+        {
+            "label": "BELVEDERE BSA ACT2",
+            "type": "STOCK",
+            "isin": "FR0011477124",
+            "exchCode": "XPAR",
+            "lastPrice": "0.47",
+            "percentageVariation": "0.04444"
+        },
+        {
+            "label": "BNP PARIBAS ACT.A",
+            "type": "STOCK",
+            "isin": "FR0000131104",
+            "exchCode": "XPAR",
+            "lastPrice": "48.835",
+            "percentageVariation": "-0.02524"
+        },
+        {
+            "label": "LAGARDERE ACT.BRO.",
+            "type": "STOCK",
+            "isin": "MC0000120790",
+            "exchCode": "XPAR",
+            "lastPrice": "314.0",
+            "percentageVariation": "0.0"
+        },
+        {
+            "label": "TRAILOR ACTM INT",
+            "type": "STOCK",
+            "isin": "FR0010506238",
+            "exchCode": "XPAR",
+            "lastPrice": "1.87",
+            "percentageVariation": "0.03888"
+        }
+    ]
+}

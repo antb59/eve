@@ -1,0 +1,71 @@
+@import "../modules/all";
+
+@debug "Building Transparent Theme";
+
+$eve_transparency_level1:          0.23;
+$eve_transparency_level2:          0.2;
+$eve_transparency_complete:        0;
+
+
+/* Configuration of application background */
+$eve_background_is_img:            true;
+//$eve_background_img_url:           "../img/blue.jpg";
+$eve_background_img_url:           "../img/greenish.jpg"; /* Only if $eve_background_is_img is true */
+$eve_background_is_gradient:       false;
+$eve_background_gradient_start:    $worldline_blue; /* Only if $eve_background_is_gradient is true */
+$eve_background_gradient_end:      $worldline_secondary_1; /* Only if $eve_background_is_gradient is true */
+$eve_background_color:             $worldline_light_grey;
+
+/* Global Configuration of form borders */
+/* bootstrap overload for border colors focus of input */
+$eve_form_input_border_focus:      white;
+$input-border-focus:               $eve_form_input_border_focus;
+
+$eve_top_menu_font_size:           16px;
+
+/* Configuration of header bar */
+$eve_header_is_colored:            false;
+$eve_header_background_color:      $worldline_blue; /* Only if $eve_header_is_colored is true */
+$eve_header_is_transparent:        true; 
+$eve_header_transparency_level:    $eve_transparency_level1; /* Only if $eve_header_transparency_level is true */
+$eve_header_logo_url:              "../img/logo.png";
+$eve_header_logo_width:            186px;
+$eve_header_logo_height:           75px;
+$eve_header_logo_margin_top:       -12px;
+
+/* Configuration of panels */
+$eve_panel_is_colored:             false;
+$eve_panel_background_color:       $worldline_blue; /* Only if $eve_header_is_colored is true */
+$eve_panel_is_transparent:         true; 
+$eve_panel_transparency_level:     $eve_transparency_level1; /* Only if $eve_header_transparency_level is true */
+$eve_panel_border:                 0px;
+
+$eve_panel_header_is_colored:             false;
+$eve_panel_header_background_color:       $worldline_blue; /* Only if $eve_header_is_colored is true */
+$eve_panel_header_is_transparent:         true; 
+$eve_panel_header_transparency_level:     $eve_transparency_level2; /* Only if $eve_header_transparency_level is true */
+$eve_panel_header_color:                  white;
+$eve_panel_header_border_bottom:          0px;
+
+$eve_panel_body_is_colored:             false;
+$eve_panel_body_background_color:       $worldline_blue; /* Only if $eve_header_is_colored is true */
+$eve_panel_body_is_transparent:         true; 
+$eve_panel_body_transparency_level:     $eve_transparency_complete; /* Only if $eve_header_transparency_level is true */
+
+/* Configuration of login form */
+$eve_login_form_is_colored:                         false;
+$eve_login_form_input_background_color:             white; /* Only if $eve_login_form_is_colored is true */
+$eve_login_form_button_background_color:            white; /* Only if $eve_login_form_is_colored is true */
+$eve_login_form_button_hover_background_color:      white; /* Only if $eve_login_form_is_colored is true */
+$eve_login_form_button_hover_color:                 white; /* Only if $eve_login_form_is_colored is true */
+$eve_login_form_input_color:                        white;
+$eve_login_form_button_color:                       white;
+$eve_login_form_button_border_color:                transparent;
+$eve_login_form_is_transparent:                     true; 
+$eve_login_form_transparency_level:                 $eve_transparency_level1; /* Only if $eve_login_form_is_transparent is true */
+$eve_login_form_button_transparency_level:          $eve_transparency_level1; /* Only if $eve_login_form_transparency_level is true */
+$eve_login_form_button_hover_transparency_level:    $eve_transparency_level1 + $eve_transparency_level2; /* Only if $eve_login_form_transparency_level is true */
+
+@debug "Transparent Theme is built";
+
+@import "../main.scss";

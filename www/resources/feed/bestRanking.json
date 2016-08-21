@@ -1,0 +1,45 @@
+{  
+    "status":0,
+    "results":[  
+        {  
+            "label":"BIGBEN BSA",
+            "isin":"FR0011993328",
+            "exchCode":"XPAR",
+            "lastPrice":"0.052",
+            "percentageVariation":"0.36842",
+            "tradedAmount":"1547.767"
+        },
+        {  
+            "label":"REWORLD MEDIA",
+            "isin":"FR0010820274",
+            "exchCode":"XPAR",
+            "lastPrice":"0.8",
+            "percentageVariation":"0.23076",
+            "tradedAmount":"1360.0"
+        },
+        {  
+            "label":"LIONAX",
+            "isin":"HK0000038429",
+            "exchCode":"XPAR",
+            "lastPrice":"0.06",
+            "percentageVariation":"0.2",
+            "tradedAmount":"60.0"
+        },
+        {  
+            "label":"SPOREVER",
+            "isin":"FR0010213215",
+            "exchCode":"XPAR",
+            "lastPrice":"2.23",
+            "percentageVariation":"0.19892",
+            "tradedAmount":"448.23"
+        },
+        {  
+            "label":"BD MULTI MEDIA",
+            "isin":"FR0000035305",
+            "exchCode":"XPAR",
+            "lastPrice":"1.88",
+            "percentageVariation":"0.19745",
+            "tradedAmount":"2011.6"
+        }
+    ]
+}
