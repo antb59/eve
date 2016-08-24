@@ -11,6 +11,6 @@ angular.module('eve.config', [])
     lang: "fr",
     applicationMode: "PRODUCTION",
     mockupPath: "resources/",
-    webServiceURL: "http://localhost:7777/api/",
+    webServiceURL: "http://88.176.183.64:7778/api/",
     dictionnary: {}
 });
