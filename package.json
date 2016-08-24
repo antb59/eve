@@ -32,7 +32,6 @@
     "gulp-concat": "*",
     "gulp-connect": "*",
     "gulp-express": "*",
-    "gulp-karma": "*",
     "gulp-minify-css": "*",
     "gulp-prompt": "*",
     "gulp-protractor": "*",
@@ -41,14 +40,6 @@
     "gulp-sass": "*",
     "gulp-task-listing": "*",
     "gulp-util": "*",
-    "karma": "*",
-    "karma-chrome-launcher": "*",
-    "karma-cli": "*",
-    "karma-html-reporter": "*",
-    "karma-jasmine": "*",
-    "karma-phantomjs-launcher": "*",
-    "protractor": "*",
-    "protractor-html-screenshot-reporter": "*",
     "request": "*"
   }
 }
