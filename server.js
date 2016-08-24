@@ -17,9 +17,9 @@ var express = require('express'),
     bookmarksCommand = require('./server/routes/commands/bookmarksCommand'),
     interpreterCommand = require('./server/routes/commands/interpreterCommand'),
     path = require('path'),
-    log = require('custom-logger').config({ level: 0 });
-    ZWave = require('openzwave-shared');
-
+    log = require('custom-logger').config({ level: 0 }),
+    ZWave = require('openzwave-shared'),
+    util = require('util');
 
 
 console.log('Starting Server...');
@@ -152,7 +152,8 @@ db.once('open', function callback() {
 
 var zwave = new ZWave({
         Logging: false,     // disable file logging (OZWLog.txt)
-        ConsoleOutput: false // enable console logging
+        ConsoleOutput: false, // enable console logging
+	UserPath: "/home/pi/eve/eve/node_modules/openzwave-shared/config"
 });
 
 var nodes = [];
@@ -168,7 +169,8 @@ zwave.on('driver failed', function() {
 });
 
 zwave.on('node added', function(nodeid) {
-    nodes[nodeid] = {
+ console.log('[ZWAVE][NODE ADDED]node%d', nodeid);
+   nodes[nodeid] = {
         manufacturer: '',
         manufacturerid: '',
         product: '',
@@ -186,15 +188,17 @@ zwave.on('value added', function(nodeid, comclass, value) {
     if (!nodes[nodeid]['classes'][comclass])
         nodes[nodeid]['classes'][comclass] = {};
     nodes[nodeid]['classes'][comclass][value.index] = value;
-});
-
-zwave.on('value changed', function(nodeid, comclass, value) {
-    if (nodes[nodeid]['ready']) {
-        console.log('[ZWAVE][VALUE CHANGED]node%d: changed: %d:%s:%s->%s', nodeid, comclass,
+    console.log('[ZWAVE][%s][VALUE ADDED]node%d: added: %s:%s->%s',new Date(), nodeid, comclass,
                 value['label'],
                 nodes[nodeid]['classes'][comclass][value.index]['value'],
                 value['value']);
-    }
+});
+
+zwave.on('value changed', function(nodeid, comclass, value) {
+    console.log('[ZWAVE][%s][VALUE CHANGED]node%d: changed: %s:%s->%s',new Date(), nodeid, comclass,
+                value['label'],
+                nodes[nodeid]['classes'][comclass][value.index]['value'],
+                value['value']);
     nodes[nodeid]['classes'][comclass][value.index] = value;
 });
 
@@ -203,6 +207,18 @@ zwave.on('value removed', function(nodeid, comclass, index) {
         nodes[nodeid]['classes'][comclass][index])
         delete nodes[nodeid]['classes'][comclass][index];
 });
+
+zwave.on('node naming', function(nodeid, nodeinfo) {
+    console.log('[ZWAVE][%s][NODE NAMING]node%d',new Date(), nodeid);
+    console.log('[ZWAVE][NODE READY] node%d: %s, %s', nodeid,
+            nodeinfo.manufacturer ? nodeinfo.manufacturer
+                      : 'id=' + nodeinfo.manufacturerid,
+            nodeinfo.product ? nodeinfo.product
+                     : 'product=' + nodeinfo.productid +
+                       ', type=' + nodeinfo.producttype);
+   
+});
+
 
 zwave.on('node ready', function(nodeid, nodeinfo) {
     nodes[nodeid]['manufacturer'] = nodeinfo.manufacturer;
@@ -251,10 +267,10 @@ zwave.on('notification', function(nodeid, notif) {
         break;
     case 3:
         console.log('[ZWAVE][NOTIFICATION] node%d: node awake', nodeid);
-        break;
+	break;
     case 4:
         console.log('[ZWAVE][NOTIFICATION] node%d: node sleep', nodeid);
-        break;
+	break;
     case 5:
         console.log('[ZWAVE][NOTIFICATION] node%d: node dead', nodeid);
         break;
@@ -264,20 +280,23 @@ zwave.on('notification', function(nodeid, notif) {
         }
 });
 
+
 zwave.on('scan complete', function() {
     console.log('[ZWAVE][SCAN COMPLETE] ====> scan complete, hit ^C to finish.');
+    // zwave.setValue(1,37,1,0,true);
+    // zwave.refreshNodeInfo(4);
+    // console.log(util.inspect(zwave, true, null));
     // set dimmer node 5 to 50%
     //zwave.setValue(5,38,1,0,50);
     //zwave.setValue( {node_id:5, class_id: 38, instance:1, index:0}, 50);
     // Add a new device to the ZWave controller
-    if (zwave.hasOwnProperty('beginControllerCommand')) {
+    // if (zwave.hasOwnProperty('beginControllerCommand')) {
       // using legacy mode (OpenZWave version < 1.3) - no security
-      zwave.beginControllerCommand('AddDevice', true);
-    } else {
+    //   zwave.beginControllerCommand('AddDevice', true);
+    // } else {
       // using new security API
       // set this to 'true' for secure devices eg. door locks
-      zwave.addNode(false);
-    }
+      // zwave.addNode(false);
 });
 
 zwave.on('controller command', function(r,s) {
