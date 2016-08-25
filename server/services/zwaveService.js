@@ -41,7 +41,7 @@ exports.init = function(callback) {
         if (!nodes[nodeid]['classes'][comclass])
             nodes[nodeid]['classes'][comclass] = {};
         nodes[nodeid]['classes'][comclass][value.index] = value;
-        console.log('[ZWAVE][%s][VALUE ADDED]node%d: added: %s:%s->%s',new Date(), nodeid, comclass,
+        console.log('[ZWAVE][%s][VALUE ADDED]node%d: added: %s:%s:%s->%s',new Date(), nodeid, value.index, comclass,
                     value['label'],
                     nodes[nodeid]['classes'][comclass][value.index]['value'],
                     value['value']);
@@ -52,7 +52,7 @@ exports.init = function(callback) {
     });
 
     zwave.on('value changed', function(nodeid, comclass, value) {
-        console.log('[ZWAVE][%s][VALUE CHANGED]node%d: changed: %s:%s->%s',new Date(), nodeid, comclass,
+        console.log('[ZWAVE][%s][VALUE CHANGED]node%d: changed: %s:%s:%s->%s',new Date(), nodeid, value.index, comclass,
                     value['label'],
                     nodes[nodeid]['classes'][comclass][value.index]['value'],
                     value['value']);
@@ -176,7 +176,7 @@ exports.getTemperature = function(callback) {
         callback('Temperature is not defined');
     }
     else {
-        console.log("Temperature: " + temperature);
-        callback(null, temperature);
+        console.log("Temperature: " + temperature.value);
+        callback(null, temperature.value);
     }
 };
