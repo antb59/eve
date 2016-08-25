@@ -133,6 +133,19 @@ app.get('/', function(req, res){
     res.render('index');
 });
 
+app.get('/api/getTemperature', function(req, res) {
+    zwaveService.getTemperature(function(err, temp){
+        if (err) {
+            res.send(err);
+        }
+        else {
+            res.send({
+                temperature: temp;
+            });
+        }
+    });
+});
+
 
 var port = process.env.PORT || 7778;
 var ip = process.env.IP || "88.176.183.64";
@@ -149,6 +162,6 @@ db.once('open', function callback() {
     console.log("Connection to database succeed")
 });
 
-
+zwaveService.init();
 
 
