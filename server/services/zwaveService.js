@@ -1,8 +1,6 @@
 var ZWave = require('openzwave-shared');
 
 var nodes = [];
-var temperature;
-
 
 exports.init = function(callback) {
     var zwave = new ZWave({
@@ -45,10 +43,6 @@ exports.init = function(callback) {
                     value['label'],
                     nodes[nodeid]['classes'][comclass][value.index]['value'],
                     value['value']);
-        if ((comclass == 49) && (value['label'] == 'Temperature')) {
-            console.log('[ZWAVE][%s][TEMPERATURE] %s', new Date(), value);
-            temperature = value;
-        }
     });
 
     zwave.on('value changed', function(nodeid, comclass, value) {
@@ -171,12 +165,13 @@ exports.init = function(callback) {
 
 
 exports.getTemperature = function(callback) {
-    if (temperature) {
+    var temperature = nodes[nodeid]['classes']['49']['1'];
+    if (!temperature) {
         console.log('Temperature is not defined');
         callback('Temperature is not defined');
     }
     else {
-        console.log("Temperature: " + temperature.value);
-        callback(null, temperature.value);
+        callback(null, ((temperature.value - 32)*5/9).toFixed(1));
     }
 };
+
