@@ -172,10 +172,10 @@ exports.init = function(callback) {
 exports.getTemperature = function(callback) {
     if (temperature) {
         console.log('Temperature is not defined');
-        callback(err);
+        callback('Temperature is not defined');
     }
     else {
         console.log("Temperature: " + temperature);
-        callback(err, temperature);
+        callback(null, temperature);
     }
 };

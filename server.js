@@ -140,7 +140,7 @@ app.get('/api/getTemperature', function(req, res) {
         }
         else {
             res.send({
-                temperature: temp;
+                temperature: temp
             });
         }
     });
