@@ -45,7 +45,8 @@ exports.init = function(callback) {
                     value['label'],
                     nodes[nodeid]['classes'][comclass][value.index]['value'],
                     value['value']);
-        if ((comclass == '49') && (value['label'] == 'Temperature')) {
+        if ((comclass == 49) && (value['label'] == 'Temperature')) {
+            console.log('[ZWAVE][%s][TEMPERATURE] %s', new Date(), value);
             temperature = value;
         }
     });
