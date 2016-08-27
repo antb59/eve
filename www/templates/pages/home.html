@@ -4,13 +4,15 @@
 
     <!--Smartphone display -->
     <div ng-if="mobileDisplay" class="visible-xs-block">
-        Bonjour sur téléphone
+        <div data-eve-panel data-title="Temperature">
+            {{temperature}}
+        </div>
     </div>
 
     <!--Tablet/screen display -->
     <div ng-if="tabletDisplay || desktopDisplay" class="container hidden-xs">
-        <div data-eve-panel data-title="Plugin 1">
-            blablabla
+        <div data-eve-panel data-title="Temperature">
+            {{temperature}}
         </div>
     </div>
 </div>
