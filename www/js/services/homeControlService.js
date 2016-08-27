@@ -1,4 +1,4 @@
-angular.module('eve.services', ['http-auth-interceptor']).factory('HomeControlService', ['$rootScope', '$http', 'authService', '$log', '$q', 'RequestSender', 'configuration', 'md5', function($rootScope, $http, authService, $log, $q, RequestSender, configuration, md5) {
+angular.module('eve.services', ['http-auth-interceptor']).factory('HomeControlService', ['$rootScope', '$http', '$log', '$q', 'RequestSender', 'configuration', 'md5', function($rootScope, $http, $log, $q, RequestSender, configuration, md5) {
     $log.debug("Building HomeControlService");
     var service = {
 
