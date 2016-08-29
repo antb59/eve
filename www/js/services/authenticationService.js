@@ -30,4 +30,4 @@ angular.module('eve.services', ['http-auth-interceptor']).factory('Authenticatio
         return buildAuthenticationServiceMock($rootScope, $q);
     }
 
-}])
+}]);

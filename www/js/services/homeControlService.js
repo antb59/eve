@@ -15,4 +15,4 @@ angular.module('eve.services', ['http-auth-interceptor']).factory('HomeControlSe
         return buildHomeControlServiceMock($rootScope, $q);
     }
 
-}])
+}]);

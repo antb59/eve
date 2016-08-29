@@ -1,8 +1,16 @@
-var ZWave = require('openzwave-shared');
+var ZWave;
+try {
+    ZWave = require('openzwave-shared');
+}
+catch(e) {
+    console.log('Unable to load openzwave lib')
+    console.log(e)
+}
 
 var nodes = [];
 
 exports.init = function(callback) {
+    if (!ZWave) return;
     var zwave = new ZWave({
         Logging: false,     // disable file logging (OZWLog.txt)
         ConsoleOutput: false, // enable console logging
@@ -165,13 +173,18 @@ exports.init = function(callback) {
 
 
 exports.getTemperature = function(callback) {
-    var temperature = nodes[nodeid]['classes']['49']['1'];
-    if (!temperature) {
-        console.log('Temperature is not defined');
-        callback('Temperature is not defined');
+    if (!ZWave) {
+        callback('ZWave is not loaded');
     }
     else {
-        callback(null, ((temperature.value - 32)*5/9).toFixed(1));
+        var temperature = nodes[nodeid]['classes']['49']['1'];
+        if (!temperature) {
+            console.log('Temperature is not defined');
+            callback('Temperature is not defined');
+        }
+        else {
+            callback(null, ((temperature.value - 32)*5/9).toFixed(1));
+        }
     }
 };
 
