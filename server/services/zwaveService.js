@@ -172,19 +172,57 @@ exports.init = function(callback) {
 };
 
 
-exports.getTemperature = function(callback) {
+exports.getTemperature = function(req, res) {
+    console.log("API GET temperature");
+    //commandsFlow.pushCommand("GET bookmarksByTag '" + req.params.tag + "'");
     if (!ZWave) {
-        callback('ZWave is not loaded');
+        console.log('ZWave is not loaded');
+        res.status(501).send('ZWave is not loaded');
     }
     else {
         var temperature = nodes[4]['classes']['49']['1'];
         if (!temperature) {
             console.log('Temperature is not defined');
-            callback('Temperature is not defined');
+            res.json({
+                status: 500,
+                message: 'Error while gettting temperature: ZWave is not loaded'
+            });
         }
         else {
-            callback(null, ((temperature.value - 32)*5/9).toFixed(1));
+            var tempInCelsus = ((temperature.value - 32)*5/9).toFixed(1);
+            res.json({
+                status: 200,
+                temperature: tempInCelsus
+            });
         }
     }
 };
+
+
+exports.getLuminance = function(req, res) {
+    console.log("API GET luminance");
+    //commandsFlow.pushCommand("GET bookmarksByTag '" + req.params.tag + "'");
+    if (!ZWave) {
+        console.log('ZWave is not loaded');
+        res.status(501).send('ZWave is not loaded');
+    }
+    else {
+        var luminance = nodes[4]['classes']['49']['3'];
+        if (!luminance) {
+            console.log('Luminance is not defined');
+            res.json({
+                status: 500,
+                message: 'Error while gettting luminance: ZWave is not loaded'
+            });
+        }
+        else {
+            var lum = ((luminance.value)*1);
+            res.json({
+                status: 200,
+                luminance: lum
+            });
+        }
+    }
+};
+
 

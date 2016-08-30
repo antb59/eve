@@ -7,17 +7,25 @@
         <div class="temperature-panel" data-eve-panel data-title="Temperature">
             <p><i class="wi wi-thermometer"></i> {{temperature | customNumber : 2}} °C</p>
         </div>
+        <div class="luminance-panel" data-eve-panel data-title="Luminance">
+            <p><i class="wi wi-day-sunny"></i> {{luminance | customNumber : 0}} %</p>
+        </div>
     </div>
 
     <!--Tablet/screen display -->
     <div ng-if="tabletDisplay || desktopDisplay" class="container hidden-xs">
-        <div id="markets-search-row" class="row row-content">
+        <div id="home-row" class="row row-content">
             <div class="col-sm-3">
                 <div class="temperature-panel" data-eve-panel data-title="Temperature">
                     <p><i class="wi wi-thermometer"></i> {{temperature | customNumber : 2}} °C</p>
                 </div>
             </div>
+            <div class="col-sm-3">
+                <div class="luminance-panel" data-eve-panel data-title="Luminance">
+                    <p><i class="wi wi-day-sunny"></i> {{luminance | customNumber : 0}} %</p>
+                </div>
+            </div>
         </div>
     </div>
-    
+
 </div>

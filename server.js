@@ -129,11 +129,13 @@ app.post('/api/interpretCommand', interpreterCommand.interpretCommand);
 app.post('/api/pushNotification', pushNotificationsCommand.pushNotification);
 app.post('/api/addBookmark', ensureAuthenticated, bookmarksCommand.addBookmark);
 app.post('/api/deleteBookmark', bookmarksCommand.deleteBookmark);
+app.get('/api/getTemperature', zwaveService.getTemperature);
+app.get('/api/getLuminance', zwaveService.getLuminance);
 app.get('/', function(req, res){
     res.render('index');
 });
 
-app.get('/api/getTemperature', function(req, res) {
+/*app.get('/api/getTemperature', function(req, res) {
     zwaveService.getTemperature(function(err, temp){
         if (err) {
             res.send(err);
@@ -144,7 +146,7 @@ app.get('/api/getTemperature', function(req, res) {
             });
         }
     });
-});
+});*/
 
 
 var port = process.env.PORT || 7778;

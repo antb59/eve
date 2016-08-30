@@ -3,6 +3,7 @@ var buildHomeControlServiceMock = function($rootScope, $q) {
     //http://www.frederiknakstad.com/2013/01/21/authentication-in-single-page-applications-with-angular-js/
 
     var defaultTemp = {"temperature" : 0.0};
+    var defaultTemp = {"luminance" : 0};
     
     var service = {
         
@@ -13,7 +14,17 @@ var buildHomeControlServiceMock = function($rootScope, $q) {
                 deferred.resolve(defaultTemp);
             }, 0);
             return deferred.promise;
+        },
+        
+        getLuminance : function() {
+            console.log("[HomeControlServiceMock] getLuminance");
+            var deferred = $q.defer();
+            setTimeout(function() {
+                deferred.resolve(defaultLum);
+            }, 0);
+            return deferred.promise;
         }
+        
     };
     return service;
 };

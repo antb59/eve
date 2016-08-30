@@ -5,6 +5,11 @@ angular.module('eve.services').factory('HomeControlService', ['$rootScope', '$ht
         getTemperature: function() {
             $log.info("HomeControlService getTemperature");
             return RequestSender.sendRequest("GET","getTemperature",'',  {});
+        },
+        
+        getLuminance: function() {
+            $log.info("HomeControlService getLuminance");
+            return RequestSender.sendRequest("GET","getLuminance",'',  {});
         }
     };
 
