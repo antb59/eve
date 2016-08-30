@@ -3,16 +3,21 @@
     <div data-settings-menu class="hidden-xs"></div>
 
     <!--Smartphone display -->
-    <div ng-if="mobileDisplay" class="visible-xs-block">
-        <div data-eve-panel data-title="Temperature">
-            {{temperature}}
+    <div ng-if="mobileDisplay" id="home-xs" class="visible-xs-block">
+        <div class="temperature-panel" data-eve-panel data-title="Temperature">
+            <p><i class="wi wi-thermometer"></i> {{temperature | customNumber : 2}} °C</p>
         </div>
     </div>
 
     <!--Tablet/screen display -->
     <div ng-if="tabletDisplay || desktopDisplay" class="container hidden-xs">
-        <div data-eve-panel data-title="Temperature">
-            {{temperature}}
+        <div id="markets-search-row" class="row row-content">
+            <div class="col-sm-3">
+                <div class="temperature-panel" data-eve-panel data-title="Temperature">
+                    <p><i class="wi wi-thermometer"></i> {{temperature | customNumber : 2}} °C</p>
+                </div>
+            </div>
         </div>
     </div>
+    
 </div>

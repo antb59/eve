@@ -1,4 +1,4 @@
-var app = angular.module('eve',['ui.router', 'ngSanitize', 'angularMoment', 'angular-md5', 'matchMedia', 'ui.bootstrap', 'eve.config', 'eve.controllers', 'eve.directives', 'eve.filters', 'eve.tools', 'eve.services'])
+var app = angular.module('eve',['ui.router', 'ngSanitize', 'angularMoment', 'angular-md5', 'matchMedia', 'ui.bootstrap', 'eve.config', 'eve.services', 'eve.controllers', 'eve.directives', 'eve.filters', 'eve.tools'])
 
 .run(function($httpBackend, $log, $http, $rootScope, $state, configuration, AuthenticationService, JsonFileReader) {
     $log.debug("Running eve");
@@ -102,8 +102,8 @@ var app = angular.module('eve',['ui.router', 'ngSanitize', 'angularMoment', 'ang
                 templateUrl: "templates/pages/home.html",
                 controller: 'homeCtrl'
             }
-        },
-        authenticate: true 
+        }/*,
+        authenticate: true */
     })
 
 

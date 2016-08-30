@@ -15,7 +15,6 @@ var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var server = require('gulp-express');
 var sh = require('shelljs');
-var karma = require('gulp-karma');
 var batch = require('gulp-batch');
 var argv = require('yargs').argv;
 var request = require('request');
@@ -91,7 +90,7 @@ gulp.task('sass', function(done) {
 
 
 /**************** Launching TEST commands ***************/
-var testOptions = {
+/*var testOptions = {
     browsers: {
         all: ['PhantomJS','Chrome'],
         silent: ['PhantomJS']
@@ -136,17 +135,17 @@ gulp.task('install-e2e-test', function() {
     } else {
         gutil.log(gutil.colors.green("Selenium installation script ended successfully"));
     }
-});
+});*/
 
-gulp.task('e2e-test', function() {
-    var testFiles = argv.testFiles || "**/*_spec.js";
-    return gulp.src(["test/e2e/" + testFiles])
-    .pipe(protractor({
-        configFile: "test/e2e/protractor.config.js",
-        args: ['--baseUrl', 'http://localhost:8100/']
-    })) 
-    .on('error', function(e) { throw e })
-});
+//gulp.task('e2e-test', function() {
+//    var testFiles = argv.testFiles || "**/*_spec.js";
+//    return gulp.src(["test/e2e/" + testFiles])
+//    .pipe(protractor({
+//        configFile: "test/e2e/protractor.config.js",
+//        args: ['--baseUrl', 'http://localhost:8100/']
+//    })) 
+//    .on('error', function(e) { throw e })
+//});
 /********************************************************/
 
 /**************** Launching WATCH commands **************/
