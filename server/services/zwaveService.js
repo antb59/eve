@@ -177,7 +177,7 @@ exports.getTemperature = function(callback) {
         callback('ZWave is not loaded');
     }
     else {
-        var temperature = nodes[nodeid]['classes']['49']['1'];
+        var temperature = nodes[4]['classes']['49']['1'];
         if (!temperature) {
             console.log('Temperature is not defined');
             callback('Temperature is not defined');
