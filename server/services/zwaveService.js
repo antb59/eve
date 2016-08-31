@@ -242,7 +242,7 @@ exports.getDoorStatus = function(req, res) {
             });
         }
         else {
-            var ds = (doorStatus == 8) ? "CLOSED" : "OPENED";
+            var ds = (doorStatus.value == 8) ? "CLOSED" : "OPENED";
             res.json({
                 status: 200,
                 doorStatus: ds
