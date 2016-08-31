@@ -185,7 +185,7 @@ exports.getTemperature = function(req, res) {
             console.log('Temperature is not defined');
             res.json({
                 status: 500,
-                message: 'Error while gettting temperature: ZWave is not loaded'
+                message: 'Error while gettting temperature: Temperature is not defined'
             });
         }
         else {
@@ -212,7 +212,7 @@ exports.getLuminance = function(req, res) {
             console.log('Luminance is not defined');
             res.json({
                 status: 500,
-                message: 'Error while gettting luminance: ZWave is not loaded'
+                message: 'Error while gettting luminance: Luminance is not defined'
             });
         }
         else {
@@ -220,6 +220,32 @@ exports.getLuminance = function(req, res) {
             res.json({
                 status: 200,
                 luminance: lum
+            });
+        }
+    }
+};
+
+exports.getDoorStatus = function(req, res) {
+    console.log("API GET doorStatus");
+    //commandsFlow.pushCommand("GET bookmarksByTag '" + req.params.tag + "'");
+    if (!ZWave) {
+        console.log('ZWave is not loaded');
+        res.status(501).send('ZWave is not loaded');
+    }
+    else {
+        var doorStatus = nodes[4]['classes']['113']['10'];
+        if (!doorStatus) {
+            console.log('DoorStatus is not defined');
+            res.json({
+                status: 500,
+                message: 'Error while gettting doorStatus: DoorStatus is not defined'
+            });
+        }
+        else {
+            var ds = (doorStatus == "8") ? "CLOSED" : "OPENED";
+            res.json({
+                status: 200,
+                doorStatus: ds
             });
         }
     }

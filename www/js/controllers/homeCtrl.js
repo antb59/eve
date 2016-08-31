@@ -24,5 +24,15 @@ angular.module('eve.controllers').controller('homeCtrl', function($scope, $state
         $log.info("Attempt to get luminance");
     });
 
+    var getDoorStatusRequest = HomeControlService.getDoorStatus();
+    getDoorStatusRequest.then(function(dataResolved) {
+        $scope.doorStatus = dataResolved.doorStatus;    
+    },function(rejectReason) {
+        $log.error("Unable to get doorStatus : " + rejectReason);
+        $scope.errorMsg = "Unable to get doorStatus : " + rejectReason;
+        $scope.doorStatus = "UNDEFINED";
+    },function(notifyValue) {
+        $log.info("Attempt to get doorStatus");
+    });    
 
 })

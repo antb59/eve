@@ -10,6 +10,11 @@ angular.module('eve.services').factory('HomeControlService', ['$rootScope', '$ht
         getLuminance: function() {
             $log.info("HomeControlService getLuminance");
             return RequestSender.sendRequest("GET","getLuminance",'',  {});
+        },
+        
+        getDoorStatus: function() {
+            $log.info("HomeControlService getDoorStatus");
+            return RequestSender.sendRequest("GET","getDoorStatus",'',  {});
         }
     };
 

@@ -4,11 +4,16 @@
 
     <!--Smartphone display -->
     <div ng-if="mobileDisplay" id="home-xs" class="visible-xs-block">
-        <div class="temperature-panel" data-eve-panel data-title="Temperature">
+        <div class="temperature-panel" data-eve-panel data-title="{{'TEMPERATURE' | translate}}">
             <p><i class="wi wi-thermometer"></i> {{temperature | customNumber : 2}} °C</p>
         </div>
-        <div class="luminance-panel" data-eve-panel data-title="Luminance">
+        <div class="luminance-panel" data-eve-panel data-title="{{'LUMINANCE' | translate}}">
             <p><i class="wi wi-day-sunny"></i> {{luminance | customNumber : 0}} %</p>
+        </div>
+        <div class="doorstatus-panel" data-eve-panel data-title="{{'DOOR_STATUS' | translate}}">
+            <p ng-if="(doorStatus == 'CLOSED')"><i class="fa fa-lock"></i> {{doorStatus | translate}}</p>
+            <p ng-if="(doorStatus == 'OPENED')"><i class="fa fa-unlock"></i> {{doorStatus | translate}}</p>
+            <p ng-if="(doorStatus == 'UNDEFINED')"><i class="fa fa-question"></i> {{doorStatus | translate}}</p>
         </div>
     </div>
 
@@ -16,13 +21,20 @@
     <div ng-if="tabletDisplay || desktopDisplay" class="container hidden-xs">
         <div id="home-row" class="row row-content">
             <div class="col-sm-3">
-                <div class="temperature-panel" data-eve-panel data-title="Temperature">
+                <div class="temperature-panel" data-eve-panel data-title="{{'TEMPERATURE' | translate}}">
                     <p><i class="wi wi-thermometer"></i> {{temperature | customNumber : 2}} °C</p>
                 </div>
             </div>
             <div class="col-sm-3">
-                <div class="luminance-panel" data-eve-panel data-title="Luminance">
+                <div class="luminance-panel" data-eve-panel data-title="{{'LUMINANCE' | translate}}">
                     <p><i class="wi wi-day-sunny"></i> {{luminance | customNumber : 0}} %</p>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="doorstatus-panel" data-eve-panel data-title="{{'DOOR_STATUS' | translate}}">
+                    <p ng-if="(doorStatus == 'CLOSED')"><i class="fa fa-lock"></i> {{doorStatus | translate}}</p>
+                    <p ng-if="(doorStatus == 'OPENED')"><i class="fa fa-unlock"></i> {{doorStatus | translate}}</p>
+                    <p ng-if="(doorStatus == 'UNDEFINED')"><i class="fa fa-question"></i> {{doorStatus | translate}}</p>
                 </div>
             </div>
         </div>

@@ -1,18 +1,8 @@
 {
-    "MENU_MARKETS":                     "Markets",
-    "MENU_MARKETS_ACCOUNT":             "My Accounts",
-    "MENU_ORDERS":                      "My Orders",
-    "MENU_RISK_COVERAGE":               "Risk Coverage",
-    "MENU_MOVEMENTS":                   "Movements",
-    "MENU_FISCALITY":                   "Fiscality",
-    "MENU_REPORT":                      "Carry Over",
-    "MENU_IPO":                         "IPO",
-    "MENU_BANK":                        "Bank",
-    "MENU_BANK_ACCOUNT":                "My Accounts",
-    "MENU_BANKING_TRANSACTIONS":        "Transactions",
-    "MENU_CARD_TRANSACTIONS":           "Card Operations",
-    "MENU_CASH_TRANSFERS":              "Cash Transfers",
-    "VALUE_OVERVIEW":                   "Value Overview",
-    "ORDER_BOOK":                       "Order Book",
-    "LAST_TRANSACTIONS":                "Last Transactions"
+    "TEMPERATURE":                      "Temperature",
+    "LUMINANCE":                        "Luminance",
+    "DOOR_STATUS":                      "Door state",
+    "OPENED":                           "Opened",
+    "CLOSED":                           "Closed",
+    "UNDEFINED":                        "Undefined"
 }

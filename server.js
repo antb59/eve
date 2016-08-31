@@ -131,6 +131,7 @@ app.post('/api/addBookmark', ensureAuthenticated, bookmarksCommand.addBookmark);
 app.post('/api/deleteBookmark', bookmarksCommand.deleteBookmark);
 app.get('/api/getTemperature', zwaveService.getTemperature);
 app.get('/api/getLuminance', zwaveService.getLuminance);
+app.get('/api/getDoorStatus', zwaveService.getDoorStatus);
 app.get('/', function(req, res){
     res.render('index');
 });

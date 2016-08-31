@@ -1,18 +1,8 @@
 {
-    "MENU_MARKETS":                     "Bourse",
-    "MENU_MARKETS_ACCOUNT":             "Mes Comptes",
-    "MENU_ORDERS":                      "Mes Ordres",
-    "MENU_RISK_COVERAGE":               "Couverture",
-    "MENU_MOVEMENTS":                   "Mouvements",
-    "MENU_FISCALITY":                   "Fiscalité",
-    "MENU_REPORT":                      "Report",
-    "MENU_IPO":                         "Introductions",
-    "MENU_BANK":                        "Banque",
-    "MENU_BANK_ACCOUNT":                "Mes Comptes",
-    "MENU_BANKING_TRANSACTIONS":        "Mouvements",
-    "MENU_CARD_TRANSACTIONS":           "Mouvements CB",
-    "MENU_CASH_TRANSFERS":              "Virements",
-    "VALUE_OVERVIEW":                   "Résumé de séance",
-    "ORDER_BOOK":                       "Carnet d'ordres",
-    "LAST_TRANSACTIONS":                "Dernières transactions"
+    "TEMPERATURE":                      "Temperature",
+    "LUMINANCE":                        "Luminosité",
+    "DOOR_STATUS":                      "Etat de la porte",
+    "OPENED":                           "Ouverte",
+    "CLOSED":                           "Fermée",
+    "UNDEFINED":                        "Indéfini"
 }
