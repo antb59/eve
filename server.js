@@ -69,7 +69,7 @@ var ensureAuthenticated = function (req, res, next) {
 
 
 
-passport.use(new LocalStrategy(function(username, password, done) {
+passport.use('login', new LocalStrategy(function(username, password, done) {
     usersController.login(username, password, function(err, userFound) {
         console.log("Login attempt");
         if (err) {
@@ -120,7 +120,7 @@ app.get('/api/test', function(req, res) {
 });
 app.get('/api/loggedin', function(req, res) { res.send(req.isAuthenticated() ? req.user : '0'); });
 app.get('/api/testAccess', ensureAuthenticated, function(req, res) { res.send('Access allowed'); });
-app.post('/api/login', passport.authenticate('local'), function(req, res) {res.send(200);});
+app.post('/api/login', passport.authenticate('login'), function(req, res) {res.send(200);});
 //app.post('/api/login', function(req, res) {res.send(200);});
 app.post('/api/logout', function(req, res){ req.logOut();res.send(200); });
 app.get('/api/commandsFlow', commandsFlowCommand.getCommandsFlow);
