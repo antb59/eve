@@ -102,8 +102,8 @@ var app = angular.module('eve',['ui.router', 'ngSanitize', 'angularMoment', 'ang
                 templateUrl: "templates/pages/home.html",
                 controller: 'homeCtrl'
             }
-        }/*,
-        authenticate: true */
+        },
+        authenticate: true 
     })
 
 
