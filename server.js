@@ -120,8 +120,8 @@ app.get('/api/test', function(req, res) {
 });
 app.get('/api/loggedin', function(req, res) { res.send(req.isAuthenticated() ? req.user : '0'); });
 app.get('/api/testAccess', ensureAuthenticated, function(req, res) { res.send('Access allowed'); });
-//app.post('/api/login', passport.authenticate('local'), function(req, res) {res.send(200);});
-app.post('/api/login', function(req, res) {res.send(200);});
+app.post('/api/login', passport.authenticate('local'), function(req, res) {res.send(200);});
+//app.post('/api/login', function(req, res) {res.send(200);});
 app.post('/api/logout', function(req, res){ req.logOut();res.send(200); });
 app.get('/api/commandsFlow', commandsFlowCommand.getCommandsFlow);
 app.get('/api/getWikipediaArticle/:title', wikipediaCommand.getWikipediaArticle);
