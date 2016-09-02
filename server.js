@@ -18,12 +18,19 @@ var express = require('express'),
     bookmarksCommand = require('./server/routes/commands/bookmarksCommand'),
     interpreterCommand = require('./server/routes/commands/interpreterCommand'),
     path = require('path'),
+    https = require('https');
+    fs = require('fs');
     log = require('custom-logger').config({ level: 0 });
 
 
 console.log('Starting Server...');
 
 var app = express();
+
+var options = {
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
+};
 
 app.use(favicon(__dirname + '/icon.png'));
 app.set('views', __dirname + '/www/templates');
@@ -154,9 +161,13 @@ app.get('/', function(req, res){
 var port = process.env.PORT || 7778;
 var ip = process.env.IP || "88.176.183.64";
 
-var server = app.listen(port, function(){
+var app = express();
+https.createServer(options, app).listen(7778);
+console.log('Express server listening on port ' + port);
+
+/*var server = app.listen(port, function(){
     console.log('Express server listening on port ' + port);
-});
+});*/
 
 mongoose.connect('mongodb://localhost' + '/data');
 
