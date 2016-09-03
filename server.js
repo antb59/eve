@@ -19,8 +19,8 @@ var express = require('express'),
     interpreterCommand = require('./server/routes/commands/interpreterCommand'),
     path = require('path'),
     https = require('https');
-    fs = require('fs');
-    log = require('custom-logger').config({ level: 0 });
+fs = require('fs');
+log = require('custom-logger').config({ level: 0 });
 
 
 console.log('Starting Server...');
@@ -28,8 +28,8 @@ console.log('Starting Server...');
 var app = express();
 
 var options = {
-  key: fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('cert.pem')
+    key: fs.readFileSync('key.pem'),
+    cert: fs.readFileSync('cert.pem')
 };
 
 app.use(favicon(__dirname + '/icon.png'));
@@ -162,8 +162,9 @@ var port = process.env.PORT || 7778;
 var ip = process.env.IP || "88.176.183.64";
 
 var app = express();
-https.createServer(options, app).listen(7778);
-console.log('Express server listening on port ' + port);
+https.createServer(options, app).listen(7778, function(){
+    console.log('Express server listening on port ' + port);
+});
 
 /*var server = app.listen(port, function(){
     console.log('Express server listening on port ' + port);

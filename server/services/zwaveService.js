@@ -233,7 +233,7 @@ exports.getDoorStatus = function(req, res) {
         res.status(501).send('ZWave is not loaded');
     }
     else {
-        var doorStatus = nodes[4]['classes']['113']['10'];
+        var doorStatus = nodes[4]['classes']['113']['9'];
         if (!doorStatus) {
             console.log('DoorStatus is not defined');
             res.json({
@@ -242,7 +242,7 @@ exports.getDoorStatus = function(req, res) {
             });
         }
         else {
-            var ds = (doorStatus.value == 8) ? "CLOSED" : "OPENED";
+            var ds = (doorStatus.value == 23) ? "CLOSED" : "OPENED";
             res.json({
                 status: 200,
                 doorStatus: ds
