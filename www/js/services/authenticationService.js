@@ -26,13 +26,13 @@ angular.module('eve.services', ['http-auth-interceptor']).factory('Authenticatio
         },
 
         currentUser : function() {
-            if(isLoggedIn()){
+            if(this.isLoggedIn()){
                 var token = this.getToken();
                 var payload = token.split('.')[1];
                 payload = $window.atob(payload);
                 payload = JSON.parse(payload);
                 return {
-                    name : payload.name
+                    username : payload.username
                 };
             }
         },
