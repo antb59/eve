@@ -25,6 +25,7 @@ angular.module('eve.directives').directive('loginForm', ['$log', '$q', '$rootSco
                 $log.info("[LoginFormDirective] login - pageRequested : " + $rootScope.pageRequested);
                 var loginRequest = AuthenticationService.login(scope.user, $rootScope.pageRequested);
                 loginRequest.then(function(dataResolved) {
+                    AuthenticationService.saveToken(dataResolved.token);
                     $rootScope.user = scope.user;
                     $rootScope.$broadcast('event:auth-loginConfirmed', scope.user, $rootScope.pageRequested);
                 },function(rejectReason) {

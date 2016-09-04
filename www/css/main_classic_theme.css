@@ -5720,7 +5720,8 @@ button.close {
   width: 95%;
   margin: auto;
   margin-top: 10px;
-  color: black; }
+  color: black;
+  font-size: 14px; }
 
 .login-form .login-form-field-input {
   background-color: white;
@@ -5805,6 +5806,12 @@ button.close {
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center; }
+  #top-menu .navbar-text {
+    margin-right: 20px;
+    color: white; }
+    #top-menu .navbar-text .navbar-link {
+      color: white;
+      text-decoration: underline; }
 
 /*****************************/
 /******** HOME PAGE*********/

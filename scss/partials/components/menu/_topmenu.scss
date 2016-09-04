@@ -40,6 +40,17 @@
         background-repeat: no-repeat;
         background-position: center; 
     }
+    
+    .navbar-text {
+        margin-right: 20px;
+        color: white;
+        
+        .navbar-link {
+            color: white;
+            text-decoration: underline;
+        }
+        
+    }
 
 }
 /*****************************/
