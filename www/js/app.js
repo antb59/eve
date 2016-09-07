@@ -51,15 +51,6 @@ var app = angular.module('eve',['ui.router', 'ngSanitize', 'angularMoment', 'ang
             $state.transitionTo("app.login");
         }
     });
-
-    $rootScope.message = 'Test de root message';
-
-    // Logout function is available in any pages
-    $rootScope.logout = function(){
-        $rootScope.message = 'Logged out.';
-        $http.post('/api/logout');
-    };
-
 })
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
@@ -70,7 +61,7 @@ var app = angular.module('eve',['ui.router', 'ngSanitize', 'angularMoment', 'ang
         return {
             'responseError': function(response) {
                 if(response.status === 401 || response.status === 403) {
-                    $location.path('/login');
+                    $location.path('/app/login');
                 }
                 return $q.reject(response);
             }

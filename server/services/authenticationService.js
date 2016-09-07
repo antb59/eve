@@ -38,7 +38,7 @@ module.exports.login = function(req, res) {
             });
         } else {
             // If user is not found
-            res.status(401).json(info);
+            res.status(200).json({"error" : "Login failed"});
         }
     })(req, res);
 

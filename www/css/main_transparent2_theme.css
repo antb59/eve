@@ -5715,6 +5715,9 @@ button.close {
   color: black; }
 
 /*****************************/
+.login-form-message {
+  font-size: 14px; }
+
 /******** LOGIN FORM **********/
 .login-form .login-form-field {
   width: 95%;
@@ -11549,6 +11552,9 @@ button.close {
   color: black; }
 
 /*****************************/
+.login-form-message {
+  font-size: 14px; }
+
 /******** LOGIN FORM **********/
 .login-form .login-form-field {
   width: 95%;
