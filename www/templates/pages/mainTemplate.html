@@ -6,7 +6,7 @@
             <div class="navbar-header">
                 <a href="#/app/home" class="navbar-brand title">Eve</a>
             </div>
-            <p ng-if="isLoggedIn()" class="navbar-text navbar-right">Signed in as {{currentUser.username || "Undefined"}}.&nbsp;<a href="#" ng-click="logout()" class="navbar-link">Logout</a></p>
+            <p ng-if="isLoggedIn()" class="navbar-text navbar-right">Signed in as {{currentUser.username || "Undefined"}}.&nbsp;<a ng-click="logout()" href class="navbar-link">Logout</a></p>
         </div>
     </nav>
     <div ui-view="pageContent"></div>

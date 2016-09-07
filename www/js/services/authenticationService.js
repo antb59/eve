@@ -44,12 +44,14 @@ angular.module('eve.services', ['http-auth-interceptor']).factory('Authenticatio
         },*/
 
         login : function(user) {
-            $log.info("AuthenticationService login")
+            $log.info("AuthenticationService login");
             return RequestSender.sendRequest("POST","login",'', user);
         },
 
         logout : function() {
+            $log.info("AuthenticationService logout")
             $window.localStorage.removeItem('eve-token');
+            $rootScope.$broadcast('event:auth-logout-complete');
         }
 
         /*login: function(user, pageRequested) {

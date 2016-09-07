@@ -18,10 +18,12 @@ angular.module('eve.controllers').controller('AppCtrl', function($rootScope, $sc
     });
 
     $scope.$on('event:auth-logout-complete', function() {
-        $state.go('app.home', {}, {reload: true, inherit: false});
+        $log.info('[AppCtrl] event:auth-logout-complete');
+        $scope.goToLogin();
     });
 
     $scope.logout = function() {
+        $log.info("[AppCtrl] logout");  
         AuthenticationService.logout();       
     }
 
