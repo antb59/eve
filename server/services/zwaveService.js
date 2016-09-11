@@ -1,6 +1,8 @@
 var ZWave;
+var gcm;
 try {
     ZWave = require('openzwave-shared');
+    gcm = require('node-gcm');
 }
 catch(e) {
     console.log('Unable to load openzwave lib')
@@ -16,6 +18,10 @@ exports.init = function(callback) {
         ConsoleOutput: false, // enable console logging
         UserPath: "/home/pi/eve/eve/node_modules/openzwave-shared/config"
     });
+
+    // Set up the sender with you API key, prepare your recipients' registration tokens. 
+    var sender = new gcm.Sender(process.env.ANDROID_SERVER_API_KEY);
+    var regTokens = ['YOUR_REG_TOKEN_HERE'];
 
     zwave.on('driver ready', function(homeid) {
         console.log('[ZWAVE][DRIVER READY]scanning homeid=0x%s...', homeid.toString(16));
@@ -59,6 +65,10 @@ exports.init = function(callback) {
                     nodes[nodeid]['classes'][comclass][value.index]['value'],
                     value['value']);
         nodes[nodeid]['classes'][comclass][value.index] = value;
+        if ((nodeid == 4) && (comclass == 113) && (value.index == 9)) {
+            console.log("PUSH DOOR STATUS CHANGED !!!!!!!");
+
+        }
     });
 
     zwave.on('value removed', function(nodeid, comclass, index) {
