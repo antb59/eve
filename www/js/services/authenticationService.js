@@ -1,12 +1,60 @@
-angular.module('eve.services', ['http-auth-interceptor']).factory('AuthenticationService', ['$rootScope', '$http', 'authService', '$log', '$q', 'RequestSender', 'configuration', 'md5', function($rootScope, $http, authService, $log, $q, RequestSender, configuration, md5) {
+angular.module('eve.services', ['http-auth-interceptor']).factory('AuthenticationService', ['$rootScope', '$http', '$log', '$q', 'RequestSender', 'configuration', '$window', function($rootScope, $http, $log, $q, RequestSender, configuration, $window) {
     $log.debug("Building AuthenticationService");
     var service = {
 
-        isLoggedIn : function() {
-            return $rootScope.user;
+        saveToken : function (token) {
+            $window.localStorage['eve-token'] = token;
         },
 
-        login: function(user, pageRequested) {
+        getToken : function () {
+            return $window.localStorage['eve-token'];
+        },
+
+        isLoggedIn : function() {
+            var token = this.getToken();
+            var payload;
+
+            if(token){
+                payload = token.split('.')[1];
+                payload = $window.atob(payload);
+                payload = JSON.parse(payload);
+
+                return payload.exp > Date.now() / 1000;
+            } else {
+                return false;
+            }
+        },
+
+        currentUser : function() {
+            if(this.isLoggedIn()){
+                var token = this.getToken();
+                var payload = token.split('.')[1];
+                payload = $window.atob(payload);
+                payload = JSON.parse(payload);
+                return {
+                    username : payload.username
+                };
+            }
+        },
+
+        /*register : function(user) {
+            return $http.post('/api/register', user).success(function(data){
+                saveToken(data.token);
+            });
+        },*/
+
+        login : function(user) {
+            $log.info("AuthenticationService login");
+            return RequestSender.sendRequest("POST","login",'', user);
+        },
+
+        logout : function() {
+            $log.info("AuthenticationService logout")
+            $window.localStorage.removeItem('eve-token');
+            $rootScope.$broadcast('event:auth-logout-complete');
+        }
+
+        /*login: function(user, pageRequested) {
             $log.info("AuthenticationService login")
             return RequestSender.sendRequest("POST","login",'',  {login: user.username, password: md5.createHash(user.password)});
 
@@ -16,11 +64,8 @@ angular.module('eve.services', ['http-auth-interceptor']).factory('Authenticatio
             $rootScope.$broadcast('event:auth-logout-complete');
             return RequestSender.sendRequest("POST","logout",'',  {login: login});
 
-        },
-        
-        loginCancelled: function() {
-            authService.loginCancelled();
-        }
+        },*/
+
     };
 
     if (configuration.applicationMode != "MOCKUP") {

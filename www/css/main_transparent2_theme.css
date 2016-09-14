@@ -5715,12 +5715,16 @@ button.close {
   color: black; }
 
 /*****************************/
+.login-form-message {
+  font-size: 14px; }
+
 /******** LOGIN FORM **********/
 .login-form .login-form-field {
   width: 95%;
   margin: auto;
   margin-top: 10px;
-  color: white; }
+  color: white;
+  font-size: 14px; }
 
 .login-form .login-form-field-input {
   background: rgba(0, 0, 0, 0.23);
@@ -5804,6 +5808,12 @@ button.close {
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center; }
+  #top-menu .navbar-text {
+    margin-right: 20px;
+    color: white; }
+    #top-menu .navbar-text .navbar-link {
+      color: white;
+      text-decoration: underline; }
 
 /*****************************/
 /******** HOME PAGE*********/
@@ -11542,12 +11552,16 @@ button.close {
   color: black; }
 
 /*****************************/
+.login-form-message {
+  font-size: 14px; }
+
 /******** LOGIN FORM **********/
 .login-form .login-form-field {
   width: 95%;
   margin: auto;
   margin-top: 10px;
-  color: white; }
+  color: white;
+  font-size: 14px; }
 
 .login-form .login-form-field-input {
   background: rgba(0, 0, 0, 0.23);
@@ -11631,6 +11645,12 @@ button.close {
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center; }
+  #top-menu .navbar-text {
+    margin-right: 20px;
+    color: white; }
+    #top-menu .navbar-text .navbar-link {
+      color: white;
+      text-decoration: underline; }
 
 /*****************************/
 /******** HOME PAGE*********/

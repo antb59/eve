@@ -52,13 +52,33 @@ var app = angular.module('eve',['ui.router', 'ngSanitize', 'angularMoment', 'ang
         }
     });
 
-    $rootScope.message = 'Test de root message';
+    /*var push = PushNotification.init({
+        "android": {
+            "senderID": "959970759497",
+            "icon": "notification",
+            "iconColor": "blue",
+            "forceShow": "false"
+        },
+        "ios": {"alert": "true", "badge": "true", "sound": "true"},
+        "windows": {}
+    });
 
-    // Logout function is available in any pages
-    $rootScope.logout = function(){
-        $rootScope.message = 'Logged out.';
-        $http.post('/api/logout');
-    };
+    push.on('registration', function(data) {
+        $log.info("[App] Notification registration event " + JSON.stringify(data));
+        $rootScope.deviceToken = data.registrationId;
+    });
+
+    push.on('notification', function(data) {
+        $log.info("[App] Notification notification event " + JSON.stringify(data));
+        if (data.message !== undefined)
+            Notification(data.message);
+
+        push.finish(function () {
+            $log.info("[App] Notification notification event is finished");
+
+        });
+    });*/
+
 
 })
 
@@ -70,7 +90,7 @@ var app = angular.module('eve',['ui.router', 'ngSanitize', 'angularMoment', 'ang
         return {
             'responseError': function(response) {
                 if(response.status === 401 || response.status === 403) {
-                    $location.path('/login');
+                    $location.path('/app/login');
                 }
                 return $q.reject(response);
             }
@@ -78,14 +98,14 @@ var app = angular.module('eve',['ui.router', 'ngSanitize', 'angularMoment', 'ang
     });
 
     $stateProvider
-    .state('app', {
+        .state('app', {
         url: "/app",
         abstract: true,
         templateUrl: "templates/pages/mainTemplate.html",
         controller: 'AppCtrl'
     })
 
-    .state('app.login', {
+        .state('app.login', {
         url: "/login",
         views: {
             'pageContent':{
@@ -95,7 +115,7 @@ var app = angular.module('eve',['ui.router', 'ngSanitize', 'angularMoment', 'ang
         }
     })
 
-    .state('app.home', {
+        .state('app.home', {
         url: "/home",
         views: {
             'pageContent' :{

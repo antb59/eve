@@ -25,11 +25,23 @@ angular.module('eve.directives').directive('loginForm', ['$log', '$q', '$rootSco
                 $log.info("[LoginFormDirective] login - pageRequested : " + $rootScope.pageRequested);
                 var loginRequest = AuthenticationService.login(scope.user, $rootScope.pageRequested);
                 loginRequest.then(function(dataResolved) {
-                    $rootScope.user = scope.user;
-                    $rootScope.$broadcast('event:auth-loginConfirmed', scope.user, $rootScope.pageRequested);
+                    if (dataResolved.error) {
+                        $log.info("Unable to login : " + dataResolved.error);
+                        $rootScope.$broadcast('event:auth-login-failed', dataResolved.error);
+                        $rootScope.user = {
+                            username: null,
+                            password: null
+                        };
+                    }
+                    else {
+                        AuthenticationService.saveToken(dataResolved.token);
+                        $rootScope.user = scope.user;
+                        $rootScope.$broadcast('event:auth-loginConfirmed', scope.user, $rootScope.pageRequested);    
+                    }
+
                 },function(rejectReason) {
-                    $log.error("Impossible de se connecter : " + rejectReason);
-                    $rootScope.$broadcast('event:auth-login-failed', "wrong password");
+                    $log.error("Unable to login : " + rejectReason);
+                    $rootScope.$broadcast('event:auth-login-failed', rejectReason);
                     $rootScope.user = {
                         username: null,
                         password: null

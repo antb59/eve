@@ -2,6 +2,8 @@ angular.module('eve.controllers').controller('AppCtrl', function($rootScope, $sc
 
     $log.info("[AppCtrl] starting");  
 
+    $scope.currentUser = AuthenticationService.currentUser(); 
+
     // Using dynamic method `on`, which will set the variables initially and then update the variable on window resize
     $scope.desktopDisplay = screenSize.on('md, lg', function(match){
         $scope.desktopDisplay = match;
@@ -16,10 +18,12 @@ angular.module('eve.controllers').controller('AppCtrl', function($rootScope, $sc
     });
 
     $scope.$on('event:auth-logout-complete', function() {
-        $state.go('app.home', {}, {reload: true, inherit: false});
+        $log.info('[AppCtrl] event:auth-logout-complete');
+        $scope.goToLogin();
     });
 
     $scope.logout = function() {
+        $log.info("[AppCtrl] logout");  
         AuthenticationService.logout();       
     }
 

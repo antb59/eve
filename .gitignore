@@ -1,4 +1,8 @@
+platforms/
+plugins/
 node_modules/
 test/report/
 data/
 www/lib/
+cert.pem
+key.pem

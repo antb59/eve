@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.h4.eve" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+	<name>EVE Mobile</name>
+	<description>
+		EVE Mobile application.
+	</description>
+	<author email="" href="">
+		Antoine
+	</author>
+	<content src="index.html" />
+    <access origin="*" />
+    <preference name="fullscreen" value="false" />
+    <preference name="webviewbounce" value="false" />
+    <preference name="UIWebViewBounce" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="Orientation" value="default" />
+    <preference name="android-windowSoftInputMode" value="adjustPan" />
+
+	<!-- Don't store local date in an iCloud backup. Turn this to "cloud" to enable storage 
+		 to be sent to iCloud. Note: enabling this could result in Apple rejecting your app.
+	-->
+	<preference name="BackupWebStorage" value="none" />
+    <preference name="SplashScreen" value="screen" />
+    <preference name="SplashScreenDelay" value="5000" />
+    
+    <platform name="android">
+        <splash src="screen.png"/>
+        <icon src="icon.png"/>
+    </platform>
+    <platform name="ios">
+        <splash src="screen.png"  width="320" height="480" />
+        <splash src="screen.png"  width="640" height="960" />
+
+        <!-- iPhone 5 / iPod Touch (5th Generation) -->
+        <splash src="screen.png"  width="640" height="1136" />
+
+        <!-- iPad -->
+        <splash src="screen.png"  width="768" height="1024" />
+        <splash src="screen.png"  width="1024" height="768" />
+
+        <!-- Retina iPad -->
+        <splash src="screen.png"  width="1536" height="2048" />
+        <splash src="screen.png"  width="2048" height="1536" />
+        !-- iOS 7.0+ -->
+        <!-- iPhone / iPod Touch -->
+        <icon src="icon.png"/>
+
+    </platform>
+
+	<feature name="StatusBar">
+		<param name="ios-package" value="CDVStatusBar" onload="true" />
+	</feature>
+</widget>
+
