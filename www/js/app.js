@@ -1,8 +1,10 @@
 var app = angular.module('eve',['ui.router', 'ngSanitize', 'angularMoment', 'angular-md5', 'matchMedia', 'ui.bootstrap', 'eve.config', 'eve.services', 'eve.controllers', 'eve.directives', 'eve.filters', 'eve.tools'])
 
-.run(function($httpBackend, $log, $http, $rootScope, $state, $ionicPlatform, configuration, AuthenticationService, JsonFileReader, PushNotification) {
+.run(function($httpBackend, $log, $http, $rootScope, $state, configuration, AuthenticationService, JsonFileReader) {
     $log.debug("Running eve");
 
+    document.addEventListener("deviceready", onDeviceReady, false);
+    
     $rootScope.applicationMenus = configuration.menus;
     //$log.error("[App] Menus : " + JSON.stringify($rootScope.applicationMenus));
 
@@ -52,11 +54,10 @@ var app = angular.module('eve',['ui.router', 'ngSanitize', 'angularMoment', 'ang
         }
     });
 
-
-    $ionicPlatform.ready(function() {
+    function onDeviceReady() {
         var push = PushNotification.init({
             "android": {
-                "senderID": "959970759497",
+                "senderID": "203390195852",
                 "icon": "notification",
                 "iconColor": "blue",
                 "forceShow": "false"
@@ -80,8 +81,7 @@ var app = angular.module('eve',['ui.router', 'ngSanitize', 'angularMoment', 'ang
 
             });
         });
-    });
-
+    };
 
 })
 

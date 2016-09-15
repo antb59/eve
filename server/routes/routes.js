@@ -10,6 +10,8 @@ var express = require('express'),
     zwaveService = require('../services/zwaveService');
 
 
+if (!process.env.SECRET)
+    process.env.SECRET = "DEFAULT_SECRET"
 
 var auth = jwt({
     secret: process.env.SECRET,
