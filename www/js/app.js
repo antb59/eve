@@ -1,6 +1,6 @@
 var app = angular.module('eve',['ui.router', 'ngSanitize', 'angularMoment', 'angular-md5', 'matchMedia', 'ui.bootstrap', 'eve.config', 'eve.services', 'eve.controllers', 'eve.directives', 'eve.filters', 'eve.tools'])
 
-.run(function($httpBackend, $log, $http, $rootScope, $state, configuration, AuthenticationService, JsonFileReader) {
+.run(function($httpBackend, $log, $http, $rootScope, $state, $ionicPlatform, configuration, AuthenticationService, JsonFileReader, PushNotification) {
     $log.debug("Running eve");
 
     $rootScope.applicationMenus = configuration.menus;
@@ -52,32 +52,35 @@ var app = angular.module('eve',['ui.router', 'ngSanitize', 'angularMoment', 'ang
         }
     });
 
-    /*var push = PushNotification.init({
-        "android": {
-            "senderID": "959970759497",
-            "icon": "notification",
-            "iconColor": "blue",
-            "forceShow": "false"
-        },
-        "ios": {"alert": "true", "badge": "true", "sound": "true"},
-        "windows": {}
-    });
 
-    push.on('registration', function(data) {
-        $log.info("[App] Notification registration event " + JSON.stringify(data));
-        $rootScope.deviceToken = data.registrationId;
-    });
-
-    push.on('notification', function(data) {
-        $log.info("[App] Notification notification event " + JSON.stringify(data));
-        if (data.message !== undefined)
-            Notification(data.message);
-
-        push.finish(function () {
-            $log.info("[App] Notification notification event is finished");
-
+    $ionicPlatform.ready(function() {
+        var push = PushNotification.init({
+            "android": {
+                "senderID": "959970759497",
+                "icon": "notification",
+                "iconColor": "blue",
+                "forceShow": "false"
+            },
+            "ios": {"alert": "true", "badge": "true", "sound": "true"},
+            "windows": {}
         });
-    });*/
+
+        push.on('registration', function(data) {
+            $log.info("[App] Notification registration event " + JSON.stringify(data));
+            $rootScope.deviceToken = data.registrationId;
+        });
+
+        push.on('notification', function(data) {
+            $log.info("[App] Notification notification event " + JSON.stringify(data));
+            if (data.message !== undefined)
+                Notification(data.message);
+
+            push.finish(function () {
+                $log.info("[App] Notification notification event is finished");
+
+            });
+        });
+    });
 
 
 })
