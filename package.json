@@ -21,7 +21,6 @@
     "multer": "*",
     "natural": "*",
     "node-gcm": "*",
-    "openzwave-shared": "*",
     "passport": "*",
     "passport-local": "*",
     "serve-favicon": "*",
