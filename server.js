@@ -62,7 +62,6 @@ app.use(bodyParser.json());
 //app.use(multer());
 app.use(methodOverride());
 app.use(logger('dev'));
-app.use(express.static(path.join(__dirname, 'www')));
 app.use(errorHandler({
     dumpExceptions: true,
     showStack: true
@@ -76,6 +75,8 @@ app.use('/api', serverRoutes);
 app.get('/', function(req, res){
     res.render('index');
 });
+
+app.use(express.static(path.join(__dirname, 'www')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
