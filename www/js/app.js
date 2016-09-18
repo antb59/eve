@@ -1,10 +1,10 @@
-var app = angular.module('eve',['ui.router', 'ngSanitize', 'angularMoment', 'angular-md5', 'matchMedia', 'ui.bootstrap', 'eve.config', 'eve.services', 'eve.controllers', 'eve.directives', 'eve.filters', 'eve.tools'])
+var app = angular.module('eve',['ui.router', 'ngSanitize', 'angularMoment', 'angular-md5', 'matchMedia', 'ui.bootstrap', 'ui-notification', 'eve.config', 'eve.services', 'eve.controllers', 'eve.directives', 'eve.filters', 'eve.tools'])
 
-.run(function($httpBackend, $log, $http, $rootScope, $state, configuration, AuthenticationService, JsonFileReader) {
+.run(function($httpBackend, $log, $http, $rootScope, $state, configuration, AuthenticationService, JsonFileReader ,Notification) {
     $log.debug("Running eve");
 
     document.addEventListener("deviceready", onDeviceReady, false);
-    
+
     $rootScope.applicationMenus = configuration.menus;
     //$log.error("[App] Menus : " + JSON.stringify($rootScope.applicationMenus));
 
@@ -85,9 +85,19 @@ var app = angular.module('eve',['ui.router', 'ngSanitize', 'angularMoment', 'ang
 
 })
 
-.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider, NotificationProvider) {
 
     $httpProvider.defaults.withCredentials = true;
+
+    NotificationProvider.setOptions({
+        delay: 2000,
+        startTop: 10,
+        startRight: 10,
+        verticalSpacing: 10,
+        horizontalSpacing: 10,
+        positionX: 'right',
+        positionY: 'bottom'
+    });
 
     $httpProvider.interceptors.push(function($q, $location) {
         return {

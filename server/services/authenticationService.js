@@ -1,6 +1,7 @@
 var passport = require('passport');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var util = require('util');
 
 module.exports.register = function(req, res) {
     var user = new User();
@@ -31,6 +32,8 @@ module.exports.login = function(req, res) {
 
         // If a user is found
         if(user){
+            if (req.body.deviceToken)
+                user.setDeviceToken(req.body.deviceToken);
             token = user.generateJwt();
             res.status(200);
             res.json({

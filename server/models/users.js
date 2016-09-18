@@ -9,7 +9,8 @@ var userSchema = new mongoose.Schema({
         required: true
     },
     hash: String,
-    salt: String
+    salt: String,
+    deviceToken: String
 });
 
 userSchema.methods.setPassword = function(password){
@@ -32,6 +33,11 @@ userSchema.methods.generateJwt = function() {
         username: this.username,
         exp: parseInt(expiry.getTime() / 1000),
     }, process.env.SECRET);
+};
+
+userSchema.methods.setDeviceToken = function(deviceToken){
+    console.log("User Set DeviceToken : " + password);
+    this.deviceToken = deviceToken;
 };
 
 mongoose.model('User', userSchema);

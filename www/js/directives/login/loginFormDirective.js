@@ -6,7 +6,8 @@ angular.module('eve.directives').directive('loginForm', ['$log', '$q', '$rootSco
 
             scope.user = {
                 username: null,
-                password: null
+                password: null,
+                deviceToken: $rootScope.deviceToken
             };
 
             scope.rememberMeSelected = false;
@@ -30,7 +31,8 @@ angular.module('eve.directives').directive('loginForm', ['$log', '$q', '$rootSco
                         $rootScope.$broadcast('event:auth-login-failed', dataResolved.error);
                         $rootScope.user = {
                             username: null,
-                            password: null
+                            password: null,
+                            deviceToken: null
                         };
                     }
                     else {
@@ -44,7 +46,8 @@ angular.module('eve.directives').directive('loginForm', ['$log', '$q', '$rootSco
                     $rootScope.$broadcast('event:auth-login-failed', rejectReason);
                     $rootScope.user = {
                         username: null,
-                        password: null
+                        password: null,
+                        deviceToken: null
                     };
                 },function(notifyValue) {
                     $log.info("Connexion de l'utilisateur");
