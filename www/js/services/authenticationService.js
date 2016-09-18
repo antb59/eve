@@ -52,6 +52,12 @@ angular.module('eve.services', ['http-auth-interceptor']).factory('Authenticatio
             $log.info("AuthenticationService logout")
             $window.localStorage.removeItem('eve-token');
             $rootScope.$broadcast('event:auth-logout-complete');
+        },
+
+        test: function() {
+            $log.info("AuthenticationService logout")
+            return RequestSender.sendRequest("GET","test",'');
+
         }
 
         /*login: function(user, pageRequested) {
