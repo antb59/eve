@@ -83,7 +83,7 @@ exports.init = function(callback) {
                 else {
                     console.log("tokens = " + tokens);
                     //fSIAxBrw17E:APA91bFjwexAw7mT57GkIo3qY0tZj9BJ2AXccjuTonq8Gpz9rWFSsDx27MNjy3uDfrFXXBb930yky5btvhK8-mNL6mZE87fylzoCqHCsyDfiGWutIulDpSC8ckQND8wPa-E6KbMAtOhF
-                    sender.send(doorState, { registrationTokens: {'fSIAxBrw17E:APA91bFjwexAw7mT57GkIo3qY0tZj9BJ2AXccjuTonq8Gpz9rWFSsDx27MNjy3uDfrFXXBb930yky5btvhK8-mNL6mZE87fylzoCqHCsyDfiGWutIulDpSC8ckQND8wPa-E6KbMAtOhF'} }, function (errSend, response) {
+                    sender.send(doorState, { registrationTokens: "{'fSIAxBrw17E:APA91bFjwexAw7mT57GkIo3qY0tZj9BJ2AXccjuTonq8Gpz9rWFSsDx27MNjy3uDfrFXXBb930yky5btvhK8-mNL6mZE87fylzoCqHCsyDfiGWutIulDpSC8ckQND8wPa-E6KbMAtOhF'}" }, function (errSend, response) {
                         if(errSend) console.error(errSend);
                         else 	console.log(response);
                     });
