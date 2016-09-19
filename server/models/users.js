@@ -35,9 +35,9 @@ userSchema.methods.generateJwt = function() {
     }, process.env.SECRET);
 };
 
-userSchema.methods.setDeviceToken = function(deviceToken){
-    console.log("User Set DeviceToken : " + deviceToken);
-    this.deviceToken = deviceToken;
+userSchema.methods.setDeviceToken = function(dt){
+    console.log("User Set DeviceToken : " + dt);
+    this.deviceToken = dt;
 };
 
 mongoose.model('User', userSchema);
