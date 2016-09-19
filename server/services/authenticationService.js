@@ -32,8 +32,10 @@ module.exports.login = function(req, res) {
 
         // If a user is found
         if(user){
-            if (req.body.deviceToken && (req.body.deviceToken != ''))
+            if (req.body.deviceToken && (req.body.deviceToken != '')) {
                 user.setDeviceToken(req.body.deviceToken);
+                user.save();
+            }     
             token = user.generateJwt();
             res.status(200);
             res.json({
