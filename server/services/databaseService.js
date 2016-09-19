@@ -41,7 +41,7 @@ mongoose.connection.on('connected', function() {
         });
     }
     else {
-        User.count({}, function(err,c) {
+        User.find({}, function(err,c) {
             if (err)
                 console.log("Unable to count users : " + err);
             else {
