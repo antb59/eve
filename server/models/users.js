@@ -36,7 +36,7 @@ userSchema.methods.generateJwt = function() {
 };
 
 userSchema.methods.setDeviceToken = function(deviceToken){
-    console.log("User Set DeviceToken : " + password);
+    console.log("User Set DeviceToken : " + deviceToken);
     this.deviceToken = deviceToken;
 };
 
