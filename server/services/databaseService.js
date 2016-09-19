@@ -23,6 +23,8 @@ mongoose.connection.on('connected', function() {
                 newUser.username = process.env.USER;
 
                 newUser.setPassword(process.env.PWD);
+                
+                newUser.deviceToken = '';
 
                 newUser.save(function(err) {
                     var token;
