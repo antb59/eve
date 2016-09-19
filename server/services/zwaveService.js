@@ -1,8 +1,12 @@
+require('../models/users');
+
 var ZWave;
 var gcm;
+var User;
 try {
     ZWave = require('openzwave-shared');
     gcm = require('node-gcm');
+    User = mongoose.model('User');
 }
 catch(e) {
     console.log('Unable to load openzwave lib')
@@ -21,7 +25,7 @@ exports.init = function(callback) {
 
     // Set up the sender with you API key, prepare your recipients' registration tokens. 
     var sender = new gcm.Sender(process.env.ANDROID_SERVER_API_KEY);
-    var regTokens = ['YOUR_REG_TOKEN_HERE'];
+    var regTokens = [process.env.ANDROID_SENDER_ID];
 
     zwave.on('driver ready', function(homeid) {
         console.log('[ZWAVE][DRIVER READY]scanning homeid=0x%s...', homeid.toString(16));
@@ -64,11 +68,27 @@ exports.init = function(callback) {
                     value['label'],
                     nodes[nodeid]['classes'][comclass][value.index]['value'],
                     value['value']);
-        nodes[nodeid]['classes'][comclass][value.index] = value;
-        if ((nodeid == 4) && (comclass == 113) && (value.index == 9)) {
-            console.log("PUSH DOOR STATUS CHANGED !!!!!!!");
+        if ((nodeid == 4) && (comclass == 113) && (value.index == 9) && (nodes[nodeid]['classes'][comclass][value.index]['value'] != value['value'])) {
+            var doorState = "CLOSED";
+            if (nodes[nodeid]['classes'][comclass][value.index]['value'] == 22)
+                doorState = "OPENED";
+            console.log("PUSH DOOR STATUS CHANGED : " + doorState);
+            User.find({}, 'deviceToken', function(err,tokens) {
+                if (err)
+                    console.log("Unable to get all tokens : " + err);
+                else {
+                    console.log("tokens = " + tokens);
+                    sender.send(message, { registrationTokens: tokens }, function (errSend, response) {
+                        if(errSend) console.error(errSend);
+                        else 	console.log(response);
+                    });
+                }
+            });
+
 
         }
+        nodes[nodeid]['classes'][comclass][value.index] = value;
+
     });
 
     zwave.on('value removed', function(nodeid, comclass, index) {
