@@ -86,7 +86,7 @@ exports.init = function(callback) {
                         data: { doorStatus: doorState }
                     });
                     //fSIAxBrw17E:APA91bFjwexAw7mT57GkIo3qY0tZj9BJ2AXccjuTonq8Gpz9rWFSsDx27MNjy3uDfrFXXBb930yky5btvhK8-mNL6mZE87fylzoCqHCsyDfiGWutIulDpSC8ckQND8wPa-E6KbMAtOhF
-                    sender.send(message, { registrationTokens: "{'fSIAxBrw17E:APA91bFjwexAw7mT57GkIo3qY0tZj9BJ2AXccjuTonq8Gpz9rWFSsDx27MNjy3uDfrFXXBb930yky5btvhK8-mNL6mZE87fylzoCqHCsyDfiGWutIulDpSC8ckQND8wPa-E6KbMAtOhF'}" }, function (errSend, response) {
+                    sender.send(message, { registrationTokens: ['fSIAxBrw17E:APA91bFjwexAw7mT57GkIo3qY0tZj9BJ2AXccjuTonq8Gpz9rWFSsDx27MNjy3uDfrFXXBb930yky5btvhK8-mNL6mZE87fylzoCqHCsyDfiGWutIulDpSC8ckQND8wPa-E6KbMAtOhF'] }, function (errSend, response) {
                         if(errSend) console.error(errSend);
                         else 	console.log(response);
                     });
