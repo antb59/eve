@@ -1,11 +1,15 @@
 require('../models/users');
+ 
 
 var ZWave;
 var gcm;
+var mongoose;
 var User;
+
 try {
     ZWave = require('openzwave-shared');
     gcm = require('node-gcm');
+    mongoose = require('mongoose');
     User = mongoose.model('User');
 }
 catch(e) {
@@ -70,7 +74,7 @@ exports.init = function(callback) {
                     value['value']);
         if ((nodeid == 4) && (comclass == 113) && (value.index == 9) && (nodes[nodeid]['classes'][comclass][value.index]['value'] != value['value'])) {
             var doorState = "CLOSED";
-            if (nodes[nodeid]['classes'][comclass][value.index]['value'] == 22)
+            if (value['value'] == 22)
                 doorState = "OPENED";
             console.log("PUSH DOOR STATUS CHANGED : " + doorState);
             User.find({}, 'deviceToken', function(err,tokens) {
@@ -78,7 +82,7 @@ exports.init = function(callback) {
                     console.log("Unable to get all tokens : " + err);
                 else {
                     console.log("tokens = " + tokens);
-                    sender.send(message, { registrationTokens: tokens }, function (errSend, response) {
+                    sender.send(doorState, { registrationTokens: tokens }, function (errSend, response) {
                         if(errSend) console.error(errSend);
                         else 	console.log(response);
                     });
