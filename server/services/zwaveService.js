@@ -77,12 +77,13 @@ exports.init = function(callback) {
             if (value['value'] == 22)
                 doorState = "OPENED";
             console.log("PUSH DOOR STATUS CHANGED : " + doorState);
-            User.find({}, 'deviceToken -id', function(err,tokens) {
+            User.find({}, 'deviceToken', function(err,tokens) {
                 if (err)
                     console.log("Unable to get all tokens : " + err);
                 else {
                     console.log("tokens = " + tokens);
-                    sender.send(doorState, { registrationTokens: tokens }, function (errSend, response) {
+                    //fSIAxBrw17E:APA91bFjwexAw7mT57GkIo3qY0tZj9BJ2AXccjuTonq8Gpz9rWFSsDx27MNjy3uDfrFXXBb930yky5btvhK8-mNL6mZE87fylzoCqHCsyDfiGWutIulDpSC8ckQND8wPa-E6KbMAtOhF
+                    sender.send(doorState, { registrationTokens: {'fSIAxBrw17E:APA91bFjwexAw7mT57GkIo3qY0tZj9BJ2AXccjuTonq8Gpz9rWFSsDx27MNjy3uDfrFXXBb930yky5btvhK8-mNL6mZE87fylzoCqHCsyDfiGWutIulDpSC8ckQND8wPa-E6KbMAtOhF'} }, function (errSend, response) {
                         if(errSend) console.error(errSend);
                         else 	console.log(response);
                     });
