@@ -77,7 +77,7 @@ exports.init = function(callback) {
             if (value['value'] == 22)
                 doorState = "OPENED";
             console.log("PUSH DOOR STATUS CHANGED : " + doorState);
-            User.find({}, 'deviceToken', function(err,tokens) {
+            User.find({}, 'deviceToken -id', function(err,tokens) {
                 if (err)
                     console.log("Unable to get all tokens : " + err);
                 else {
