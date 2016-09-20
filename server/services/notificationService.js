@@ -33,7 +33,6 @@ var notifyUsers = exports.notifyUsers = function(title, msg, users, callback) {
         message.addData('title', title);
         message.addData('message', msg);
         message.addData('ledColor', [255, 255, 255, 255]);
-        message.addData('style', 'inbox');
         //message.addData('summaryText', 'There are %n% notifications');
 
         sender.send(message, { registrationTokens: tokens }, function (errSend, response) {
