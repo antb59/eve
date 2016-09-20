@@ -59,7 +59,6 @@ var app = angular.module('eve',['ui.router', 'ngSanitize', 'angularMoment', 'ang
             "android": {
                 "senderID": "203390195852",
                 "icon": "notification",
-                "iconColor": "blue",
                 "forceShow": "false"
             },
             "ios": {"alert": "true", "badge": "true", "sound": "true"},

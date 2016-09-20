@@ -7,7 +7,8 @@ var express = require('express'),
     bookmarksCommand = require('./commands/bookmarksCommand'),
     interpreterCommand = require('./commands/interpreterCommand'),
     authenticationService = require('../services/authenticationService'),
-    zwaveService = require('../services/zwaveService');
+    zwaveService = require('../services/zwaveService'),
+    notificationService = require('../services/notificationService');
 
 
 if (!process.env.SECRET)
@@ -75,6 +76,7 @@ router.post('/deleteBookmark', bookmarksCommand.deleteBookmark);
 router.get('/getTemperature', zwaveService.getTemperature);
 router.get('/getLuminance', zwaveService.getLuminance);
 router.get('/getDoorStatus', zwaveService.getDoorStatus);
+router.get('/testPush', notificationService.testNotifications);
 
 // profile
 //router.get('/profile', auth, ctrlProfile.profileRead);
