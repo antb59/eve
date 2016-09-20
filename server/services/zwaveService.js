@@ -1,6 +1,7 @@
 var ZWave;
 var gcm;
 var notificationService;
+var moment;
 
 try {
     ZWave = require('openzwave-shared');
@@ -69,7 +70,7 @@ exports.init = function(callback) {
             if (value['value'] == 22)
                 doorState = "opened";
             console.log("PUSH DOOR STATUS CHANGED : " + doorState);
-            notificationService.notifyAllUsers('Door state changed', moment().format('hh:mm:ss')+' - the door is ' + doorState, function(err,response){});
+            notificationService.notifyAllUsers('Door state changed', moment().format('hh:mm:ss') + ' - the door is ' + doorState, function(err,response){});
         }
         nodes[nodeid]['classes'][comclass][value.index] = value;
 
@@ -156,8 +157,7 @@ exports.init = function(callback) {
 
     zwave.on('scan complete', function() {
         console.log('[ZWAVE][SCAN COMPLETE] ====> scan complete, hit ^C to finish.');
-        var time =  moment().format('hh:mm:ss')
-        notificationService.notifyAllUsers('Eve is ready', time + ' - Zwave scan complete', function(err,response){});
+        notificationService.notifyAllUsers('Eve is ready', moment().format('hh:mm:ss') + ' - Zwave scan complete', function(err,response){});
         // zwave.setValue(1,37,1,0,true);
         // zwave.refreshNodeInfo(4);
         // console.log(util.inspect(zwave, true, null));
