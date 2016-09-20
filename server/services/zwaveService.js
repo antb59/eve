@@ -1,19 +1,15 @@
-require('../models/users');
-
-
 var ZWave;
 var gcm;
-var mongoose;
-var User;
+var notificationService;
 
 try {
     ZWave = require('openzwave-shared');
     gcm = require('node-gcm');
-    mongoose = require('mongoose');
-    User = mongoose.model('User');
+    notificationService = require('notificationService');
+    moment = require('moment');
 }
 catch(e) {
-    console.log('Unable to load openzwave lib')
+    console.log('Unable to load lib')
     console.log(e)
 }
 
@@ -26,10 +22,6 @@ exports.init = function(callback) {
         ConsoleOutput: false, // enable console logging
         UserPath: "/home/pi/eve/eve/node_modules/openzwave-shared/config"
     });
-
-    // Set up the sender with you API key, prepare your recipients' registration tokens. 
-    var sender = new gcm.Sender(process.env.ANDROID_SERVER_API_KEY);
-    var regTokens = [process.env.ANDROID_SENDER_ID];
 
     zwave.on('driver ready', function(homeid) {
         console.log('[ZWAVE][DRIVER READY]scanning homeid=0x%s...', homeid.toString(16));
@@ -73,27 +65,11 @@ exports.init = function(callback) {
                     nodes[nodeid]['classes'][comclass][value.index]['value'],
                     value['value']);
         if ((nodeid == 4) && (comclass == 113) && (value.index == 9) && (nodes[nodeid]['classes'][comclass][value.index]['value'] != value['value'])) {
-            var doorState = "CLOSED";
+            var doorState = "closed";
             if (value['value'] == 22)
-                doorState = "OPENED";
+                doorState = "opened";
             console.log("PUSH DOOR STATUS CHANGED : " + doorState);
-            User.find({}, 'deviceToken', function(err,tokens) {
-                if (err)
-                    console.log("Unable to get all tokens : " + err);
-                else {
-                    console.log("tokens = " + tokens);
-                    var message = new gcm.Message({
-                        data: { doorStatus: doorState }
-                    });
-                    //fSIAxBrw17E:APA91bFjwexAw7mT57GkIo3qY0tZj9BJ2AXccjuTonq8Gpz9rWFSsDx27MNjy3uDfrFXXBb930yky5btvhK8-mNL6mZE87fylzoCqHCsyDfiGWutIulDpSC8ckQND8wPa-E6KbMAtOhF
-                    sender.send(message, { registrationTokens: ['fSIAxBrw17E:APA91bFjwexAw7mT57GkIo3qY0tZj9BJ2AXccjuTonq8Gpz9rWFSsDx27MNjy3uDfrFXXBb930yky5btvhK8-mNL6mZE87fylzoCqHCsyDfiGWutIulDpSC8ckQND8wPa-E6KbMAtOhF'] }, function (errSend, response) {
-                        if(errSend) console.error(errSend);
-                        else 	console.log(response);
-                    });
-                }
-            });
-
-
+            notificationService.notifyAllUsers('Door state changed', moment().format('hh:mm:ss')+' - the door is ' + doorState);
         }
         nodes[nodeid]['classes'][comclass][value.index] = value;
 

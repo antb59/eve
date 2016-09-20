@@ -16,6 +16,7 @@
     "https": "*",
     "jsonwebtoken": "*",
     "method-override": "*",
+    "moment": "^2.15.0",
     "mongoose": "*",
     "morgan": "*",
     "multer": "*",

@@ -3,20 +3,18 @@ var gcm = require('node-gcm'),
     mongoose = require('mongoose'),
     User = mongoose.model('User');
 
-exports.init = function(callback) {};
-
-exports.notifyAllUsers = function(callback){
+exports.notifyAllUsers = function(title, message, callback){
     User.find({}, function(err,users) {
         if (err) {
             console.error("Unable to notifyAllUsers : " + err);
         }
         else {
-            notifyUsers(users, callback);
+            notifyUsers(title, message, users, callback);
         }
     });
 };
 
-exports.notifyUsers = function(users, callback) {
+exports.notifyUsers = function(title, message, users, callback) {
     var tokens = [];
     for (var user in users) {
         if (user.deviceToken)
@@ -27,23 +25,24 @@ exports.notifyUsers = function(users, callback) {
     }
     else {
         console.log("Tokens = " + tokens);
-        var message = new gcm.Message({
-            collapseKey: 'Eve',
-            priority: 'high',
-            restrictedPackageName: "somePackageName",
-            data: {
-                key1: 'message1',
-                key2: 'message2'
-            },
-            notification: {
-                title: "Titre de notification",
-                body: "Message de notification."
-            }
-        });
+        var proxy = process.env.PROXY;
+        var sender = new gcm.Sender(process.env.ANDROID_SERVER_API_KEY,{'proxy': proxy});
+
+        var message = new gcm.Message();
+        message.addData('title', title);
+        message.addData('message', message);
+        message.addData('ledColor', [255, 255, 255, 255]);
+        message.addData('style', 'inbox');
+        //message.addData('summaryText', 'There are %n% notifications');
 
         sender.send(message, { registrationTokens: tokens }, function (errSend, response) {
-            if(errSend) console.error(errSend);
-            else 	console.log(response);
+            if(errSend) {
+                console.error(errSend);
+                callback(errSend,null);
+            }
+            else {
+                callback(null, response);
+            }
         });
     }
 };
