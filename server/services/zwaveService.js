@@ -158,7 +158,9 @@ exports.init = function(callback) {
     zwave.on('scan complete', function() {
         console.log('[ZWAVE][SCAN COMPLETE] ====> scan complete, hit ^C to finish.');
         var time = "" + moment().format('hh:mm:ss');
-        notificationService.notifyAllUsers('Eve is ready', time + ' - Zwave scan complete', function(err,response){});
+        console.log(time);
+        var msg = time + ' - Zwave scan complete';
+        notificationService.notifyAllUsers('Eve is ready', msg , function(err,response){});
         // zwave.setValue(1,37,1,0,true);
         // zwave.refreshNodeInfo(4);
         // console.log(util.inspect(zwave, true, null));
