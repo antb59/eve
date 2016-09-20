@@ -3,18 +3,18 @@ var gcm = require('node-gcm'),
     mongoose = require('mongoose'),
     User = mongoose.model('User');
 
-exports.notifyAllUsers = function(title, message, callback){
+exports.notifyAllUsers = function(title, msg, callback){
     User.find({}, function(err,users) {
         if (err) {
             console.error("Unable to notifyAllUsers : " + err);
         }
         else {
-            notifyUsers(title, message, users, callback);
+            notifyUsers(title, msg, users, callback);
         }
     });
 };
 
-var notifyUsers = exports.notifyUsers = function(title, message, users, callback) {
+var notifyUsers = exports.notifyUsers = function(title, msg, users, callback) {
     var tokens = [];
     var i;
     for (i = 0; i < users.length; i++) {
@@ -31,7 +31,7 @@ var notifyUsers = exports.notifyUsers = function(title, message, users, callback
 
         var message = new gcm.Message();
         message.addData('title', title);
-        message.addData('message', message);
+        message.addData('message', msg);
         message.addData('ledColor', [255, 255, 255, 255]);
         message.addData('style', 'inbox');
         //message.addData('summaryText', 'There are %n% notifications');
