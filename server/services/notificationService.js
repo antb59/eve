@@ -16,9 +16,10 @@ exports.notifyAllUsers = function(title, message, callback){
 
 var notifyUsers = exports.notifyUsers = function(title, message, users, callback) {
     var tokens = [];
-    for (var user in users) {
-        if (user.deviceToken)
-            tokens.push(user.deviceToken);
+    var i;
+    for (i = 0; i < users.length; i++) {
+        if (users[i].deviceToken)
+            tokens.push(users[i].deviceToken);
     }
     if (tokens.length == 0) {
         console.error("No token found for users list " + JSON.stringify(users));    
