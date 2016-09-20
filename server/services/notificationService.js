@@ -9,12 +9,12 @@ exports.notifyAllUsers = function(title, message, callback){
             console.error("Unable to notifyAllUsers : " + err);
         }
         else {
-            this.notifyUsers(title, message, users, callback);
+            notifyUsers(title, message, users, callback);
         }
     });
 };
 
-exports.notifyUsers = function(title, message, users, callback) {
+var notifyUsers = exports.notifyUsers = function(title, message, users, callback) {
     var tokens = [];
     for (var user in users) {
         if (user.deviceToken)
