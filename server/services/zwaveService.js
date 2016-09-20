@@ -5,7 +5,7 @@ var notificationService;
 try {
     ZWave = require('openzwave-shared');
     gcm = require('node-gcm');
-    notificationService = require('notificationService');
+    notificationService = require('./notificationService');
     moment = require('moment');
 }
 catch(e) {
