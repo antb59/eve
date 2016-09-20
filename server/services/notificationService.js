@@ -9,7 +9,7 @@ exports.notifyAllUsers = function(title, message, callback){
             console.error("Unable to notifyAllUsers : " + err);
         }
         else {
-            notifyUsers(title, message, users, callback);
+            this.notifyUsers(title, message, users, callback);
         }
     });
 };
