@@ -18,7 +18,8 @@ var express = require('express'),
     log = require('custom-logger').config({ level: 0 }),
     databaseService = require('./server/services/databaseService'),
     passportService = require('./server/services/passportService'),
-    zwaveService = require('./server/services/zwaveService'),
+    eventsService = require('./server/services/eventsService'),
+    homeControlService = require('./server/services/homeControlService'),
     serverRoutes = require('./server/routes/routes');
 
 
@@ -127,8 +128,9 @@ var port = process.env.PORT || 7778;
 
 https.createServer(options, app).listen(port, function(){
     console.log('Express server listening on port ' + port);
+    eventsService.store('EVE','Eve is starting');
 });
 
-zwaveService.init();
+homeControlService.init();
 
 

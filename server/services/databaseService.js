@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 // BRING IN YOUR SCHEMAS & MODELS
 require('../models/users');
+require('../models/events');
 
 var gracefulShutdown;
 var dbURI = "mongodb://localhost/data";
@@ -10,6 +11,7 @@ mongoose.connect(dbURI);
 // CONNECTION EVENTS
 mongoose.connection.on('connected', function() {
     var User = mongoose.model('User');
+    var Event = mongoose.model('Event');
     console.log('Mongoose connected to ' + dbURI);
 
     if (process.env.FIRST_TIME) {
@@ -39,6 +41,14 @@ mongoose.connection.on('connected', function() {
                         }
                     });
                 });
+            }
+        });
+        
+        Event.remove({},function(err) {
+            if (err)
+                console.log("Unable to remove all events : " + err);
+            else {
+                console.log("Events removed.");
             }
         });
     }

@@ -7,7 +7,8 @@ var express = require('express'),
     bookmarksCommand = require('./commands/bookmarksCommand'),
     interpreterCommand = require('./commands/interpreterCommand'),
     authenticationService = require('../services/authenticationService'),
-    zwaveService = require('../services/zwaveService'),
+    eventsService = require('../services/eventsService'),
+    homeControlService = require('../services/homeControlService'),
     notificationService = require('../services/notificationService');
 
 
@@ -73,10 +74,10 @@ router.post('/interpretCommand', interpreterCommand.interpretCommand);
 router.post('/pushNotification', pushNotificationsCommand.pushNotification);
 router.post('/addBookmark', ensureAuthenticated, bookmarksCommand.addBookmark);
 router.post('/deleteBookmark', bookmarksCommand.deleteBookmark);
-router.get('/getTemperature', zwaveService.getTemperature);
-router.get('/getLuminance', zwaveService.getLuminance);
-router.get('/getDoorStatus', zwaveService.getDoorStatus);
-router.get('/testPush', notificationService.testNotifications);
+router.get('/getTemperature', homeControlService.getTemperature);
+router.get('/getLuminance', homeControlService.getLuminance);
+router.get('/getDoorStatus', homeControlService.getDoorStatus);
+router.get('/getEvents', eventsService.getEvents);
 
 // profile
 //router.get('/profile', auth, ctrlProfile.profileRead);

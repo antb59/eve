@@ -24,3 +24,9 @@ Also, you will want to download the google-services.json file and copy it to the
 
 cordova platform add android
 cordova plugin add phonegap-plugin-push --variable SENDER_ID="XXXXXXXXX"
+
+
+TODO :
+ - Notification translate
+ - Log with Winston
+ - Events viewing on front side
