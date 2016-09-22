@@ -67,13 +67,35 @@ exports.init = function(callback) {
                     value['label'],
                     nodes[nodeid]['classes'][comclass][value.index]['value'],
                     value['value']);
+        
+        // DOOR STATUS CHANGED
+        // COMCLASS = 13
+        // VALUE INDEX = 9
         if ((nodeid == 4) && (comclass == 113) && (value.index == 9) && (nodes[nodeid]['classes'][comclass][value.index]['value'] != value['value'])) {
             var doorState = "closed";
             if (value['value'] == 22)
                 doorState = "opened";
             console.log("PUSH DOOR STATUS CHANGED : " + doorState);
+            eventsService.store('DOOR','DOOR ' + doorState.toUpperCase());
             notificationService.notifyAllUsers('Door state changed', moment().format('hh:mm:ss') + ' - the door is ' + doorState, function(err,response){});
         }
+        
+        // TEMPERATURE CHANGED
+        // COMCLASS = 49
+        // VALUE INDEX = 3
+        if ((nodeid == 4) && (comclass == 49) && (value.index == 3) && (nodes[nodeid]['classes'][comclass][value.index]['value'] != value['value'])) {
+            var tempInCelsus = ((value['value'] - 32)*5/9).toFixed(1);
+            eventsService.store('TEMPERATURE', tempInCelsus);
+        }
+        
+        // LUMINANCE CHANGED
+        // COMCLASS = 49
+        // VALUE INDEX = 1
+        if ((nodeid == 4) && (comclass == 49) && (value.index == 1) && (nodes[nodeid]['classes'][comclass][value.index]['value'] != value['value'])) {
+            var lum = ((value['value'])*1);
+            eventsService.store('LUMINANCE', 1);
+        }
+        
         nodes[nodeid]['classes'][comclass][value.index] = value;
 
     });
@@ -160,7 +182,7 @@ exports.init = function(callback) {
     zwave.on('scan complete', function() {
         console.log('[ZWAVE][SCAN COMPLETE] ====> scan complete, hit ^C to finish.');
         var time = "" + moment().format('hh:mm:ss');
-        eventsService.store('EVE','Home control is ready');
+        eventsService.store('EVE','HOMECONTROL READY');
         notificationService.notifyAllUsers('Home control is ready', moment().format('hh:mm:ss') + ' - Zwave scan complete', function(err,response){});
         // zwave.setValue(1,37,1,0,true);
         // zwave.refreshNodeInfo(4);

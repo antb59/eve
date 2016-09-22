@@ -30,3 +30,5 @@ TODO :
  - Notification translate
  - Log with Winston
  - Events viewing on front side
+ - Design improvements
+ - Administration & monitoring module

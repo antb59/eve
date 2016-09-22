@@ -3,6 +3,8 @@ var mongoose = require('mongoose');
 require('../models/users');
 require('../models/events');
 
+
+var eventsService = require('../services/eventsService');
 var gracefulShutdown;
 var dbURI = "mongodb://localhost/data";
 
@@ -12,6 +14,7 @@ mongoose.connect(dbURI);
 mongoose.connection.on('connected', function() {
     var User = mongoose.model('User');
     var Event = mongoose.model('Event');
+    eventsService.store('EVE','CONNECTED TO DATABASE');
     console.log('Mongoose connected to ' + dbURI);
 
     if (process.env.FIRST_TIME) {
