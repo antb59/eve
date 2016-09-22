@@ -1,0 +1,7 @@
+{
+    "FRONT_DOOR":                       "Porte d'entrée",
+    "FRONT_DOOR_IS_OPENED":             "La porte d'entrée est ouverte",
+    "FRONT_DOOR_IS_CLOSED":             "La porte d'entrée est fermée",
+    "HOME_CONTROL_READY":               "HomeControl activé",
+    "SERVER_STARTED":                   "Serveur démarré"
+}

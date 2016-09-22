@@ -1,15 +1,14 @@
 var ZWave;
-var gcm;
-var notificationService;
-var eventsService;
-var moment;
+var translationService = require('./translationService'),
+    notificationService = require('./notificationService'),
+    eventsService = require('./eventsService'),
+    moment = require('moment');
+    
+ 
 
 try {
     ZWave = require('openzwave-shared');
-    gcm = require('node-gcm');
-    notificationService = require('./notificationService');
-    eventsService = require('./eventsService');
-    moment = require('moment');
+    
 }
 catch(e) {
     console.log('Unable to load lib')
@@ -76,8 +75,9 @@ exports.init = function(callback) {
             if (value['value'] == 22)
                 doorState = "opened";
             console.log("PUSH DOOR STATUS CHANGED : " + doorState);
-            eventsService.store('DOOR','DOOR ' + doorState.toUpperCase());
-            notificationService.notifyAllUsers('Door state changed', moment().format('hh:mm:ss') + ' - the door is ' + doorState, function(err,response){});
+            eventsService.store('DOOR','FRONT DOOR ' + doorState.toUpperCase());
+            var notifMsg = moment().format('hh:mm:ss') + ' - ' + translationService.translate('FRONT_DOOR_IS' + doorState.toUpperCase());
+            notificationService.notifyAllUsers(translationService.translate('FRONT_DOOR'), notifMsg, function(err,response){});
         }
         
         // TEMPERATURE CHANGED
@@ -183,7 +183,7 @@ exports.init = function(callback) {
         console.log('[ZWAVE][SCAN COMPLETE] ====> scan complete, hit ^C to finish.');
         var time = "" + moment().format('hh:mm:ss');
         eventsService.store('EVE','HOMECONTROL READY');
-        notificationService.notifyAllUsers('Home control is ready', moment().format('hh:mm:ss') + ' - Zwave scan complete', function(err,response){});
+        notificationService.notifyAllUsers(translationService.translate('HOME_CONTROL_READY'), moment().format('hh:mm:ss') + ' - Zwave scan complete', function(err,response){});
         // zwave.setValue(1,37,1,0,true);
         // zwave.refreshNodeInfo(4);
         // console.log(util.inspect(zwave, true, null));

@@ -16,10 +16,12 @@ var express = require('express'),
     fs = require('fs'),
     moment = require('moment'),
     log = require('custom-logger').config({ level: 0 }),
+    translationService = require('./server/services/translationService'),
     databaseService = require('./server/services/databaseService'),
     passportService = require('./server/services/passportService'),
     eventsService = require('./server/services/eventsService'),
     homeControlService = require('./server/services/homeControlService'),
+    notificationService = require('./server/services/notificationService'),
     serverRoutes = require('./server/routes/routes');
 
 
@@ -129,6 +131,7 @@ var port = process.env.PORT || 7778;
 https.createServer(options, app).listen(port, function(){
     console.log('Express server listening on port ' + port);
     eventsService.store('EVE','SERVER STARTED');
+    notificationService.notifyAllUsers(translationService.translate('SERVER_STARTED'), moment().format('hh:mm:ss') + ' - Server is started', function(err,response){});
 });
 
 homeControlService.init();

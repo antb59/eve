@@ -29,7 +29,7 @@ mongoose.connection.on('connected', function() {
 
                 newUser.setPassword(process.env.PWD);
                 
-                newUser.deviceToken = '';
+                newUser.deviceToken = 'e7zxkcJKD2Q:APA91bHXHxkM8ylh-0SouBYXBGxSu0jy3DH9G6-CLaOi1SQHQ64gJySuniW2oMwqTpYXPOlV_E_8fUfkDcfXMV6EJveODIHso7SpDcVlTjUHHBDaryDSxbPDfYKuKgk89s7i0hYfDngr';
 
                 newUser.save(function(err) {
                     var token;
