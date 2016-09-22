@@ -76,7 +76,7 @@ exports.init = function(callback) {
                 doorState = "opened";
             console.log("PUSH DOOR STATUS CHANGED : " + doorState);
             eventsService.store('DOOR','FRONT DOOR ' + doorState.toUpperCase());
-            var notifMsg = moment().format('hh:mm:ss') + ' - ' + translationService.translate('FRONT_DOOR_IS' + doorState.toUpperCase());
+            var notifMsg = moment().format('HH:mm:ss') + ' - ' + translationService.translate('FRONT_DOOR_IS' + doorState.toUpperCase());
             notificationService.notifyAllUsers(translationService.translate('FRONT_DOOR'), notifMsg, function(err,response){});
         }
         
@@ -183,7 +183,8 @@ exports.init = function(callback) {
         console.log('[ZWAVE][SCAN COMPLETE] ====> scan complete, hit ^C to finish.');
         var time = "" + moment().format('hh:mm:ss');
         eventsService.store('EVE','HOMECONTROL READY');
-        notificationService.notifyAllUsers(translationService.translate('HOME_CONTROL_READY'), moment().format('hh:mm:ss') + ' - Zwave scan complete', function(err,response){});
+        var notifMsg = moment().format('HH:mm:ss') + ' - ' + translationService.translate('HOME_CONTROL_READY');
+        notificationService.notifyAllUsers(translationService.translate('HOME_CONTROL_READY'), notifMsg, function(err,response){});
         // zwave.setValue(1,37,1,0,true);
         // zwave.refreshNodeInfo(4);
         // console.log(util.inspect(zwave, true, null));
@@ -284,7 +285,7 @@ exports.getDoorStatus = function(req, res) {
             });
         }
         else {
-            var ds = (doorStatus.value == 23) ? "CLOSED" : "OPENED";
+            var ds = (doorStatus.value == 22) ? "OPENED" : "CLOSED";
             res.json({
                 status: 200,
                 doorStatus: ds
