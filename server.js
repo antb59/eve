@@ -131,7 +131,8 @@ var port = process.env.PORT || 7778;
 https.createServer(options, app).listen(port, function(){
     console.log('Express server listening on port ' + port);
     eventsService.store('EVE','SERVER STARTED');
-    notificationService.notifyAllUsers(translationService.translate('SERVER_STARTED'), moment().format('hh:mm:ss') + ' - Server is started', function(err,response){});
+    var notifMsg = moment().format('HH:mm:ss') + ' - ' + translationService.translate('SERVER_STARTED');
+    notificationService.notifyAllUsers(translationService.translate('SERVER_STARTED'), notifMsg, function(err,response){});
 });
 
 homeControlService.init();
