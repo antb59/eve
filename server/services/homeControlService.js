@@ -76,7 +76,7 @@ exports.init = function(callback) {
                 doorState = "opened";
             console.log("PUSH DOOR STATUS CHANGED : " + doorState);
             eventsService.store('DOOR','FRONT DOOR ' + doorState.toUpperCase());
-            var notifMsg = moment().format('HH:mm:ss') + ' - ' + translationService.translate('FRONT_DOOR_IS' + doorState.toUpperCase());
+            var notifMsg = moment().format('HH:mm:ss') + ' - ' + translationService.translate('FRONT_DOOR_IS_' + doorState.toUpperCase());
             notificationService.notifyAllUsers(translationService.translate('FRONT_DOOR'), notifMsg, function(err,response){});
         }
         
