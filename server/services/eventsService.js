@@ -35,7 +35,7 @@ var findEvents = exports.findEvents = function(pModule, beginDate, endDate, orde
     }    
     req += '}';
 
-    Event.find(JSON.parse(req), function(err,events) {
+    Event.find(JSON.parse(req), 'datetime content', function(err,events) {
         if (err) {
             console.error("Unable to getEvents : " + err);
             if (callback) callback(errSend,null);
