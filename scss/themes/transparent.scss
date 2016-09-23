@@ -66,6 +66,8 @@ $eve_login_form_transparency_level:                 $eve_transparency_level1; /*
 $eve_login_form_button_transparency_level:          $eve_transparency_level1; /* Only if $eve_login_form_transparency_level is true */
 $eve_login_form_button_hover_transparency_level:    $eve_transparency_level1 + $eve_transparency_level2; /* Only if $eve_login_form_transparency_level is true */
 
+$eve_login_logo_url:                                "../img/eve_login.png";
+
 @debug "Transparent Theme is built";
 
 @import "../main.scss";

@@ -2,4 +2,14 @@
 .login-row {
     padding-top: 10%;
 }
+
+.login-logo{
+    background-image:   url($eve_login_logo_url);
+    height:             250px;
+    background-size:    100%;
+    background-repeat:  no-repeat;
+    width:              75%;
+    margin:             auto;
+    margin-top:         20px;
+}
 /*****************************/

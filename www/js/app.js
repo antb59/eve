@@ -50,7 +50,7 @@ var app = angular.module('eve',['ui.router', 'ngSanitize', 'angularMoment', 'ang
             $log.info("[App] pageRequested is set to " + toState.name);
             $rootScope.pageRequested = toState.name;
             event.preventDefault();
-            $state.transitionTo("app.login");
+            $state.transitionTo("login");
         }
     });
 
@@ -102,7 +102,7 @@ var app = angular.module('eve',['ui.router', 'ngSanitize', 'angularMoment', 'ang
         return {
             'responseError': function(response) {
                 if(response.status === 401 || response.status === 403) {
-                    $location.path('/app/login');
+                    $location.path('/login');
                 }
                 return $q.reject(response);
             }
@@ -110,21 +110,17 @@ var app = angular.module('eve',['ui.router', 'ngSanitize', 'angularMoment', 'ang
     });
 
     $stateProvider
+        .state('login', {
+        url: "/login",
+        templateUrl: "templates/pages/login.html",
+        controller: 'LoginCtrl'
+    })
+    
         .state('app', {
         url: "/app",
         abstract: true,
         templateUrl: "templates/pages/mainTemplate.html",
         controller: 'AppCtrl'
-    })
-
-        .state('app.login', {
-        url: "/login",
-        views: {
-            'pageContent':{
-                templateUrl: "templates/pages/login.html",
-                controller: 'LoginCtrl'
-            }
-        }
     })
 
         .state('app.home', {

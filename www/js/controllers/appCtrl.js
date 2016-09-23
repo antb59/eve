@@ -33,7 +33,7 @@ angular.module('eve.controllers').controller('AppCtrl', function($rootScope, $sc
 
     $scope.goToLogin = function() {
         $log.info("[AppCtrl] goToLogin");  
-        $state.go('app.login', {}, {reload: true, inherit: false});      
+        $state.go('login', {}, {reload: true, inherit: false});      
     }
 
     $scope.goToHome = function() {

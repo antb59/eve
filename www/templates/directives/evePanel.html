@@ -1,5 +1,5 @@
 <div class="panel panel-default eve-panel">
-    <div class="panel-heading">
+    <div ng-if="title" class="panel-heading">
         <h2 ng-if='!hasTitleLink'>{{title}}</h2>
         <h2 ng-if='hasTitleLink' ng-click="clickOnTitle()">
             <i class="fa fa-caret-left"></i>&nbsp;

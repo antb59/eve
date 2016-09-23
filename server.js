@@ -132,7 +132,7 @@ https.createServer(options, app).listen(port, function(){
     console.log('Express server listening on port ' + port);
     eventsService.store('EVE','SERVER STARTED');
     var notifMsg = moment().format('HH:mm:ss') + ' - ' + translationService.translate('SERVER_STARTED');
-    notificationService.notifyAllUsers(translationService.translate('SERVER_STARTED'), notifMsg, function(err,response){});
+    //notificationService.notifyAllUsers(translationService.translate('SERVER_STARTED'), notifMsg, function(err,response){});
 });
 
 homeControlService.init();

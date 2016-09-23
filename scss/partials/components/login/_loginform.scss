@@ -5,47 +5,68 @@
 /******** LOGIN FORM **********/
 .login-form {
 
-    .login-form-field {
+    .input-group {
+
         width: 95%;
         margin: auto;
         margin-top: 10px;
         color: $eve_login_form_input_color;
         font-size: 14px;
-    }
 
-    .login-form-field-input {
-        @if $eve_login_form_is_colored {
-            background-color: $eve_login_form_input_background_color;    
-        }
-        @else {
-            @if $eve_login_form_is_transparent {
-                background: rgba(0,0,0, $eve_login_form_transparency_level);
+        .input-group-addon {
+            font-size: 14px;
+            border-radius: 0;
+            margin-top: 10px;
+            color: $eve_login_form_input_color;
+            @if $eve_login_form_is_colored {
+                background-color: $eve_login_form_input_background_color;    
+            }
+            @else {
+                @if $eve_login_form_is_transparent {
+                    background: rgba(0,0,0, $eve_login_form_transparency_level);
+                }
             }
         }
 
-        border-radius: 0;
+        .login-form-field-input {
+            color: $eve_login_form_input_color;
+            @if $eve_login_form_is_colored {
+                background-color: $eve_login_form_input_background_color;    
+            }
+            @else {
+                @if $eve_login_form_is_transparent {
+                    background: rgba(0,0,0, $eve_login_form_transparency_level);
+                }
+            }
+
+            border-radius: 0;
+
+            padding-left: 5px;
+        }
     }
 
-    .login-form-username {
-        padding-left: 5px;
-    }
-
-    .login-form-password {
-        padding-left: 5px;
+    .login-form-checkbox {
+        margin: auto;
+        margin-top: 10px;
+        color: $eve_login_form_input_color;
+        font-size: 14px;    
     }
 
     .login-form-button {
         text-align: center;
+        margin:     auto;
         margin-top: 5px;
         margin-bottom: 10px;
+        width: 95%;
 
         .login-form-button-link {
+            width: 100%;
             @if $eve_login_form_is_colored {
                 background-color: $eve_login_form_button_background_color;    
             }
             @else {
                 @if $eve_login_form_is_transparent {
-                    background: rgba(0,0,0, $eve_login_form_button_transparency_level);
+                    background: rgba(255,255,255, $eve_login_form_button_transparency_level);
                 }
             }
 
