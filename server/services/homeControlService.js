@@ -67,6 +67,16 @@ exports.init = function(callback) {
                     value['label'],
                     nodes[nodeid]['classes'][comclass][value.index]['value'],
                     value['value']);
+        
+        // TEMPERATURE CHANGED
+        // COMCLASS = 49
+        // VALUE INDEX = 3
+        if ((nodeid == 4) && (comclass == 49) && (value.index == 3)) {
+            var tempInCelsus = ((value['value'] - 32)*5/9).toFixed(1);
+            console.log("ABE VALUE = " + value['value'] +  ";TEMP = " + tempInCelsus);
+            eventsService.store('TEMPERATURE', tempInCelsus);
+        }
+        
     });
 
     zwave.on('value changed', function(nodeid, comclass, value) {
@@ -93,7 +103,7 @@ exports.init = function(callback) {
         // VALUE INDEX = 3
         if ((nodeid == 4) && (comclass == 49) && (value.index == 3) && (nodes[nodeid]['classes'][comclass][value.index]['value'] != value['value'])) {
             var tempInCelsus = ((value['value'] - 32)*5/9).toFixed(1);
-            console.log("ABE TEMP = " + tempInCelsus);
+            console.log("ABE VALUE = " + value['value'] +  ";TEMP = " + tempInCelsus);
             eventsService.store('TEMPERATURE', tempInCelsus);
         }
         
