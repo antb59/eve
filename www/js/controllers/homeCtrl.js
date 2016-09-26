@@ -1,4 +1,4 @@
-angular.module('eve.controllers').controller('homeCtrl', function($scope, $state, $stateParams, $window, $log, $rootScope, configuration, HomeControlService) {
+angular.module('eve.controllers').controller('homeCtrl', function($scope, $state, $stateParams, $window, $log, $rootScope, configuration, HomeControlService, EventsService) {
 
     $log.info('[HomeCtrl] starting');
 
@@ -17,15 +17,16 @@ angular.module('eve.controllers').controller('homeCtrl', function($scope, $state
     }; 
     
     $scope.getTemperatureEvents = function() {
-        var getTemperatureEventsRequest = HomeControlService.getTemperature();
-        getTemperatureRequest.then(function(dataResolved) {
-            $scope.temperature = dataResolved.temperature;    
+        var getTemperatureEventsRequest = EventsService.getEvents('TEMPERATURE');
+        getTemperatureEventsRequest.then(function(dataResolved) {
+            console.log("getTemperatureEvents = " + JSON.stringify(dataResolved)); 
+            $scope.temperatureEvents = dataResolved.events;    
         },function(rejectReason) {
-            $log.error("Unable to get temperature : " + rejectReason);
-            $scope.errorMsg = "Unable to get temperature : " + rejectReason;
-            $scope.temperature = 0;
+            $log.error("Unable to get temperature events : " + rejectReason);
+            $scope.errorMsg = "Unable to get temperature events : " + rejectReason;
+            $scope.temperatureEvents = [];
         },function(notifyValue) {
-            $log.info("Attempt to get temperature");
+            $log.info("Attempt to get temperature events");
         });    
     }; 
 
@@ -60,5 +61,6 @@ angular.module('eve.controllers').controller('homeCtrl', function($scope, $state
     $scope.refreshTemperature();
     $scope.refreshLuminance();
     $scope.refreshDoorStatus();
+    $scope.getTemperatureEvents();
 
 })

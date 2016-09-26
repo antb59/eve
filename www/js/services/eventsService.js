@@ -4,7 +4,9 @@ angular.module('eve.services').factory('EventsService', ['$rootScope', '$http', 
 
         getEvents: function(module) {
             $log.info("EventsService getEvents");
-            return RequestSender.sendRequest("GET","getEvents",'',  {});
+            var params = JSON.parse('{ "module": "' + module + '"}');
+            console.log("params = " + params);
+            return RequestSender.sendRequest("GET","getEvents",params,  {});
         }
     };
 
