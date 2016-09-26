@@ -2,8 +2,17 @@ var ZWave;
 var translationService = require('./translationService'),
     notificationService = require('./notificationService'),
     eventsService = require('./eventsService'),
-    moment = require('moment');
+    moment = require('moment'),
+    winston = require('winston');
     
+winston.loggers.add('homeControl', {
+    file: {
+        filename: 'logs/homeControl.log'
+    }
+});
+winston.loggers.get('homeControl').remove(winston.transports.Console);
+var homeControlLog = winston.loggers.get('homeControl');
+
  
 
 try {
@@ -11,8 +20,7 @@ try {
     
 }
 catch(e) {
-    console.log('Unable to load lib')
-    console.log(e)
+    homeControlLog.error('Unable to load lib openzwave-shared' + e);
 }
 
 var nodes = [];
@@ -26,17 +34,17 @@ exports.init = function(callback) {
     });
 
     zwave.on('driver ready', function(homeid) {
-        console.log('[ZWAVE][DRIVER READY]scanning homeid=0x%s...', homeid.toString(16));
+        homeControlLog.debug('[ZWAVE][DRIVER READY]scanning homeid=0x%s...', homeid.toString(16));
     });
 
     zwave.on('driver failed', function() {
-        console.log('[ZWAVE][DRIVER FAILED]failed to start driver');
+        homeControlLog.error('[ZWAVE][DRIVER FAILED]failed to start driver');
         zwave.disconnect();
         process.exit();
     });
 
     zwave.on('node added', function(nodeid) {
-        console.log('[ZWAVE][NODE ADDED]node%d', nodeid);
+        homeControlLog.debug('[ZWAVE][NODE ADDED]node%d', nodeid);
         nodes[nodeid] = {
             manufacturer: '',
             manufacturerid: '',
@@ -55,14 +63,14 @@ exports.init = function(callback) {
         if (!nodes[nodeid]['classes'][comclass])
             nodes[nodeid]['classes'][comclass] = {};
         nodes[nodeid]['classes'][comclass][value.index] = value;
-        console.log('[ZWAVE][%s][VALUE ADDED]node%d: added: %s:%s:%s->%s',new Date(), nodeid, value.index, comclass,
+        homeControlLog.debug('[ZWAVE][%s][VALUE ADDED]node%d: added: %s:%s:%s->%s',new Date(), nodeid, value.index, comclass,
                     value['label'],
                     nodes[nodeid]['classes'][comclass][value.index]['value'],
                     value['value']);
     });
 
     zwave.on('value changed', function(nodeid, comclass, value) {
-        console.log('[ZWAVE][%s][VALUE CHANGED]node%d: changed: %s:%s:%s->%s',new Date(), nodeid, value.index, comclass,
+        homeControlLog.debug('[ZWAVE][%s][VALUE CHANGED]node%d: changed: %s:%s:%s->%s',new Date(), nodeid, value.index, comclass,
                     value['label'],
                     nodes[nodeid]['classes'][comclass][value.index]['value'],
                     value['value']);
@@ -74,7 +82,7 @@ exports.init = function(callback) {
             var doorState = "closed";
             if (value['value'] == 22)
                 doorState = "opened";
-            console.log("PUSH DOOR STATUS CHANGED : " + doorState);
+            homeControlLog.info("PUSH DOOR STATUS CHANGED : " + doorState);
             eventsService.store('DOOR','FRONT DOOR ' + doorState.toUpperCase());
             var notifMsg = moment().format('HH:mm:ss') + ' - ' + translationService.translate('FRONT_DOOR_IS_' + doorState.toUpperCase());
             notificationService.notifyAllUsers(translationService.translate('FRONT_DOOR'), notifMsg, function(err,response){});
@@ -107,8 +115,8 @@ exports.init = function(callback) {
     });
 
     zwave.on('node naming', function(nodeid, nodeinfo) {
-        console.log('[ZWAVE][%s][NODE NAMING]node%d',new Date(), nodeid);
-        console.log('[ZWAVE][NODE READY] node%d: %s, %s', nodeid,
+        homeControlLog.debug('[ZWAVE][%s][NODE NAMING]node%d',new Date(), nodeid);
+        homeControlLog.debug('[ZWAVE][NODE READY] node%d: %s, %s', nodeid,
                     nodeinfo.manufacturer ? nodeinfo.manufacturer
                     : 'id=' + nodeinfo.manufacturerid,
                     nodeinfo.product ? nodeinfo.product
@@ -128,13 +136,13 @@ exports.init = function(callback) {
         nodes[nodeid]['name'] = nodeinfo.name;
         nodes[nodeid]['loc'] = nodeinfo.loc;
         nodes[nodeid]['ready'] = true;
-        console.log('[ZWAVE][NODE READY] node%d: %s, %s', nodeid,
+        homeControlLog.debug('[ZWAVE][NODE READY] node%d: %s, %s', nodeid,
                     nodeinfo.manufacturer ? nodeinfo.manufacturer
                     : 'id=' + nodeinfo.manufacturerid,
                     nodeinfo.product ? nodeinfo.product
                     : 'product=' + nodeinfo.productid +
                     ', type=' + nodeinfo.producttype);
-        console.log('[ZWAVE][NODE READY] node%d: name="%s", type="%s", location="%s"', nodeid,
+        homeControlLog.debug('[ZWAVE][NODE READY] node%d: name="%s", type="%s", location="%s"', nodeid,
                     nodeinfo.name,
                     nodeinfo.type,
                     nodeinfo.loc);
@@ -146,41 +154,41 @@ exports.init = function(callback) {
                     break;
             }
             var values = nodes[nodeid]['classes'][comclass];
-            console.log('[ZWAVE][NODE READY] node%d: class %d', nodeid, comclass);
+            homeControlLog.debug('[ZWAVE][NODE READY] node%d: class %d', nodeid, comclass);
             for (idx in values)
-                console.log('[ZWAVE][NODE READY] node%d:   %s=%s', nodeid, values[idx]['label'], values[idx]['value']);
+                homeControlLog.debug('[ZWAVE][NODE READY] node%d:   %s=%s', nodeid, values[idx]['label'], values[idx]['value']);
         }
     });
 
     zwave.on('notification', function(nodeid, notif) {
         switch (notif) {
             case 0:
-                console.log('[ZWAVE][NOTIFICATION] node%d: message complete', nodeid);
+                homeControlLog.debug('[ZWAVE][NOTIFICATION] node%d: message complete', nodeid);
                 break;
             case 1:
-                console.log('[ZWAVE][NOTIFICATION] node%d: timeout', nodeid);
+                homeControlLog.debug('[ZWAVE][NOTIFICATION] node%d: timeout', nodeid);
                 break;
             case 2:
-                console.log('[ZWAVE][NOTIFICATION] node%d: nop', nodeid);
+                homeControlLog.debug('[ZWAVE][NOTIFICATION] node%d: nop', nodeid);
                 break;
             case 3:
-                console.log('[ZWAVE][NOTIFICATION] node%d: node awake', nodeid);
+                homeControlLog.debug('[ZWAVE][NOTIFICATION] node%d: node awake', nodeid);
                 break;
             case 4:
-                console.log('[ZWAVE][NOTIFICATION] node%d: node sleep', nodeid);
+                homeControlLog.debug('[ZWAVE][NOTIFICATION] node%d: node sleep', nodeid);
                 break;
             case 5:
-                console.log('[ZWAVE][NOTIFICATION] node%d: node dead', nodeid);
+                homeControlLog.debug('[ZWAVE][NOTIFICATION] node%d: node dead', nodeid);
                 break;
             case 6:
-                console.log('[ZWAVE][NOTIFICATION] node%d: node alive', nodeid);
+                homeControlLog.debug('[ZWAVE][NOTIFICATION] node%d: node alive', nodeid);
                 break;
         }
     });
 
 
     zwave.on('scan complete', function() {
-        console.log('[ZWAVE][SCAN COMPLETE] ====> scan complete, hit ^C to finish.');
+        homeControlLog.debug('[ZWAVE][SCAN COMPLETE] ====> scan complete, hit ^C to finish.');
         var time = "" + moment().format('hh:mm:ss');
         eventsService.store('EVE','HOMECONTROL READY');
         var notifMsg = moment().format('HH:mm:ss') + ' - ' + translationService.translate('HOME_CONTROL_READY');
@@ -202,13 +210,13 @@ exports.init = function(callback) {
     });
 
     zwave.on('controller command', function(r,s) {
-        console.log('[ZWAVE][CONTROLLER COMMAND] controller commmand feedback: r=%d, s=%d',r,s);
+        homeControlLog.debug('[ZWAVE][CONTROLLER COMMAND] controller commmand feedback: r=%d, s=%d',r,s);
     });
 
     zwave.connect('/dev/ttyACM0');
 
     process.on('SIGINT', function() {
-        console.log('[ZWAVE][SIGINT] disconnecting...');
+        homeControlLog.debug('[ZWAVE][SIGINT] disconnecting...');
         zwave.disconnect('/dev/ttyACM0');
         process.exit();
     });
@@ -216,16 +224,16 @@ exports.init = function(callback) {
 
 
 exports.getTemperature = function(req, res) {
-    console.log("API GET temperature");
+    homeControlLog.info("API GET temperature");
     //commandsFlow.pushCommand("GET bookmarksByTag '" + req.params.tag + "'");
     if (!ZWave) {
-        console.log('ZWave is not loaded');
+        homeControlLog.debug('ZWave is not loaded');
         res.status(501).send('ZWave is not loaded');
     }
     else {
         var temperature = nodes[4]['classes']['49']['1'];
         if (!temperature) {
-            console.log('Temperature is not defined');
+            homeControlLog.debug('Temperature is not defined');
             res.json({
                 status: 500,
                 message: 'Error while gettting temperature: Temperature is not defined'
@@ -243,16 +251,16 @@ exports.getTemperature = function(req, res) {
 
 
 exports.getLuminance = function(req, res) {
-    console.log("API GET luminance");
+    homeControlLog.info("API GET luminance");
     //commandsFlow.pushCommand("GET bookmarksByTag '" + req.params.tag + "'");
     if (!ZWave) {
-        console.log('ZWave is not loaded');
+        homeControlLog.debug('ZWave is not loaded');
         res.status(501).send('ZWave is not loaded');
     }
     else {
         var luminance = nodes[4]['classes']['49']['3'];
         if (!luminance) {
-            console.log('Luminance is not defined');
+            homeControlLog.debug('Luminance is not defined');
             res.json({
                 status: 500,
                 message: 'Error while gettting luminance: Luminance is not defined'
@@ -269,16 +277,16 @@ exports.getLuminance = function(req, res) {
 };
 
 exports.getDoorStatus = function(req, res) {
-    console.log("API GET doorStatus");
+    homeControlLog.info("API GET doorStatus");
     //commandsFlow.pushCommand("GET bookmarksByTag '" + req.params.tag + "'");
     if (!ZWave) {
-        console.log('ZWave is not loaded');
+        homeControlLog.debug('ZWave is not loaded');
         res.status(501).send('ZWave is not loaded');
     }
     else {
         var doorStatus = nodes[4]['classes']['113']['9'];
         if (!doorStatus) {
-            console.log('DoorStatus is not defined');
+            homeControlLog.debug('DoorStatus is not defined');
             res.json({
                 status: 500,
                 message: 'Error while gettting doorStatus: DoorStatus is not defined'

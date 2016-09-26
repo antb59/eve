@@ -2,6 +2,13 @@
     font-size: 14px;
 }
 
+@mixin placeholder {
+    &::-webkit-input-placeholder {@content}
+    &:-moz-placeholder           {@content}
+    &::-moz-placeholder          {@content}
+    &:-ms-input-placeholder      {@content}  
+}
+
 /******** LOGIN FORM **********/
 .login-form {
 
@@ -9,12 +16,12 @@
 
         width: 95%;
         margin: auto;
-        margin-top: 10px;
+        margin-top: 20px;
         color: $eve_login_form_input_color;
-        font-size: 14px;
+        font-size: 18px;
 
         .input-group-addon {
-            font-size: 14px;
+            font-size: 18px;
             border-radius: 0;
             margin-top: 10px;
             color: $eve_login_form_input_color;
@@ -40,8 +47,12 @@
             }
 
             border-radius: 0;
-
             padding-left: 5px;
+
+            @include placeholder {
+                text-transform: uppercase;
+            } 
+
         }
     }
 
@@ -55,7 +66,7 @@
     .login-form-button {
         text-align: center;
         margin:     auto;
-        margin-top: 5px;
+        margin-top: 20px;
         margin-bottom: 10px;
         width: 95%;
 
@@ -72,6 +83,7 @@
 
             color: $eve_login_form_button_color;
             border-color: $eve_login_form_button_border_color;
+            text-transform: uppercase;
 
             &:hover {
                 @if $eve_login_form_is_colored {
@@ -92,4 +104,5 @@
     }
 
 }
+
 /*****************************/

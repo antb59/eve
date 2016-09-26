@@ -2,6 +2,16 @@ var passport = require('passport');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var util = require('util');
+var winston = require('winston');
+    
+winston.loggers.add('authentication', {
+    file: {
+        filename: 'logs/authentication.log'
+    }
+});
+winston.loggers.get('authentication').remove(winston.transports.Console);
+var authenticationLog = winston.loggers.get('authentication');
+
 
 module.exports.register = function(req, res) {
     var user = new User();
@@ -32,8 +42,9 @@ module.exports.login = function(req, res) {
 
         // If a user is found
         if(user){
+            authenticationLog.info("Login successfull : " + user.username);
             if (req.body.deviceToken && (req.body.deviceToken != '')) {
-                console.log("DEVICE TOKEN : " + req.body.deviceToken);
+                authenticationLog.info("DEVICE TOKEN : " + req.body.deviceToken);
                 user.setDeviceToken(req.body.deviceToken);
                 user.save();
             }     

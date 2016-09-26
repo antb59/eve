@@ -30,6 +30,10 @@ $dark:                              $worldline_black;
 color: white;
 }*/
 
+html, body, .container-fluid, .main-ui-view {
+   height:100%;
+}
+
 body {
     @if $eve_background_is_img {
         @debug "$eve_background_is_img is set to #{$eve_background_is_img}";

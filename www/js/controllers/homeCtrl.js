@@ -15,6 +15,20 @@ angular.module('eve.controllers').controller('homeCtrl', function($scope, $state
             $log.info("Attempt to get temperature");
         });    
     }; 
+    
+    $scope.getTemperatureEvents = function() {
+        var getTemperatureEventsRequest = HomeControlService.getTemperature();
+        getTemperatureRequest.then(function(dataResolved) {
+            $scope.temperature = dataResolved.temperature;    
+        },function(rejectReason) {
+            $log.error("Unable to get temperature : " + rejectReason);
+            $scope.errorMsg = "Unable to get temperature : " + rejectReason;
+            $scope.temperature = 0;
+        },function(notifyValue) {
+            $log.info("Attempt to get temperature");
+        });    
+    }; 
+
 
 
     $scope.refreshLuminance = function() {

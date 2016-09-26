@@ -3,13 +3,45 @@
     padding-top: 10%;
 }
 
+.login-mobile-display {
+
+    height: 100%;
+
+    .login-panel {
+
+        height: 100%;
+
+        .eve-panel {
+            height: 100%;
+
+            .panel-body {
+                padding-top: 50px;
+            }
+        }
+    }
+}
+
 .login-logo{
     background-image:   url($eve_login_logo_url);
-    height:             250px;
+    height:             275px;
     background-size:    100%;
     background-repeat:  no-repeat;
     width:              75%;
     margin:             auto;
-    margin-top:         20px;
+    margin-top:         30px;
+}
+
+.login-panel {
+
+    .panel-body {
+        @if $eve_login_panel_body_is_colored {
+            background-color: $eve_login_panel_body_background_color;
+        }
+        @else {
+            @if $eve_login_panel_body_is_transparent {
+                background: rgba(0,0,0, $eve_login_panel_body_transparency_level);
+            }
+        }
+    }
 }
 /*****************************/

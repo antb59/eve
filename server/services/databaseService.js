@@ -1,4 +1,15 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+    winston = require('winston');
+    
+winston.loggers.add('database', {
+    file: {
+        filename: 'logs/database.log'
+    }
+});
+winston.loggers.get('database').remove(winston.transports.Console);
+var databaseLog = winston.loggers.get('database');
+
+mongoose.Promise = global.Promise;
 // BRING IN YOUR SCHEMAS & MODELS
 require('../models/users');
 require('../models/events');
@@ -15,14 +26,14 @@ mongoose.connection.on('connected', function() {
     var User = mongoose.model('User');
     var Event = mongoose.model('Event');
     eventsService.store('EVE','CONNECTED TO DATABASE');
-    console.log('Mongoose connected to ' + dbURI);
+    databaseLog.info('Mongoose connected to ' + dbURI);
 
     if (process.env.FIRST_TIME) {
         User.remove({},function(err) {
             if (err)
-                console.log("Unable to remove all users : " + err);
+                databaseLog.error("Unable to remove all users : " + err);
             else {
-                console.log("Users removed.");
+                databaseLog.debug("Users removed.");
                 var newUser = new User();
 
                 newUser.username = process.env.USER;
@@ -37,10 +48,10 @@ mongoose.connection.on('connected', function() {
 
                     User.find({}, function(err,users) {
                         if (err)
-                            console.log("Unable to remove all users : " + err);
+                            databaseLog.error("Unable to remove all users : " + err);
                         else {
-                            console.log("users = " + users);
-                            console.log("User 'antoine' successfully created");
+                            databaseLog.debug("users = " + users);
+                            databaseLog.info("User " + newUser.username + " successfully created");
                         }
                     });
                 });
@@ -49,35 +60,35 @@ mongoose.connection.on('connected', function() {
         
         Event.remove({},function(err) {
             if (err)
-                console.log("Unable to remove all events : " + err);
+                databaseLog.error("Unable to remove all events : " + err);
             else {
-                console.log("Events removed.");
+               databaseLog.info("Events removed.");
             }
         });
     }
     else {
-        User.find({}, function(err,c) {
+        User.count({}, function(err,c) {
             if (err)
-                console.log("Unable to count users : " + err);
+                databaseLog.error("Unable to count users : " + err);
             else {
-                console.log("Number of existing users : " + c);
+                databaseLog.info("Number of existing users : " + c);
             }
         });
     }
 
 });
 mongoose.connection.on('error', function(err) {
-    console.log('Mongoose connection error: ' + err);
+    databaseLog.error('Mongoose connection error: ' + err);
 });
 mongoose.connection.on('disconnected', function() {
-    console.log('Mongoose disconnected');
+    databaseLog.info('Mongoose disconnected');
 });
 
 // CAPTURE APP TERMINATION / RESTART EVENTS
 // To be called when process is restarted or terminated
 gracefulShutdown = function(msg, callback) {
     mongoose.connection.close(function() {
-        console.log('Mongoose disconnected through ' + msg);
+        databaseLog.info('Mongoose disconnected through ' + msg);
         callback();
     });
 };

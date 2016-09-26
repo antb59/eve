@@ -28,7 +28,7 @@ cordova plugin add phonegap-plugin-push --variable SENDER_ID="XXXXXXXXX"
 
 TODO :
 DONE - Notification translate
- - Log with Winston
+DONE - Log with Winston
  - Events viewing on front side
  - Design improvements
  - Administration & monitoring 

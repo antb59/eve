@@ -4,6 +4,7 @@
 
 $eve_transparency_level1:          0.23;
 $eve_transparency_level2:          0.2;
+$eve_transparency_level3:          0.85;
 $eve_transparency_complete:        0;
 
 
@@ -37,20 +38,25 @@ $eve_header_logo_margin_top:       -12px;
 $eve_panel_is_colored:             false;
 $eve_panel_background_color:       $worldline_blue; /* Only if $eve_header_is_colored is true */
 $eve_panel_is_transparent:         true; 
-$eve_panel_transparency_level:     $eve_transparency_level1; /* Only if $eve_header_transparency_level is true */
+$eve_panel_transparency_level:     $eve_transparency_complete; /* Only if $eve_header_transparency_level is true */
 $eve_panel_border:                 0px;
 
 $eve_panel_header_is_colored:             false;
 $eve_panel_header_background_color:       $worldline_blue; /* Only if $eve_header_is_colored is true */
 $eve_panel_header_is_transparent:         true; 
-$eve_panel_header_transparency_level:     $eve_transparency_level2; /* Only if $eve_header_transparency_level is true */
+$eve_panel_header_transparency_level:     $eve_transparency_level1 + $eve_transparency_level2; /* Only if $eve_header_transparency_level is true */
 $eve_panel_header_color:                  white;
 $eve_panel_header_border_bottom:          0px;
 
 $eve_panel_body_is_colored:             false;
 $eve_panel_body_background_color:       $worldline_blue; /* Only if $eve_header_is_colored is true */
 $eve_panel_body_is_transparent:         true; 
-$eve_panel_body_transparency_level:     $eve_transparency_complete; /* Only if $eve_header_transparency_level is true */
+$eve_panel_body_transparency_level:     $eve_transparency_level1; /* Only if $eve_header_transparency_level is true */
+
+$eve_login_panel_body_is_colored:               false;
+$eve_login_panel_body_background_color:         $worldline_blue; /* Only if $eve_header_is_colored is true */
+$eve_login_panel_body_is_transparent:           true; 
+$eve_login_panel_body_transparency_level:       $eve_transparency_complete; /* Only if $eve_header_transparency_level is true */
 
 /* Configuration of login form */
 $eve_login_form_is_colored:                         false;
@@ -59,12 +65,12 @@ $eve_login_form_button_background_color:            white; /* Only if $eve_login
 $eve_login_form_button_hover_background_color:      white; /* Only if $eve_login_form_is_colored is true */
 $eve_login_form_button_hover_color:                 white; /* Only if $eve_login_form_is_colored is true */
 $eve_login_form_input_color:                        white;
-$eve_login_form_button_color:                       white;
+$eve_login_form_button_color:                       black;
 $eve_login_form_button_border_color:                transparent;
 $eve_login_form_is_transparent:                     true; 
-$eve_login_form_transparency_level:                 $eve_transparency_level1; /* Only if $eve_login_form_is_transparent is true */
-$eve_login_form_button_transparency_level:          $eve_transparency_level1; /* Only if $eve_login_form_transparency_level is true */
-$eve_login_form_button_hover_transparency_level:    $eve_transparency_level1 + $eve_transparency_level2; /* Only if $eve_login_form_transparency_level is true */
+$eve_login_form_transparency_level:                 $eve_transparency_level1 ; /* Only if $eve_login_form_is_transparent is true */
+$eve_login_form_button_transparency_level:          $eve_transparency_level3; /* Only if $eve_login_form_transparency_level is true */
+$eve_login_form_button_hover_transparency_level:    $eve_transparency_level3; /* Only if $eve_login_form_transparency_level is true */
 
 $eve_login_logo_url:                                "../img/eve_login.png";
 

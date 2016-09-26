@@ -8,14 +8,15 @@ var express = require('express'),
     methodOverride = require('method-override'),
     session = require('express-session'),
     errorHandler = require('errorhandler'),
-    logger = require('morgan'),
+    morgan = require('morgan'),
     multer = require('multer'),
     path = require('path'),
     https = require('https'),
     crypto = require('crypto'),
     fs = require('fs'),
     moment = require('moment'),
-    log = require('custom-logger').config({ level: 0 }),
+    FileStreamRotator = require('file-stream-rotator'),
+    winston = require('winston'),
     translationService = require('./server/services/translationService'),
     databaseService = require('./server/services/databaseService'),
     passportService = require('./server/services/passportService'),
@@ -25,7 +26,15 @@ var express = require('express'),
     serverRoutes = require('./server/routes/routes');
 
 
-console.log('Starting Server...');
+winston.loggers.add('server', {
+    file: {
+        filename: 'logs/server.log'
+    }
+});
+winston.loggers.get('server').remove(winston.transports.Console);
+var serverLog = winston.loggers.get('server');
+
+serverLog.info('Starting Server...');
 
 var app = express();
 
@@ -65,7 +74,20 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 //app.use(multer());
 app.use(methodOverride());
-app.use(logger('dev'));
+
+var logDirectory = path.join(__dirname, '/logs');
+// ensure log directory exists
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+// create a rotating write stream
+var accessLogStream = FileStreamRotator.getStream({
+    date_format: 'YYYYMMDD',
+    filename: path.join(logDirectory, 'access-%DATE%.log'),
+    frequency: 'daily',
+    verbose: false
+})
+// setup the logger
+app.use(morgan('combined', {stream: accessLogStream}));
+
 app.use(errorHandler({
     dumpExceptions: true,
     showStack: true
@@ -115,7 +137,7 @@ if (process.env.ENV === 'DEV') {
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-    console.log("Erreur [" + err.status + "]" + err.message);
+    serverLog.error("Erreur [" + err.status + "]" + err.message);
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,
@@ -129,7 +151,7 @@ app.use(function(err, req, res, next) {
 var port = process.env.PORT || 7778;
 
 https.createServer(options, app).listen(port, function(){
-    console.log('Express server listening on port ' + port);
+    serverLog.info('Express server listening on port ' + port);
     eventsService.store('EVE','SERVER STARTED');
     var notifMsg = moment().format('HH:mm:ss') + ' - ' + translationService.translate('SERVER_STARTED');
     //notificationService.notifyAllUsers(translationService.translate('SERVER_STARTED'), notifMsg, function(err,response){});

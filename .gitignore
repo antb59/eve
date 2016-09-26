@@ -4,5 +4,6 @@ node_modules/
 test/report/
 data/
 www/lib/
+logs/
 cert.pem
 key.pem

@@ -2,7 +2,17 @@
 var mongoose = require('mongoose'),
     eventModel = require('./../models/events.js');
     Event = mongoose.model('Event'),
-    moment = require('moment');
+    moment = require('moment'),
+    winston = require('winston');
+    
+winston.loggers.add('events', {
+    file: {
+        filename: 'logs/events.log'
+    }
+});
+winston.loggers.get('events').remove(winston.transports.Console);
+var eventsLog = winston.loggers.get('events');
+
 
 exports.store = function(pModule, pContent, callback){
     var event = new Event();
@@ -11,7 +21,7 @@ exports.store = function(pModule, pContent, callback){
     event.content = pContent;
     event.save(function(err) {
         if (err) {
-            console.error("Unable to store Event : " + err);
+            eventsLog.error("Unable to store Event : " + err);
             if (callback) callback(err);
         }
         else {
@@ -35,23 +45,22 @@ var findEvents = exports.findEvents = function(pModule, beginDate, endDate, orde
     }    
     req += '}';
 
-    Event.find(JSON.parse(req), {'_id': 0, 'datetime' :1, 'content': 1, 'module': 0}, function(err,events) {
+    Event.find(JSON.parse(req), {'_id': 0, 'datetime' :1, 'content': 1}, function(err,events) {
         if (err) {
-            console.error("Unable to getEvents : " + err);
-            if (callback) callback(errSend,null);
+            eventsLog.error("Unable to getEvents : " + err);
+            if (callback) callback(err,null);
         }
         else {
-            console.log("Events found : " + JSON.stringify(events));
             if (callback) callback(null, events);
         }
     });
 };
 
 exports.getEvents = function(req, res) {
-    console.log("API GET Events");
+    eventsLog.info("API GET Events");
     //commandsFlow.pushCommand("GET bookmarksByTag '" + req.params.tag + "'");
     if (!Event) {
-        console.log('Events are not loaded');
+        eventsLog.debug('Events are not loaded');
         res.status(501).send('Events are not loaded');
     }
     else {

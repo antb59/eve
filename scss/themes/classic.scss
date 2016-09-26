@@ -48,6 +48,11 @@ $eve_panel_body_background_color:       white; /* Only if $eve_panel_body_is_col
 $eve_panel_body_is_transparent:         false; 
 $eve_panel_body_transparency_level:     0; /* Only if $eve_panel_body_is_transparent is true */
 
+$eve_login_panel_body_is_colored:               true;
+$eve_login_panel_body_background_color:         $worldline_blue; /* Only if $eve_header_is_colored is true */
+$eve_login_panel_body_is_transparent:           false; 
+$eve_login_panel_body_transparency_level:       0; /* Only if $eve_header_transparency_level is true */
+
 /* Configuration of login form */
 $eve_login_form_is_colored:                         true;
 $eve_login_form_input_background_color:             white; /* Only if $eve_login_form_is_colored is true */
