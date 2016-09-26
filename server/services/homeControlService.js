@@ -71,7 +71,7 @@ exports.init = function(callback) {
         // TEMPERATURE INIT
         // COMCLASS = 49
         // VALUE INDEX = 1
-        if ((nodeid == 4) && (comclass == 49) && (value.index == 3)) {
+        if ((nodeid == 4) && (comclass == 49) && (value.index == 1)) {
             var tempInCelsus = ((value['value'] - 32)*5/9).toFixed(1);
             eventsService.store('TEMPERATURE', tempInCelsus);
         }
@@ -108,7 +108,7 @@ exports.init = function(callback) {
         // TEMPERATURE CHANGED
         // COMCLASS = 49
         // VALUE INDEX = 1
-        if ((nodeid == 4) && (comclass == 49) && (value.index == 3) && (nodes[nodeid]['classes'][comclass][value.index]['value'] != value['value'])) {
+        if ((nodeid == 4) && (comclass == 49) && (value.index == 1) && (nodes[nodeid]['classes'][comclass][value.index]['value'] != value['value'])) {
             var tempInCelsus = ((value['value'] - 32)*5/9).toFixed(1);
             eventsService.store('TEMPERATURE', tempInCelsus);
         }
