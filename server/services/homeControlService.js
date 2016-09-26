@@ -63,7 +63,7 @@ exports.init = function(callback) {
         if (!nodes[nodeid]['classes'][comclass])
             nodes[nodeid]['classes'][comclass] = {};
         nodes[nodeid]['classes'][comclass][value.index] = value;
-        homeControlLog.debug('[ZWAVE][%s][VALUE ADDED]node%d: added: %s:%s:%s->%s',new Date(), nodeid, value.index, comclass,
+        homeControlLog.info('[ZWAVE][%s][VALUE ADDED]node%d: added: %s:%s:%s->%s',new Date(), nodeid, value.index, comclass,
                     value['label'],
                     nodes[nodeid]['classes'][comclass][value.index]['value'],
                     value['value']);
@@ -80,7 +80,7 @@ exports.init = function(callback) {
     });
 
     zwave.on('value changed', function(nodeid, comclass, value) {
-        homeControlLog.debug('[ZWAVE][%s][VALUE CHANGED]node%d: changed: %s:%s:%s->%s',new Date(), nodeid, value.index, comclass,
+        homeControlLog.info('[ZWAVE][%s][VALUE CHANGED]node%d: changed: %s:%s:%s->%s',new Date(), nodeid, value.index, comclass,
                     value['label'],
                     nodes[nodeid]['classes'][comclass][value.index]['value'],
                     value['value']);
