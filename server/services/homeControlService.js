@@ -68,19 +68,26 @@ exports.init = function(callback) {
                     nodes[nodeid]['classes'][comclass][value.index]['value'],
                     value['value']);
         
-        // TEMPERATURE CHANGED
+        // TEMPERATURE INIT
+        // COMCLASS = 49
+        // VALUE INDEX = 1
+        if ((nodeid == 4) && (comclass == 49) && (value.index == 3)) {
+            var tempInCelsus = ((value['value'] - 32)*5/9).toFixed(1);
+            eventsService.store('TEMPERATURE', tempInCelsus);
+        }
+        
+        // LUMINANCE INIT
         // COMCLASS = 49
         // VALUE INDEX = 3
         if ((nodeid == 4) && (comclass == 49) && (value.index == 3)) {
-            var tempInCelsus = ((value['value'] - 32)*5/9).toFixed(1);
-            console.log("ABE VALUE = " + value['value'] +  ";TEMP = " + tempInCelsus);
-            eventsService.store('TEMPERATURE', tempInCelsus);
+            var lum = ((value['value'])*1);
+            eventsService.store('LUMINANCE', lum);
         }
         
     });
 
     zwave.on('value changed', function(nodeid, comclass, value) {
-        homeControlLog.info('[ZWAVE][%s][VALUE CHANGED]node%d: changed: %s:%s:%s->%s',new Date(), nodeid, value.index, comclass,
+        homeControlLog.debug('[ZWAVE][%s][VALUE CHANGED]node%d: changed: %s:%s:%s->%s',new Date(), nodeid, value.index, comclass,
                     value['label'],
                     nodes[nodeid]['classes'][comclass][value.index]['value'],
                     value['value']);
@@ -92,7 +99,7 @@ exports.init = function(callback) {
             var doorState = "closed";
             if (value['value'] == 22)
                 doorState = "opened";
-            homeControlLog.info("PUSH DOOR STATUS CHANGED : " + doorState);
+            homeControlLog.debug("PUSH DOOR STATUS CHANGED : " + doorState);
             eventsService.store('DOOR','FRONT DOOR ' + doorState.toUpperCase());
             var notifMsg = moment().format('HH:mm:ss') + ' - ' + translationService.translate('FRONT_DOOR_IS_' + doorState.toUpperCase());
             notificationService.notifyAllUsers(translationService.translate('FRONT_DOOR'), notifMsg, function(err,response){});
@@ -100,19 +107,18 @@ exports.init = function(callback) {
         
         // TEMPERATURE CHANGED
         // COMCLASS = 49
-        // VALUE INDEX = 3
+        // VALUE INDEX = 1
         if ((nodeid == 4) && (comclass == 49) && (value.index == 3) && (nodes[nodeid]['classes'][comclass][value.index]['value'] != value['value'])) {
             var tempInCelsus = ((value['value'] - 32)*5/9).toFixed(1);
-            console.log("ABE VALUE = " + value['value'] +  ";TEMP = " + tempInCelsus);
             eventsService.store('TEMPERATURE', tempInCelsus);
         }
         
         // LUMINANCE CHANGED
         // COMCLASS = 49
-        // VALUE INDEX = 1
-        if ((nodeid == 4) && (comclass == 49) && (value.index == 1) && (nodes[nodeid]['classes'][comclass][value.index]['value'] != value['value'])) {
+        // VALUE INDEX = 3
+        if ((nodeid == 4) && (comclass == 49) && (value.index == 3) && (nodes[nodeid]['classes'][comclass][value.index]['value'] != value['value'])) {
             var lum = ((value['value'])*1);
-            eventsService.store('LUMINANCE', 1);
+            eventsService.store('LUMINANCE', lum);
         }
         
         nodes[nodeid]['classes'][comclass][value.index] = value;
