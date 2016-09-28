@@ -1,35 +1,36 @@
 {
-    "name": "eve",
-    "version": "0.0.1",
-    "description": "EVE application",
-    "license": "MIT",
-    "dependencies": {
-        "angular": "*",
-        "angular-animate": "*",
-        "angular-http-auth": "*",
-        "angular-mocks": "*",
-        "angular-sanitize": "*",
-        "angular-ui-router": "*",
-        "angular-ui-notification": "*",
-        "angular-md5": "*",
-        "requirejs": "*",
-        "angular-resource": "*",
-        "angular-moment": "*",
-        "jquery": "*",
-        "bootstrap": "*",
-        "bootstrap-sass-official": "*",
-        "angular-bootstrap": "*",
-        "font-awesome": "*",
-        "angular-media-queries": "*"
-    },
-    "ignore": [
-        "**/.*",
-        "node_modules",
-        "bower_components",
-        "test",
-        "tests"
-    ],
-    "resolutions": {
-        "angular": ">=1 <1.3.0"
-    }
+  "name": "eve",
+  "version": "0.0.1",
+  "description": "EVE application",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "*",
+    "angular-animate": "*",
+    "angular-http-auth": "*",
+    "angular-mocks": "*",
+    "angular-sanitize": "*",
+    "angular-ui-router": "*",
+    "angular-ui-notification": "*",
+    "angular-md5": "*",
+    "requirejs": "*",
+    "angular-resource": "*",
+    "angular-moment": "*",
+    "jquery": "*",
+    "bootstrap": "*",
+    "bootstrap-sass-official": "*",
+    "angular-bootstrap": "*",
+    "font-awesome": "*",
+    "angular-media-queries": "*",
+    "angular-chart.js": "^1.0.3"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "resolutions": {
+    "angular": ">=1 <1.3.0"
+  }
 }

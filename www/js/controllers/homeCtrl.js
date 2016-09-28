@@ -1,4 +1,4 @@
-angular.module('eve.controllers').controller('homeCtrl', function($scope, $state, $stateParams, $window, $log, $rootScope, configuration, HomeControlService, EventsService) {
+angular.module('eve.controllers').controller('homeCtrl', function($scope, $state, $stateParams, $window, $log, $rootScope, $timeout, configuration, HomeControlService, EventsService) {
 
     $log.info('[HomeCtrl] starting');
 
@@ -15,7 +15,7 @@ angular.module('eve.controllers').controller('homeCtrl', function($scope, $state
             $log.info("Attempt to get temperature");
         });    
     }; 
-    
+
     $scope.getTemperatureEvents = function() {
         var getTemperatureEventsRequest = EventsService.getEvents('TEMPERATURE');
         getTemperatureEventsRequest.then(function(dataResolved) {
@@ -62,5 +62,36 @@ angular.module('eve.controllers').controller('homeCtrl', function($scope, $state
     $scope.refreshLuminance();
     $scope.refreshDoorStatus();
     $scope.getTemperatureEvents();
+
+    $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+    $scope.series = ['Series A'];
+    $scope.data = [
+        [65, 59, 80, 81, 56, 55, 40],
+        [28, 48, 40, 19, 86, 27, 90]
+    ];
+    $scope.onClick = function (points, evt) {
+        console.log(points, evt);
+    };
+
+    // Simulate async data update
+    $timeout(function () {
+        $scope.data = [
+            [28, 48, 40, 19, 86, 27, 90],
+            [65, 59, 80, 81, 56, 55, 40]
+        ];
+    }, 3000);
+
+    $scope.options = {
+        scales: {
+            yAxes: [
+                {
+                    id: 'y-axis-1',
+                    type: 'linear',
+                    display: true,
+                    position: 'left'
+                }
+            ]
+        }
+    };
 
 })

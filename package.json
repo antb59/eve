@@ -6,12 +6,12 @@
   "dependencies": {
     "body-parser": "*",
     "cookie-parser": "*",
-    "file-stream-rotator": "*",
     "ejs": "*",
     "errorhandler": "*",
     "express": "*",
     "express-jwt": "^3.4.0",
     "express-session": "*",
+    "file-stream-rotator": "*",
     "gulp": "*",
     "https": "*",
     "jsonwebtoken": "*",
@@ -26,8 +26,8 @@
     "passport-local": "*",
     "serve-favicon": "*",
     "shelljs": "*",
-    "yargs": "*",
-    "winston" : "*"
+    "winston": "*",
+    "yargs": "*"
   },
   "devDependencies": {
     "gulp-batch": "*",
