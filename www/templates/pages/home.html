@@ -39,7 +39,7 @@
                      data-refresh="refreshTemperature()" 
                      data-title="{{'TEMPERATURE' | translate}}">
                     <p><i class="wi wi-thermometer"></i> {{temperature | customNumber : 2}} °C</p>
-                    <canvas class="chart chart-line" chart-data="data" chart-labels="labels" 
+                    <canvas class="chart chart-line" chart-data="tempValues" chart-labels="tempLabels" 
                             chart-series="series" chart-click="onClick"></canvas> 
                 </div>
             </div>

@@ -20,7 +20,18 @@ angular.module('eve.controllers').controller('homeCtrl', function($scope, $state
         var getTemperatureEventsRequest = EventsService.getEvents('TEMPERATURE');
         getTemperatureEventsRequest.then(function(dataResolved) {
             console.log("getTemperatureEvents = " + JSON.stringify(dataResolved)); 
-            $scope.temperatureEvents = dataResolved.events;    
+            $scope.temperatureEvents = dataResolved.events;
+            var labels = [];
+            var values = [];
+            for(i = 0; i < $scope.temperatureEvents.length; i++) {
+                console.log("Content = " + $scope.temperatureEvents[i].content);
+                labels.push($scope.temperatureEvents[i].datetime);
+                values.push($scope.temperatureEvents[i].content);
+            }
+            $scope.tempLabels = labels;
+            $scope.tempValues = values;
+
+
         },function(rejectReason) {
             $log.error("Unable to get temperature events : " + rejectReason);
             $scope.errorMsg = "Unable to get temperature events : " + rejectReason;
@@ -74,21 +85,33 @@ angular.module('eve.controllers').controller('homeCtrl', function($scope, $state
     };
 
     // Simulate async data update
-    $timeout(function () {
+    /*$timeout(function () {
         $scope.data = [
             [28, 48, 40, 19, 86, 27, 90],
             [65, 59, 80, 81, 56, 55, 40]
         ];
-    }, 3000);
+    }, 3000);*/
 
     $scope.options = {
         scales: {
+            color: "rgba(255, 255, 255, 1)",
             yAxes: [
                 {
                     id: 'y-axis-1',
                     type: 'linear',
                     display: true,
-                    position: 'left'
+                    position: 'left',
+                    fontColor: "rgba(255, 255, 255, 1)"
+                }
+            ],
+            xAxes: [
+                {
+                    type: 'time',
+                    time: {
+                        displayFormats: {
+                            quarter: 'MMM YYYY'
+                        }
+                    }
                 }
             ]
         }
