@@ -39,8 +39,6 @@
                      data-refresh="refreshTemperature()" 
                      data-title="{{'TEMPERATURE' | translate}}">
                     <p><i class="wi wi-thermometer"></i> {{temperature | customNumber : 2}} °C</p>
-                    <canvas class="chart chart-line" chart-data="tempValues" chart-labels="tempLabels" 
-                            chart-series="series" chart-click="onClick"></canvas> 
                 </div>
             </div>
             <div class="col-sm-3">
@@ -62,6 +60,17 @@
                     <p ng-if="(doorStatus == 'OPENED')"><i class="fa fa-unlock"></i> {{doorStatus | translate}}</p>
                     <p ng-if="(doorStatus == 'UNDEFINED')"><i class="fa fa-question"></i> {{doorStatus | translate}}</p>
                 </div>
+            </div>
+        </div>
+        <div id="home-row" class="row row-content">
+            <div class="col-sm-12">
+                <canvas class="chart chart-line" chart-data="tempValues" chart-labels="tempLabels" chart-options="optionsChart"
+                        chart-series="series" chart-click="onClick"></canvas>
+            </div>
+        </div>
+        <div id="home-row" class="row row-content">
+            <div class="col-sm-12">
+                <nvd3 options="options" data="data" class="with-3d-shadow with-transitions"></nvd3>
             </div>
         </div>
     </div>

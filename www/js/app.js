@@ -1,4 +1,4 @@
-var app = angular.module('eve',['ui.router', 'ngSanitize', 'angularMoment', 'angular-md5', 'matchMedia', 'ui.bootstrap', 'ui-notification', 'chart.js', 'eve.config', 'eve.services', 'eve.controllers', 'eve.directives', 'eve.filters', 'eve.tools'])
+var app = angular.module('eve',['ui.router', 'ngSanitize', 'angularMoment', 'angular-md5', 'matchMedia', 'ui.bootstrap', 'ui-notification','nvd3', 'chart.js', 'eve.config', 'eve.services', 'eve.controllers', 'eve.directives', 'eve.filters', 'eve.tools'])
 
 .run(function($httpBackend, $log, $http, $rootScope, $state, configuration, AuthenticationService, JsonFileReader ,Notification) {
     $log.debug("Running eve");
