@@ -33,3 +33,4 @@ DONE - Log with Winston
  - Design improvements
  - Administration & monitoring 
  - Remember me improvements
+ - Shematic view of the house

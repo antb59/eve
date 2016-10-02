@@ -5850,6 +5850,9 @@ button.close {
   color: white;
   padding: 10px; }
 
+.nvd3 .nv-axis text {
+  fill: white; }
+
 /***************************/
 /******** LOGIN PAGE **********/
 .login-row {
@@ -11729,6 +11732,9 @@ button.close {
   font-size: 25px;
   color: white;
   padding: 10px; }
+
+.nvd3 .nv-axis text {
+  fill: white; }
 
 /***************************/
 /******** LOGIN PAGE **********/
