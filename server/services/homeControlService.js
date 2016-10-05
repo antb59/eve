@@ -44,7 +44,7 @@ exports.init = function(callback) {
     });
 
     zwave.on('node added', function(nodeid) {
-        homeControlLog.debug('[ZWAVE][NODE ADDED]node%d', nodeid);
+        homeControlLog.info('[ZWAVE][NODE ADDED]node%d', nodeid);
         nodes[nodeid] = {
             manufacturer: '',
             manufacturerid: '',
@@ -132,8 +132,8 @@ exports.init = function(callback) {
     });
 
     zwave.on('node naming', function(nodeid, nodeinfo) {
-        homeControlLog.debug('[ZWAVE][%s][NODE NAMING]node%d',new Date(), nodeid);
-        homeControlLog.debug('[ZWAVE][NODE READY] node%d: %s, %s', nodeid,
+        homeControlLog.info('[ZWAVE][%s][NODE NAMING]node%d',new Date(), nodeid);
+        homeControlLog.info('[ZWAVE][NODE READY] node%d: %s, %s', nodeid,
                     nodeinfo.manufacturer ? nodeinfo.manufacturer
                     : 'id=' + nodeinfo.manufacturerid,
                     nodeinfo.product ? nodeinfo.product
@@ -153,13 +153,13 @@ exports.init = function(callback) {
         nodes[nodeid]['name'] = nodeinfo.name;
         nodes[nodeid]['loc'] = nodeinfo.loc;
         nodes[nodeid]['ready'] = true;
-        homeControlLog.debug('[ZWAVE][NODE READY] node%d: %s, %s', nodeid,
+        homeControlLog.info('[ZWAVE][NODE READY] node%d: %s, %s', nodeid,
                     nodeinfo.manufacturer ? nodeinfo.manufacturer
                     : 'id=' + nodeinfo.manufacturerid,
                     nodeinfo.product ? nodeinfo.product
                     : 'product=' + nodeinfo.productid +
                     ', type=' + nodeinfo.producttype);
-        homeControlLog.debug('[ZWAVE][NODE READY] node%d: name="%s", type="%s", location="%s"', nodeid,
+        homeControlLog.info('[ZWAVE][NODE READY] node%d: name="%s", type="%s", location="%s"', nodeid,
                     nodeinfo.name,
                     nodeinfo.type,
                     nodeinfo.loc);
@@ -171,9 +171,9 @@ exports.init = function(callback) {
                     break;
             }
             var values = nodes[nodeid]['classes'][comclass];
-            homeControlLog.debug('[ZWAVE][NODE READY] node%d: class %d', nodeid, comclass);
+            homeControlLog.info('[ZWAVE][NODE READY] node%d: class %d', nodeid, comclass);
             for (idx in values)
-                homeControlLog.debug('[ZWAVE][NODE READY] node%d:   %s=%s', nodeid, values[idx]['label'], values[idx]['value']);
+                homeControlLog.info('[ZWAVE][NODE READY] node%d:   %s=%s', nodeid, values[idx]['label'], values[idx]['value']);
         }
     });
 
@@ -205,7 +205,7 @@ exports.init = function(callback) {
 
 
     zwave.on('scan complete', function() {
-        homeControlLog.debug('[ZWAVE][SCAN COMPLETE] ====> scan complete, hit ^C to finish.');
+        homeControlLog.info('[ZWAVE][SCAN COMPLETE] ====> scan complete, hit ^C to finish.');
         var time = "" + moment().format('hh:mm:ss');
         eventsService.store('EVE','HOMECONTROL READY');
         var notifMsg = moment().format('HH:mm:ss') + ' - ' + translationService.translate('HOME_CONTROL_READY');
