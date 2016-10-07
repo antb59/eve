@@ -4,20 +4,20 @@ var translationService = require('./translationService'),
     eventsService = require('./eventsService'),
     moment = require('moment'),
     winston = require('winston');
-    
+
 winston.loggers.add('homeControl', {
     file: {
         filename: 'logs/homeControl.log'
     }
 });
-winston.loggers.get('homeControl').remove(winston.transports.Console);
+//winston.loggers.get('homeControl').remove(winston.transports.Console);
 var homeControlLog = winston.loggers.get('homeControl');
 
- 
+
 
 try {
     ZWave = require('openzwave-shared');
-    
+
 }
 catch(e) {
     homeControlLog.error('Unable to load lib openzwave-shared' + e);
@@ -64,10 +64,10 @@ exports.init = function(callback) {
             nodes[nodeid]['classes'][comclass] = {};
         nodes[nodeid]['classes'][comclass][value.index] = value;
         homeControlLog.info('[ZWAVE][%s][VALUE ADDED]node%d: added: %s:%s:%s->%s',new Date(), nodeid, value.index, comclass,
-                    value['label'],
-                    nodes[nodeid]['classes'][comclass][value.index]['value'],
-                    value['value']);
-        
+                            value['label'],
+                            nodes[nodeid]['classes'][comclass][value.index]['value'],
+                            value['value']);
+
         // TEMPERATURE INIT
         // COMCLASS = 49
         // VALUE INDEX = 1
@@ -75,7 +75,7 @@ exports.init = function(callback) {
             var tempInCelsus = ((value['value'] - 32)*5/9).toFixed(1);
             eventsService.store('TEMPERATURE', tempInCelsus);
         }
-        
+
         // LUMINANCE INIT
         // COMCLASS = 49
         // VALUE INDEX = 3
@@ -83,15 +83,15 @@ exports.init = function(callback) {
             var lum = ((value['value'])*1);
             eventsService.store('LUMINANCE', lum);
         }
-        
+
     });
 
     zwave.on('value changed', function(nodeid, comclass, value) {
         homeControlLog.debug('[ZWAVE][%s][VALUE CHANGED]node%d: changed: %s:%s:%s->%s',new Date(), nodeid, value.index, comclass,
-                    value['label'],
-                    nodes[nodeid]['classes'][comclass][value.index]['value'],
-                    value['value']);
-        
+                             value['label'],
+                             nodes[nodeid]['classes'][comclass][value.index]['value'],
+                             value['value']);
+
         // DOOR STATUS CHANGED
         // COMCLASS = 13
         // VALUE INDEX = 9
@@ -104,7 +104,7 @@ exports.init = function(callback) {
             var notifMsg = moment().format('HH:mm:ss') + ' - ' + translationService.translate('FRONT_DOOR_IS_' + doorState.toUpperCase());
             notificationService.notifyAllUsers(translationService.translate('FRONT_DOOR'), notifMsg, function(err,response){});
         }
-        
+
         // TEMPERATURE CHANGED
         // COMCLASS = 49
         // VALUE INDEX = 1
@@ -112,7 +112,7 @@ exports.init = function(callback) {
             var tempInCelsus = ((value['value'] - 32)*5/9).toFixed(1);
             eventsService.store('TEMPERATURE', tempInCelsus);
         }
-        
+
         // LUMINANCE CHANGED
         // COMCLASS = 49
         // VALUE INDEX = 3
@@ -120,7 +120,7 @@ exports.init = function(callback) {
             var lum = ((value['value'])*1);
             eventsService.store('LUMINANCE', lum);
         }
-        
+
         nodes[nodeid]['classes'][comclass][value.index] = value;
 
     });
@@ -134,11 +134,11 @@ exports.init = function(callback) {
     zwave.on('node naming', function(nodeid, nodeinfo) {
         homeControlLog.info('[ZWAVE][%s][NODE NAMING]node%d',new Date(), nodeid);
         homeControlLog.info('[ZWAVE][NODE READY] node%d: %s, %s', nodeid,
-                    nodeinfo.manufacturer ? nodeinfo.manufacturer
-                    : 'id=' + nodeinfo.manufacturerid,
-                    nodeinfo.product ? nodeinfo.product
-                    : 'product=' + nodeinfo.productid +
-                    ', type=' + nodeinfo.producttype);
+                            nodeinfo.manufacturer ? nodeinfo.manufacturer
+                            : 'id=' + nodeinfo.manufacturerid,
+                            nodeinfo.product ? nodeinfo.product
+                            : 'product=' + nodeinfo.productid +
+                            ', type=' + nodeinfo.producttype);
 
     });
 
@@ -154,15 +154,15 @@ exports.init = function(callback) {
         nodes[nodeid]['loc'] = nodeinfo.loc;
         nodes[nodeid]['ready'] = true;
         homeControlLog.info('[ZWAVE][NODE READY] node%d: %s, %s', nodeid,
-                    nodeinfo.manufacturer ? nodeinfo.manufacturer
-                    : 'id=' + nodeinfo.manufacturerid,
-                    nodeinfo.product ? nodeinfo.product
-                    : 'product=' + nodeinfo.productid +
-                    ', type=' + nodeinfo.producttype);
+                            nodeinfo.manufacturer ? nodeinfo.manufacturer
+                            : 'id=' + nodeinfo.manufacturerid,
+                            nodeinfo.product ? nodeinfo.product
+                            : 'product=' + nodeinfo.productid +
+                            ', type=' + nodeinfo.producttype);
         homeControlLog.info('[ZWAVE][NODE READY] node%d: name="%s", type="%s", location="%s"', nodeid,
-                    nodeinfo.name,
-                    nodeinfo.type,
-                    nodeinfo.loc);
+                            nodeinfo.name,
+                            nodeinfo.type,
+                            nodeinfo.loc);
         for (comclass in nodes[nodeid]['classes']) {
             switch (comclass) {
                 case 0x25: // COMMAND_CLASS_SWITCH_BINARY
@@ -209,7 +209,7 @@ exports.init = function(callback) {
         var time = "" + moment().format('hh:mm:ss');
         eventsService.store('EVE','HOMECONTROL READY');
         var notifMsg = moment().format('HH:mm:ss') + ' - ' + translationService.translate('HOME_CONTROL_READY');
-        notificationService.notifyAllUsers(translationService.translate('HOME_CONTROL_READY'), notifMsg, function(err,response){});
+        //notificationService.notifyAllUsers(translationService.translate('HOME_CONTROL_READY'), notifMsg, function(err,response){});
         // zwave.setValue(1,37,1,0,true);
         // zwave.refreshNodeInfo(4);
         // console.log(util.inspect(zwave, true, null));
@@ -217,13 +217,14 @@ exports.init = function(callback) {
         //zwave.setValue(5,38,1,0,50);
         //zwave.setValue( {node_id:5, class_id: 38, instance:1, index:0}, 50);
         // Add a new device to the ZWave controller
-        // if (zwave.hasOwnProperty('beginControllerCommand')) {
-        // using legacy mode (OpenZWave version < 1.3) - no security
-        //   zwave.beginControllerCommand('AddDevice', true);
-        // } else {
-        // using new security API
-        // set this to 'true' for secure devices eg. door locks
-        // zwave.addNode(false);
+        if (zwave.hasOwnProperty('beginControllerCommand')) {
+            using legacy mode (OpenZWave version < 1.3) - no security
+            zwave.beginControllerCommand('AddDevice', true);
+        } else {
+            // using new security API
+            // set this to 'true' for secure devices eg. door locks
+            zwave.addNode(false);
+        }
     });
 
     zwave.on('controller command', function(r,s) {
