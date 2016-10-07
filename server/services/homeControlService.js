@@ -218,7 +218,7 @@ exports.init = function(callback) {
         //zwave.setValue( {node_id:5, class_id: 38, instance:1, index:0}, 50);
         // Add a new device to the ZWave controller
         if (zwave.hasOwnProperty('beginControllerCommand')) {
-            using legacy mode (OpenZWave version < 1.3) - no security
+            //using legacy mode (OpenZWave version < 1.3) - no security
             zwave.beginControllerCommand('AddDevice', true);
         } else {
             // using new security API
