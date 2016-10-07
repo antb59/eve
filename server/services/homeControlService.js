@@ -7,6 +7,7 @@ var translationService = require('./translationService'),
 
 winston.loggers.add('homeControl', {
     file: {
+        level: 'debug',
         filename: 'logs/homeControl.log'
     }
 });
