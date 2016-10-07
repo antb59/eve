@@ -10,7 +10,7 @@ winston.loggers.add('homeControl', {
         filename: 'logs/homeControl.log'
     }
 });
-//winston.loggers.get('homeControl').remove(winston.transports.Console);
+winston.loggers.get('homeControl').remove(winston.transports.Console);
 var homeControlLog = winston.loggers.get('homeControl');
 
 
@@ -87,7 +87,7 @@ exports.init = function(callback) {
     });
 
     zwave.on('value changed', function(nodeid, comclass, value) {
-        homeControlLog.debug('[ZWAVE][%s][VALUE CHANGED]node%d: changed: %s:%s:%s->%s',new Date(), nodeid, value.index, comclass,
+        homeControlLog.info('[ZWAVE][%s][VALUE CHANGED]node%d: changed: %s:%s:%s->%s',new Date(), nodeid, value.index, comclass,
                              value['label'],
                              nodes[nodeid]['classes'][comclass][value.index]['value'],
                              value['value']);
@@ -99,7 +99,7 @@ exports.init = function(callback) {
             var doorState = "closed";
             if (value['value'] == 22)
                 doorState = "opened";
-            homeControlLog.debug("PUSH DOOR STATUS CHANGED : " + doorState);
+            homeControlLog.info("PUSH DOOR STATUS CHANGED : " + doorState);
             eventsService.store('DOOR','FRONT DOOR ' + doorState.toUpperCase());
             var notifMsg = moment().format('HH:mm:ss') + ' - ' + translationService.translate('FRONT_DOOR_IS_' + doorState.toUpperCase());
             notificationService.notifyAllUsers(translationService.translate('FRONT_DOOR'), notifMsg, function(err,response){});
@@ -132,8 +132,8 @@ exports.init = function(callback) {
     });
 
     zwave.on('node naming', function(nodeid, nodeinfo) {
-        homeControlLog.info('[ZWAVE][%s][NODE NAMING]node%d',new Date(), nodeid);
-        homeControlLog.info('[ZWAVE][NODE READY] node%d: %s, %s', nodeid,
+        homeControlLog.debug('[ZWAVE][%s][NODE NAMING]node%d',new Date(), nodeid);
+        homeControlLog.debug('[ZWAVE][NODE READY] node%d: %s, %s', nodeid,
                             nodeinfo.manufacturer ? nodeinfo.manufacturer
                             : 'id=' + nodeinfo.manufacturerid,
                             nodeinfo.product ? nodeinfo.product
@@ -153,13 +153,13 @@ exports.init = function(callback) {
         nodes[nodeid]['name'] = nodeinfo.name;
         nodes[nodeid]['loc'] = nodeinfo.loc;
         nodes[nodeid]['ready'] = true;
-        homeControlLog.info('[ZWAVE][NODE READY] node%d: %s, %s', nodeid,
+        homeControlLog.debug('[ZWAVE][NODE READY] node%d: %s, %s', nodeid,
                             nodeinfo.manufacturer ? nodeinfo.manufacturer
                             : 'id=' + nodeinfo.manufacturerid,
                             nodeinfo.product ? nodeinfo.product
                             : 'product=' + nodeinfo.productid +
                             ', type=' + nodeinfo.producttype);
-        homeControlLog.info('[ZWAVE][NODE READY] node%d: name="%s", type="%s", location="%s"', nodeid,
+        homeControlLog.debug('[ZWAVE][NODE READY] node%d: name="%s", type="%s", location="%s"', nodeid,
                             nodeinfo.name,
                             nodeinfo.type,
                             nodeinfo.loc);
@@ -171,9 +171,9 @@ exports.init = function(callback) {
                     break;
             }
             var values = nodes[nodeid]['classes'][comclass];
-            homeControlLog.info('[ZWAVE][NODE READY] node%d: class %d', nodeid, comclass);
+            homeControlLog.debug('[ZWAVE][NODE READY] node%d: class %d', nodeid, comclass);
             for (idx in values)
-                homeControlLog.info('[ZWAVE][NODE READY] node%d:   %s=%s', nodeid, values[idx]['label'], values[idx]['value']);
+                homeControlLog.debug('[ZWAVE][NODE READY] node%d:   %s=%s', nodeid, values[idx]['label'], values[idx]['value']);
         }
     });
 
@@ -209,7 +209,7 @@ exports.init = function(callback) {
         var time = "" + moment().format('hh:mm:ss');
         eventsService.store('EVE','HOMECONTROL READY');
         var notifMsg = moment().format('HH:mm:ss') + ' - ' + translationService.translate('HOME_CONTROL_READY');
-        //notificationService.notifyAllUsers(translationService.translate('HOME_CONTROL_READY'), notifMsg, function(err,response){});
+        notificationService.notifyAllUsers(translationService.translate('HOME_CONTROL_READY'), notifMsg, function(err,response){});
         // zwave.setValue(1,37,1,0,true);
         // zwave.refreshNodeInfo(4);
         // console.log(util.inspect(zwave, true, null));
@@ -217,14 +217,14 @@ exports.init = function(callback) {
         //zwave.setValue(5,38,1,0,50);
         //zwave.setValue( {node_id:5, class_id: 38, instance:1, index:0}, 50);
         // Add a new device to the ZWave controller
-        if (zwave.hasOwnProperty('beginControllerCommand')) {
+        /*if (zwave.hasOwnProperty('beginControllerCommand')) {
             //using legacy mode (OpenZWave version < 1.3) - no security
             zwave.beginControllerCommand('AddDevice', true);
         } else {
             // using new security API
             // set this to 'true' for secure devices eg. door locks
             zwave.addNode(false);
-        }
+        }*/
     });
 
     zwave.on('controller command', function(r,s) {
@@ -234,7 +234,7 @@ exports.init = function(callback) {
     zwave.connect('/dev/ttyACM0');
 
     process.on('SIGINT', function() {
-        homeControlLog.debug('[ZWAVE][SIGINT] disconnecting...');
+        homeControlLog.info('[ZWAVE][SIGINT] disconnecting...');
         zwave.disconnect('/dev/ttyACM0');
         process.exit();
     });
