@@ -34,3 +34,27 @@ DONE - Log with Winston
  - Administration & monitoring 
  - Remember me improvements
  - Shematic view of the house
+ 
+ 
+ 
+ 
+ 016-10-09 21:20:32.765 Info, Notification: Awake Nodes Queried
+2016-10-09 21:21:19.093 Detail, Node005,   Received: 0x01, 0x0d, 0x00, 0x04, 0x00, 0x05, 0x07, 0x9c, 0x02, 0x05, 0x00, 0xff, 0x00, 0x00, 0x90
+2016-10-09 21:21:19.093 Detail, 
+2016-10-09 21:21:19.093 Info, Node005, ApplicationCommandHandler - Unhandled Command Class 0x9c
+2016-10-09 21:21:20.438 Detail, Node005,   Received: 0x01, 0x0d, 0x00, 0x04, 0x00, 0x05, 0x07, 0x9c, 0x02, 0x05, 0x05, 0xff, 0x00, 0x00, 0x95
+2016-10-09 21:21:20.438 Detail, 
+2016-10-09 21:21:20.438 Info, Node005, ApplicationCommandHandler - Unhandled Command Class 0x9c
+2016-10-09 21:21:20.588 Detail, Node005,   Received: 0x01, 0x09, 0x00, 0x04, 0x00, 0x05, 0x03, 0x20, 0x01, 0xff, 0x2a
+2016-10-09 21:21:20.589 Detail, 
+2016-10-09 21:21:20.589 Info, Node005, Received Basic set from node 5: level=255.  Sending event notification.
+2016-10-09 21:21:20.589 Detail, Node005, Notification: NodeEvent
+2016-10-09 21:21:20.589 Info, Notification: Node Event Home d7755eaa Node 5 Status 255 Genre basic Class NO OPERATION Instance 1 Index 0 Type bool
+2016-10-09 21:21:23.594 Detail, Node005,   Received: 0x01, 0x0d, 0x00, 0x04, 0x00, 0x05, 0x07, 0x9c, 0x02, 0x05, 0x05, 0x00, 0x00, 0x00, 0x6a
+2016-10-09 21:21:23.594 Detail, 
+2016-10-09 21:21:23.594 Info, Node005, ApplicationCommandHandler - Unhandled Command Class 0x9c
+2016-10-09 21:21:23.613 Detail, Node005,   Received: 0x01, 0x09, 0x00, 0x04, 0x00, 0x05, 0x03, 0x20, 0x01, 0x00, 0xd5
+2016-10-09 21:21:23.613 Detail, 
+2016-10-09 21:21:23.613 Info, Node005, Received Basic set from node 5: level=0.  Sending event notification.
+2016-10-09 21:21:23.614 Detail, Node005, Notification: NodeEvent
+2016-10-09 21:21:23.614 Info, Notification: Node Event Home d7755eaa Node 5 Status 0 Genre basic Class NO OPERATION Instance 1 Index 0 Type bool

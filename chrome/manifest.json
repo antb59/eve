@@ -1,0 +1,31 @@
+{
+    "manifest_version": 2,
+
+    "name": "EveChrome",
+    "description": "Eve Chrome Extension",
+    "version": "1.0",
+
+    "browser_action": {
+        "default_icon": "icon.png"
+    },
+    "permissions": [
+        "activeTab",
+        "https://ajax.googleapis.com/",
+        "http://www.omegle.com/*",
+        "https://chat.tchatche.com/*"
+    ],
+
+    "content_scripts": [
+        {
+            "matches": ["http://www.omegle.com/"],
+            "js": ["jquery.min.js","eveChromeOm.js"]
+        },
+        {
+            "matches": ["https://chat.tchatche.com/"],
+            "js": ["jquery.min.js","eveChromeTch.js"]
+        }
+    ]
+
+
+
+}
