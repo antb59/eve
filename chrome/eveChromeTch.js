@@ -35,8 +35,21 @@ $(document).ready(function() {
 
 });
 
-function simulateKeyPress(character) {
-    jQuery.event.trigger({ type : 'keypress', which : character.charCodeAt(0) });
+function simulateKeyPress(character, element) {
+    console.log("Key Press : " + character.charCodeAt(0));
+    //jQuery.event.trigger({ type : 'keypress', which : character.charCodeAt(0) });
+    var body = document.getElementsByTagName('body')[0];
+    var event = document.createEvent('Event'); 
+    event.initEvent('keypress', true, true); 
+    event.keyCode = character.charCodeAt(0);
+    var canceled = !body.dispatchEvent(event);
+    if(canceled) {
+        // A handler called preventDefault
+        alert("canceled");
+    } else {
+        // None of the handlers called preventDefault
+        //alert("not canceled");
+    }
 }
 
 function sendMessagesToUsers() {
@@ -65,24 +78,67 @@ function sendMessagesToUsers() {
                 });       
             }
             console.log("FINAL USERS LIST = " + usersList);
-            for (var i = 0; i < usersList.length; i++) {
-                (usersList[i]).click(function() {
-                    if ( $( "input.form-control.stretch-width.no-radius" ).length ) {
+            //for (var i = 0; i < usersList.length; i++) {
+                (usersList[0]).click(function() {
+                    var inputElement = $( "input[placeholder='Ton message...']" );
+                    if ( inputElement.length ) {
                         console.log("INPUT FOUND");
+                        inputElement.removeProp("ondrop");
+                        inputElement.removeProp("onpaste");
+                        inputElement.removeAttr("ondrop");
+                        inputElement.removeAttr("onpaste");
+                        inputElement.focus( function(){
+                            console.log("INPUT FOCUS");    
+                        });
+                        inputElement.each(function() {
+                                $.each(this.attributes, function() {
+                                    // this.attributes is not a plain object, but an array
+                                    // of attribute nodes, which contain both the name and value
+                                    if(this.specified) {
+                                        console.log("inputElement [" + this.name + " = " + this.value + "]");
+                                    }
+                                });
+                            });
+                        //inputElement.val(welcomeMsg);
                         for (var j = 0, len = welcomeMsg.length; j< len; j++) {
-                            simulateKeyPress(welcomeMsg[j]);
+                            simulateKeyPress(welcomeMsg[j],inputElement);
                         }
-                        var end = performance.now() + 300000/1000;
-                        while (end > performance.now()) ; // do nothing
-                        simulateKeyPress("\n");
+                        if ( $( "div.flash-message-container button.btn" ).length ) {
+                            var buttonElement = $( "div.flash-message-container button.btn" );
+                            buttonElement.each(function() {
+                                $.each(this.attributes, function() {
+                                    // this.attributes is not a plain object, but an array
+                                    // of attribute nodes, which contain both the name and value
+                                    if(this.specified) {
+                                        console.log("buttonElement [" + this.name + " = " + this.value + "]");
+                                    }
+                                });
+                            });
+                            //buttonElement.removeProp("disabled");
+                            //buttonElement.removeAttr("disabled");
+
+                            var messageContent = inputElement.val();
+                            if (messageContent) {
+                                console.log("BUTTON FOUND - message content = " + messageContent + "; buttonText = " + buttonElement.text() + "; stateDisabled = " + buttonElement.attr("disabled"));
+                            }
+                            else {
+                                console.log("BUTTON FOUND - no message content");
+                            }
+                            buttonElement.click();
+                        }
+
+                        //<button class="btn bg-vip hover no-radius" data-bind="enable: textIsValid, click: sendMessage" disabled="">OK</button>
+                        //var end = performance.now() + 300000/1000;
+                        //while (end > performance.now()) ; // do nothing
+                        //simulateKeyPress("\n");
                     }
                     else{
                         console.log("input not found");
                     }    
                 });
-                (usersList[i]).click();
+                (usersList[0]).click();
 
-            }
+            //}
 
             /*$( this ).click();
             if ( $( "div.flash-message-container input" ).length ) {

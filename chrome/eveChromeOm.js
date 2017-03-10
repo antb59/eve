@@ -1,5 +1,5 @@
 console.log("[EVECHROME] Starting EveChrome Extension - Om");
-var welcomeMsg = "Bonjour";
+var welcomeMsg = "Bonjour !  ?";
 var automaticFill = false;
 
 // Popup code
